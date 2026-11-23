@@ -1,4 +1,4 @@
-const CACHE = 'rotta-canonica-v1.2';
+const CACHE = 'rotta-canonica-v1.3';
 const ASSETS = [
   '/',
   '/index.html',
@@ -15,7 +15,9 @@ const ASSETS = [
   '/fonts/manrope-latin-800-normal.woff2',
   '/fonts/dm-sans-latin-400-normal.woff2',
   '/fonts/dm-sans-latin-600-normal.woff2',
-  '/fonts/dm-sans-latin-700-normal.woff2'
+  '/fonts/dm-sans-latin-700-normal.woff2',
+  '/assets/ocean-chart.svg',
+  '/assets/wave-band.svg'
 ];
 
 self.addEventListener('install', (e) => {
@@ -42,7 +44,7 @@ self.addEventListener('fetch', (e) => {
       if (cached) return cached;
       return fetch(e.request)
         .then((res) => {
-          if (res.ok && url.pathname.startsWith('/fonts/')) {
+          if (res.ok && (url.pathname.startsWith('/fonts/') || url.pathname.startsWith('/assets/'))) {
             const copy = res.clone();
             caches.open(CACHE).then((c) => c.put(e.request, copy));
           }
