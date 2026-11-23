@@ -296,11 +296,11 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;background-im
   .main{padding:0 12px calc(env(safe-area-inset-bottom,0px) + 142px)!important}
   .metrics{margin:10px 0 18px!important;gap:8px!important}
   .metric{padding:10px 10px!important}
-  .hero-visual{height:168px!important}
-  .hero-banner{bottom:-16px!important;height:64px!important}
-  .hero-banner b{font-size:clamp(16px,5.2vw,22px)!important}
-  .hero-banner small{font-size:6px!important;margin-top:2px!important}
-  .hero-copy{padding:22px 14px 12px!important}
+  .hero-visual{height:176px!important}
+  .hero-banner{bottom:-12px!important;height:72px!important;width:min(90%,340px)!important}
+  .hero-banner b{font-size:clamp(17px,5.4vw,23px)!important}
+  .hero-banner small{font-size:7px!important;margin-top:3px!important;letter-spacing:.7px!important}
+  .hero-copy{padding:26px 14px 12px!important}
   .hero h1{font-size:32px!important;margin:6px 0 8px!important}
   .hero p{font-size:11px!important;line-height:1.45!important;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
   .hero-buttons{margin-top:10px!important;gap:7px!important}
