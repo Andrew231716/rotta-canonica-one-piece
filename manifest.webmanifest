@@ -1,7 +1,7 @@
 {
-  "name": "Rotta Canonica — One Piece Tracker",
+  "name": "Rotta Canonica — Grand Voyage",
   "short_name": "Rotta Canonica",
-  "description": "Guida anime ai soli episodi canonici di One Piece, recuperi live action, saghe e progressi",
+  "description": "Guida anime alle saghe, episodi senza filler, personaggi, note, mappe e ricompense",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

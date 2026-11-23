@@ -238,7 +238,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;background-im
 .hero-banner small{font-weight:1000;color:#ab3f2a;letter-spacing:1px;font-size:9px}
 .arc-saga-ribbon{position:absolute;left:6px;bottom:6px;z-index:3;width:min(52%,196px)!important;height:auto!important;max-height:42px;object-fit:contain!important;object-position:left bottom;filter:drop-shadow(0 3px 3px #122d4680)}
 @media(max-width:650px){.hero-banner{bottom:5px;height:69px;width:90%;border-width:2px}.hero-banner b{font-size:27px}.hero-banner small{font-size:8px}.arc-saga-ribbon{max-height:42px;width:52%!important}}
-
 /* ── Mobile chrome: fix cut-off header & bottom nav overlap ── */
 .mobile-chrome{display:contents}
 @media(max-width:920px){
@@ -293,7 +292,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;background-im
     margin:0 -12px 10px;
     padding:calc(env(safe-area-inset-top,0px) + 6px) 12px 8px;
   }
-  .main{padding:0 12px calc(env(safe-area-inset-bottom,0px) + 142px)!important}
+  .main{padding:0 12px calc(env(safe-area-inset-bottom,0px) + 148px)!important}
   .metrics{margin:10px 0 18px!important;gap:8px!important}
   .metric{padding:10px 10px!important}
   .hero-visual{height:176px!important}
@@ -305,11 +304,13 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;background-im
   .hero p{font-size:11px!important;line-height:1.45!important;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
   .hero-buttons{margin-top:10px!important;gap:7px!important}
   .hero-buttons .button{min-height:42px!important}
-  .mobile-nav{min-height:64px}
-  .mobile-art{width:28px!important;height:28px!important}
+  .mobile-nav{min-height:66px}
+  .mobile-art{width:26px!important;height:26px!important}
+  .mobile-nav button span{font-size:8px!important}
 }
 @media(max-width:390px){
   .mobile-brand-title{font-size:22px!important}
   .mobile-brand-stamp{display:none}
   .breadcrumb .tiny-art{display:none}
+  .mobile-nav button span{font-size:7.5px!important;letter-spacing:-.2px}
 }

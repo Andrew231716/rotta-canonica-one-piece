@@ -1,38 +1,86 @@
-# ROTTA CANONICA — VERSIONE 4.1 ANIME
+# Rotta Canonica · Cloud Ready v6
 
-**Progetto completo e pronto per Cursor, GitHub e Vercel.**
+Web app/PWA **fan-made** in italiano per organizzare gli episodi di One Piece. Mantiene la grafica anime piratesca e tutte le funzioni local-first della v5: percorso senza filler, guida 1–1155, saghe, recuperi Netflix, diario, note, ricompense, preferiti, mappa e backup.
 
-Questa versione sostituisce il restyling precedente e integra i nuovi asset grafici in ogni sezione realmente interattiva: home, navigazione principale, schede di saghe e archi, recuperi del live action, lista filler, diario dei progressi, pulsanti, interfacce modali e icone PWA. Non è una semplice tavola grafica o mockup.
+## Stato reale delle nuove funzionalità
 
-## File principali
+| Funzionalità | Stato del codice | Per attivarla online |
+|---|---|---|
+| Accesso Google | Interfaccia e flusso OAuth PKCE integrati | Nuovo progetto Supabase e provider Google autorizzato |
+| Accesso Apple | Interfaccia e flusso OAuth PKCE integrati | Supabase Auth e credenziali Apple Developer Service ID |
+| Sincronizzazione iPhone/Android/PC | Merge conservativo di visti, note, preferiti e impostazioni; RLS | Applicare migration SQL + URL e chiave pubblica |
+| Push quando PWA è chiusa | API Vercel, VAPID, service worker, consenso esplicito, cron settimanale | Database dedicato + segreti VAPID / Vercel / cron, PWA installata quando richiesto dal dispositivo |
+| Titoli episodi 1–1155 | Importatore di titoli da Jikan/MyAnimeList con origine documentata | GitHub Actions abilitata, controlli sui dati di fonte terza |
+| Capitoli manga e sinossi | Import editoriale validato con URL della fonte e data | Completamento da fonti affidabili e revisione manuale; **non** sono inventati |
+| Nuove puntate oltre 1155 | Importatore settimanale indipendente, stato "da verificare" | GitHub Actions pubblica `episodes-latest.json`; non assume un episodio a settimana |
 
-- `index.html`: punto di ingresso del sito.
-- `styles.css`: tema anime piratesco, responsive, animazioni e variante con movimento ridotto.
-- `app.js`: guida episodi (1–1155), saghe, ricerca, filtro filler, tracciamento, avanzamento, export/import e interazioni.
-- `assets/*.webp`: illustrazioni ottimizzate, background, icone, pergamene, emblemi e sei ribbon saga.
-- `icon-192.png`, `icon-512.png`, `icon.svg`: icone e metadati applicazione.
-- `manifest.webmanifest`: configurazione installabile PWA.
-- `service-worker.js`: cache degli asset per l'uso offline dopo la prima visita.
-- `PROMPT_CURSOR.md`: istruzioni complete da incollare in Cursor.
+**Importante:** le due istanze Supabase visualizzate nell'account collegato sono inattive e appartengono ad altri progetti. Questa distribuzione non le modifica né crea automaticamente una terza istanza. Senza un backend dedicato, i pulsanti account/cloud sono disabilitati e l'app continua a funzionare localmente.
 
-## Esecuzione
+## Configurazione di un progetto Supabase dedicato
 
-Non è richiesto npm o build: progetto statico HTML/CSS/JavaScript.
+1. Crea un **nuovo** progetto Supabase chiamato, ad esempio, `Rotta Canonica`, nell'organizzazione scelta da te. Il servizio potrebbe avere costi o limiti di progetto.
+2. Applica una sola volta `supabase/migrations/202611230001_rotta_sync_push.sql` nel SQL Editor. Le policies RLS limitano lettura/scrittura dei progressi al solo `auth.uid()`; le iscrizioni push non sono accessibili ai client.
+3. Configura **Auth → Providers → Google**, ottenendo il client OAuth da Google Cloud. Aggiungi callback Supabase a Google e il dominio dell'app agli URL autorizzati in Supabase.
+4. Per **Apple**, configura Apple Developer: Service ID, Team ID, Key ID, private key e URL di ritorno secondo le istruzioni correnti del provider Supabase. Apple potrebbe richiedere un account sviluppatore a pagamento.
+5. Imposta in Vercel le variabili d'ambiente sotto. Le chiavi segrete non vanno in GitHub né nel browser.
 
-Avvia un server statico dalla cartella principale, ad esempio `python3 -m http.server 8080`, e apri `http://localhost:8080`.
+### Environment variables su Vercel
 
-Non aprire `index.html` come file locale per testare la PWA, perché service worker e URL assoluti richiedono un server HTTP(S).
+```env
+SUPABASE_URL=https://YOUR_PROJECT_REF.supabase.co
+SUPABASE_PUBLISHABLE_KEY=sb_publishable_YOUR_PUBLIC_KEY
+SUPABASE_SECRET_KEY=YOUR_SERVER_ONLY_SERVICE_ROLE_OR_SECRET_KEY
+PUBLIC_SITE_URL=https://rotta-canonica-one-piece.vercel.app
+VAPID_PUBLIC_KEY=PUBLIC_GENERATED_KEY
+VAPID_PRIVATE_KEY=PRIVATE_GENERATED_KEY
+VAPID_SUBJECT=mailto:YOUR_CONTACT_EMAIL@example.com
+CRON_SECRET=LONG_RANDOM_STRING
+```
 
-## Navigazione e stato
+`SUPABASE_SECRET_KEY` può essere una chiave Supabase secret/server o legacy `service_role`; deve restare **solo** in Vercel. Genera le chiavi VAPID eseguendo **in locale** `node scripts/generate-vapid.mjs` e trasferiscile direttamente alle variabili d'ambiente del progetto. Il file `api/public-config.js` espone al browser **solo** URL, chiave pubblica e VAPID public key. Non pubblicare mai i valori privati, i segreti OAuth, `CRON_SECRET` né il database con i dati personali.
 
-L'app conserva il salvataggio `localStorage` con chiave `rotta-canonica-v1`, così i progressi precedenti del medesimo browser/dominio vengono mantenuti. In alternativa: **Progressi → Esporta/Importa** per backup tra dispositivi.
+Dopo il primo login Google/Apple, l'app unisce progressi e preferiti esistenti senza azzerare le chiavi locali `rotta-canonica-v1` e `rotta-canonica-extra-v1`. Le modifiche successive vengono sincronizzate; quando due dispositivi modificano lo stesso episodio, prevale la modifica con timestamp più recente. Per sicurezza, esporta un backup prima della prima connessione.
 
-Il catalogo termina all'episodio 1155; non è aggiornato automaticamente e non va pubblicizzato come elenco verificato dell'ultima puntata attuale. Le schede sono una guida di visione, non contenuti video in streaming.
+## Notifiche push
 
-## Animazioni e prestazioni
+- Attivazione/disattivazione solo su richiesta dell'utente (Impostazioni → Account); il browser richiede consenso.
+- PWA in contesto HTTPS; su iOS è generalmente necessario installarla nella schermata Home e usarla come web app.
+- Le sottoscrizioni sono legate all'utente autenticato e salvate nel database dedicato via endpoint `api/push/subscription.js` con controllo della sessione.
+- Cron Vercel (`/api/push/check`) controlla il catalogo di **episodi pubblicati**, non le anticipazioni, il lunedì alle 10 UTC. Il controllo è protetto da `CRON_SECRET` e non è aperto al pubblico.
+- Le notifiche contengono un testo generico e non mostrano spoiler o note personali. I dispositivi senza supporto Push mantengono i promemoria locali all'apertura dell'app.
+- Il servizio cron non può funzionare senza le variabili d'ambiente e il database attivi.
 
-Movimenti CSS leggeri per onde, timone, badge, forziere, hero zoom. Il media query `prefers-reduced-motion` disattiva gli effetti. Asset locali in WebP; nessun player, niente framework e nessuna dipendenza JavaScript esterna.
+## Catalogo editoriale
 
-## Nota sui diritti
+- `data/episodes.json`: 1155 record, classificazione basata sulla guida precedente (non ancora revisionata integralmente). Alcuni metadata sono `null` per evitare invenzioni.
+- `scripts/enrich-episodes.mjs`: usa Jikan API (MyAnimeList, fonte della community) per importare **titoli** e registrare fonte/data. Eseguito da `.github/workflows/enrich-episode-titles.yml` ogni lunedì. I titoli della fonte possono essere in inglese e non sono una traduzione ufficiale italiana.
+- `data/reviewed-episodes.json` e `scripts/merge-reviewed.mjs`: aggiungono **solo** capitoli manga, sinossi e durata sottoposti a verifica editoriale. Ogni riga deve avere `source.url` HTTPS e `source.checkedAt` ISO. Le descrizioni non devono essere copiate integralmente da fonti protette: usa brevi sinossi originali basate su fatti confermati.
+- `.github/workflows/update-episodes.yml` rileva gli episodi *già trasmessi* oltre 1155, senza inferire classificazioni manga dal campo `filler` dell'API. Il feed appare nella home, separato dal percorso canonico.
+- Se Jikan non risponde o la paginazione è anomala, gli script falliscono senza aggiungere dati inventati.
 
-Progetto di fan non ufficiale, non affiliato agli editori o ai produttori di One Piece. Il tema nautico/anime e le illustrazioni non costituiscono licenza d'uso di eventuali marchi o personaggi di terzi. Prima di una distribuzione commerciale, verificare i diritti relativi ai materiali utilizzati.
+Esempio per aggiungere un capitolo verificato in `data/reviewed-episodes.json` (i valori qui sotto sono segnaposto, non dati effettivi):
+
+```json
+{
+  "schemaVersion": 1,
+  "episodes": [
+    {
+      "n": 92,
+      "chapter": "INSERIRE CAPITOLO VERIFICATO",
+      "summary": "INSERIRE SINOSSI ORIGINALE BREVE E VERIFICATA",
+      "source": {
+        "url": "https://URL_DELLA_FONTE_AUTOREVOLE",
+        "checkedAt": "2026-11-23"
+      }
+    }
+  ]
+}
+```
+
+## Test e limiti
+
+Eseguire `python3 tests/test_browser.py` e `node tests/test_api.cjs`, oppure riprodurli con Playwright nel progetto. Sono stati verificati markup, progressi, merge, risoluzione mobile e autorizzazioni API in ambiente locale; **non è stato possibile testare OAuth, push reali o RLS su un progetto Supabase attivo**, perché manca un progetto dedicato configurato.
+
+Per utilizzare l'app senza backend avvia un server statico nella directory: `python3 -m http.server 8080`. Per testare le API Vercel e la cron, esegui un deployment Vercel con variabili d'ambiente e verifica gli endpoint HTTPS di produzione.
+
+Fan project indipendente, non ufficiale, senza affiliazione agli autori o ai detentori di One Piece.
