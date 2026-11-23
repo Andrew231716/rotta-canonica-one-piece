@@ -36,3 +36,7 @@ Movimenti CSS leggeri per onde, timone, badge, forziere, hero zoom. Il media que
 ## Nota sui diritti
 
 Progetto di fan non ufficiale, non affiliato agli editori o ai produttori di One Piece. Il tema nautico/anime e le illustrazioni non costituiscono licenza d'uso di eventuali marchi o personaggi di terzi. Prima di una distribuzione commerciale, verificare i diritti relativi ai materiali utilizzati.
+
+## Aggiornamento automatico delle puntate
+
+Il workflow GitHub Actions `.github/workflows/update-episodes.yml` esegue ogni lunedì alle 07:00 UTC un controllo della fonte Jikan/MyAnimeList. Il dataset `data/episodes-latest.json` viene aggiornato solo con puntate datate nel passato e con numero superiore al catalogo iniziale (1155); Vercel ridistribuisce automaticamente se il repository è collegato al progetto. La classificazione dei nuovi episodi resta **in verifica** fino a controllo umano: un episodio non viene conteggiato come canonico sulla sola base di un flag non-filler. Se la fonte non risponde, il job fallisce senza sovrascrivere dati validi. Il feed è disponibile offline dopo il primo accesso. Una seconda automazione ChatGPT settimanale verifica le informazioni e può curare le classificazioni.
