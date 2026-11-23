@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 760" role="img" aria-labelledby="title desc"><title id="title">Elio, capitano della Stella Salmastra</title><desc id="desc">Capitano originale dai capelli argento, cappello di paglia con fascia turchese e giacca blu, con cannocchiale</desc><defs><linearGradient id="hat" x2="0" y2="1"><stop stop-color="#ffeb9d"/><stop offset="1" stop-color="#c99342"/></linearGradient><linearGradient id="coat" x2="0" y2="1"><stop stop-color="#258cb2"/><stop offset="1" stop-color="#0d395b"/></linearGradient><linearGradient id="sash" x2="0" y2="1"><stop stop-color="#fe8b48"/><stop offset="1" stop-color="#b94433"/></linearGradient></defs>
+<g stroke="#10263a" stroke-width="9" stroke-linejoin="round" stroke-linecap="round">
+<!-- jacket and sea captain silhouette -->
+<path d="M91 698c13-151 36-255 126-298 72-36 151-31 221 14 58 38 87 133 88 282z" fill="url(#coat)"/>
+<path d="M209 414c30 23 120 35 168-4l43 284H183z" fill="#f2dfb0"/>
+<path d="M178 422l53 134 73-63-60 194H115zM399 421l-58 124-55-42 51 190h178z" fill="#135475"/>
+<path d="M145 561l46 135h249l30-140-59-20-37 97H208l-29-95z" fill="url(#sash)"/>
+<path d="M98 626l49-35 38 33-17 65H78z" fill="#f5b27b"/>
+<path d="M452 538q80-37 103 24 13 37-24 68l-75 20-41-75z" fill="#e5a873"/>
+<!-- unorthodox carved brass telescope -->
+<g transform="rotate(-21 489 546)"><rect x="389" y="512" width="171" height="68" rx="23" fill="#9f672e"/><rect x="412" y="518" width="101" height="56" rx="12" fill="#cf8b41"/><rect x="490" y="510" width="19" height="72" fill="#f0cb72"/><ellipse cx="551" cy="545" rx="25" ry="36" fill="#f9d478"/><ellipse cx="551" cy="545" rx="14" ry="24" fill="#46c3cd"/></g>
+<!-- neck -->
+<path d="M271 380v72q34 48 68 1v-74z" fill="#e3a56c"/>
+<!-- ear + face -->
+<ellipse cx="394" cy="300" rx="30" ry="41" fill="#edb579"/>
+<path d="M202 255c3-83 50-127 119-128 70-1 106 40 112 112 8 95-26 172-112 184-85-6-119-69-119-168z" fill="#f4ba80"/>
+<!-- silver hair with distinctive sweeping shape -->
+<path d="M194 276q-26-83 29-143 34-54 89-49 90-9 121 81l8 89-47-36-24-45-49 57-28-20-27 31-21-14-34 54z" fill="#bfd8e4"/>
+<path d="M220 169q68-71 132-46l-37 39-38-8-30 34" fill="none" stroke="#f6fbf3" stroke-width="18"/>
+<path d="M365 126l61 19-15 48-45-20" fill="#8baebb"/>
+<!-- expression not franchise-based -->
+<path d="M253 291q17-15 35-4M351 284q19-14 36 1" fill="none"/>
+<ellipse cx="277" cy="298" rx="9" ry="12" fill="#163f51" stroke="none"/><ellipse cx="366" cy="298" rx="9" ry="12" fill="#163f51" stroke="none"/>
+<path d="M330 308q-17 24-3 29" fill="none" stroke-width="6"/>
+<path d="M286 355q43 34 82-3" fill="none" stroke-width="7"/>
+<path d="M268 242l23 1M348 241l34-4" stroke="#69848a" stroke-width="7" fill="none"/>
+<!-- straw hat with aquamarine ribbon, offset silhouette -->
+<path d="M206 158q10-107 100-116 103 0 121 102z" fill="url(#hat)"/>
+<path d="M203 143q112-25 223 2l-4 35q-126-28-222 3z" fill="#16b5ad"/>
+<path d="M106 172q60-29 140-21 127-31 232 12 45 23 6 54-92 25-167 4-117 25-201-9-28-15-10-40z" fill="url(#hat)"/>
+<path d="M139 191q141 31 325 1" fill="none" stroke="#f9e6a9" stroke-width="7"/>
+<path d="M230 92q98-30 166 18M188 187q117 23 234 4" fill="none" stroke="#e2b86a" stroke-width="5"/>
+<!-- custom compass sigil on jacket -->
+<circle cx="389" cy="556" r="28" fill="#f9cc77"/><path d="m389 537 7 19-7 19-7-19z" fill="#127b91"/><circle cx="389" cy="556" r="4" fill="#fdf0cc" stroke="none"/>
+</g>
+</svg>

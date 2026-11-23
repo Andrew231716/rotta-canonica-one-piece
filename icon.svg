@@ -1,31 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
-  <defs>
-    <radialGradient id="g" cx="35%" cy="30%" r="70%">
-      <stop offset="0%" stop-color="#16384a"/>
-      <stop offset="100%" stop-color="#07131d"/>
-    </radialGradient>
-    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#f3e0b0"/>
-      <stop offset="55%" stop-color="#d4aa5a"/>
-      <stop offset="100%" stop-color="#a67b35"/>
-    </linearGradient>
-  </defs>
-  <rect width="128" height="128" rx="30" fill="url(#g)"/>
-  <circle cx="64" cy="64" r="46" fill="none" stroke="#1f4254" stroke-width="8"/>
-  <circle cx="64" cy="64" r="42" fill="none" stroke="url(#gold)" stroke-width="4"/>
-  <circle cx="64" cy="64" r="32" fill="none" stroke="#35546a" stroke-width="1.2" stroke-dasharray="2.5 4"/>
-  <g fill="url(#gold)">
-    <path d="M64 18 72 52 106 64 72 76 64 110 56 76 22 64 56 52Z"/>
-  </g>
-  <g fill="#f8e6c0">
-    <path d="M64 18 72 52 64 64Z"/>
-    <path d="M64 64 106 64 72 76Z"/>
-    <path d="M64 64 56 76 64 110Z"/>
-    <path d="M22 64 56 52 64 64Z"/>
-  </g>
-  <circle cx="64" cy="64" r="7" fill="#0b2032" stroke="url(#gold)" stroke-width="2.5"/>
-  <circle cx="64" cy="64" r="2.5" fill="#f3e0b0"/>
-  <g fill="#d4aa5a" font-family="system-ui,sans-serif" font-size="9" font-weight="800" text-anchor="middle">
-    <text x="64" y="14">N</text>
-  </g>
+<rect width="128" height="128" rx="30" fill="#0B2032"/>
+<circle cx="64" cy="64" r="42" fill="none" stroke="#D4AA5A" stroke-width="5"/>
+<circle cx="64" cy="64" r="31" fill="none" stroke="#35546A" stroke-width="1.5" stroke-dasharray="3 5"/>
+<path d="M64 17 74 55 111 64 74 74 64 111 54 74 17 64 54 55Z" fill="#D4AA5A"/>
+<path d="M64 17 74 55 64 64Z M64 64 111 64 74 74Z M64 64 54 74 64 111Z M17 64 54 55 64 64Z" fill="#F8E6C0"/>
+<circle cx="64" cy="64" r="6" fill="#102333" stroke="#D4AA5A" stroke-width="2"/>
 </svg>

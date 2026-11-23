@@ -1,25 +1,27 @@
-# Rotta Canonica — One Piece Tracker
+# Rotta Canonica – Edizione Illustrata e Animata
 
-PWA indipendente, mobile-first e senza account: percorso canonico di One Piece, episodi filler da saltare, recuperi dopo le prime due stagioni live action Netflix, avanzamento individuale per episodio, backup locale JSON e funzionamento offline.
+Questa è l'app web completa con i file pronti per Cursor, GitHub e Vercel. Funziona come sito statico e PWA senza dipendenze npm, senza autenticazione e con i progressi salvati in localStorage.
 
-## Avvio
+## Elementi grafici
+- `assets/capitano-elio.svg`: capitano originale, cappello di paglia con fascia turchese, capelli argento, giacca blu e cannocchiale. Non riproduce un personaggio del manga.
+- `assets/stella-salmastra.svg`: paesaggio e nave originali.
+- `assets/bandiera.svg`: vessillo con simbolo nautico originale.
+- `assets/pergamena.webp`, `assets/cornice-nautica.webp`, `assets/emblema-nautico.webp`: ulteriori immagini decorative del pacchetto.
+- `styles.css`: tema nautico anime con font display *Pirata One* (Google Fonts) e fallback Georgia. Non si utilizzano caratteri ufficiali di One Piece.
 
-È un sito statico, senza build e senza dipendenze JavaScript:
+## Animazioni
+- Capitano che ondeggia, bandiera che vibra, onde che scorrono, piccole stelle luminose, transizioni dei controlli.
+- Attivazione CSS con `prefers-reduced-motion` per ridurre il movimento.
+- Offline: l'app funziona dopo primo caricamento; i font Google richiedono rete e passano al fallback se offline.
 
-```bash
-python3 -m http.server 8000
-```
+## Avvio e pubblicazione
+Avvio locale: `python3 -m http.server 8000` nella cartella progetto; apri `http://localhost:8000`.
+GitHub: crea un nuovo repository e carica il contenuto della cartella senza annidarlo.
+Vercel: importa repository; Framework Preset: **Other**; nessuna build; Output Directory: `.`. Deploy.
+Su iOS: Safari > Condividi > Aggiungi alla schermata Home.
 
-Apri http://localhost:8000. Per installarla su iPhone, pubblica su HTTPS e in Safari usa **Condividi → Aggiungi alla schermata Home**.
+## Dataset
+Il dataset iniziale si ferma all'episodio 1155, non verificato come ultimo attuale. Ricontrolla classificazione e numeri prima di aggiornare. Sezioni disponibili: percorso, recuperi del live action, filler, progressi/backup JSON. Non sincronizza su dispositivi diversi.
 
-## Pubblicazione
-
-Progetto statico su Vercel (Framework: Other; nessun comando di build). Configurazione in `vercel.json`.
-
-## Dati e limiti
-
-Il dataset iniziale arriva all'episodio 1155. **Non è l'ultimo episodio corrente verificato**, e non esiste una sincronizzazione automatica con le nuove pubblicazioni. L'elenco degli episodi da saltare segue una classificazione di riferimento ricostruita, non è una verifica live scena per scena. Gli episodi misti canonico/filler sono mantenuti. Aggiorna `arcData`, `fillerData` e `MAX` in `app.js` dopo verifica di nuove uscite.
-
-Salvataggio tramite `localStorage`. Nessun server, accesso, API, analytics o tracciamento; non sincronizza i dati tra dispositivi. Esporta/importa JSON da Statistiche.
-
-Progetto non ufficiale e non affiliato a One Piece, Eiichiro Oda, Toei, Shueisha o Netflix. Nessuna immagine o risorsa di terzi inclusa.
+## Avviso marchi e opere
+Progetto fan indipendente, non ufficiale, non affiliato ai titolari di One Piece. Titoli/nomi della serie sono usati a scopo descrittivo. Le illustrazioni `capitano-elio.svg`, `stella-salmastra.svg`, `bandiera.svg` e il tema della UI sono creazioni originali, non copie di personaggi o loghi di terzi. Evita di aggiungere screenshot, logo ufficiale o disegni molto simili a personaggi e simboli protetti senza una licenza.
