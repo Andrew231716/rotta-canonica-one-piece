@@ -220,3 +220,8 @@ img{image-rendering:auto;max-width:100%}
  .hero .button{min-height:41px!important;padding:9px 12px!important}
 }
 
+
+@media(max-width:650px){
+ /* The header already supplies this slogan; do not obscure the crew artwork. */
+ .hero .hero-top-stamp{display:none!important}
+}
