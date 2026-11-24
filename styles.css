@@ -318,7 +318,9 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;background-im
     margin:0 -12px 10px;
     padding:calc(env(safe-area-inset-top,0px) + 6px) 12px 8px;
   }
-  .main{padding:0 12px calc(env(safe-area-inset-bottom,0px) + 168px)!important}
+  .main{padding:0 12px calc(env(safe-area-inset-bottom,0px) + 188px)!important}
+  html[data-active-section="characters"] .main{padding-bottom:calc(env(safe-area-inset-bottom,0px) + 230px)!important}
+  html[data-active-section="more"] .main{padding-bottom:calc(env(safe-area-inset-bottom,0px) + 200px)!important}
   .metrics{margin:10px 0 18px!important;gap:8px!important}
   .metric{padding:10px 10px!important}
   .hero-visual{height:176px!important}
