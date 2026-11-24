@@ -30,9 +30,11 @@ with sync_playwright() as pw:
  page.locator('.mobile-nav button',has_text='Altro').click()
  page.locator('.more-menu .tool-tile',has_text='Impostazioni').click();page.wait_for_timeout(200)
  assert page.locator('.cloud-panel').count()==1
- assert page.locator('[data-cloud-action="google"]').is_disabled()
- assert 'configur' in page.locator('.cloud-panel').inner_text().lower() or 'non disponibile' in page.locator('.cloud-panel').inner_text().lower()
- print('local state intact and cloud gracefully disabled')
+ assert page.locator('#cloud-email').count()==1
+ assert page.locator('[data-cloud-action="email-link"]').is_disabled()
+ text=page.locator('.cloud-panel').inner_text().lower()
+ assert 'configur' in text or 'non disponibile' in text or 'email' in text
+ print('local state intact and cloud email login present (disabled without backend)')
  for w in [360,390,430,768,1024,1440]:
   page.set_viewport_size({'width':w,'height':850});page.evaluate("setTab('path')");n=page.evaluate('document.documentElement.scrollWidth')
   print('width',w,'scroll',n)
