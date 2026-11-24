@@ -3,13 +3,15 @@ from pathlib import Path
 from playwright.sync_api import sync_playwright
 import json
 p=Path(__file__).resolve().parent.parent
-css='\n'.join((p/n).read_text() for n in ['styles.css','features.css','cloud.css','characters-v8.css'])
+css='\n'.join((p/n).read_text() for n in ['styles.css','features.css','cloud.css','characters-v8.css','enhancements-v9.css','characters-v10.css','enhancements-audit.css'])
 css=css.replace("@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Nunito+Sans:wght@400;600;700;800;900&display=swap');",'')
 js='\n'.join((p/n).read_text() for n in ['features.js','cloud.js','app.js'])
 shim="window.__store={};Object.defineProperty(window,'localStorage',{configurable:true,value:{getItem:k=>window.__store[k]||null,setItem:(k,v)=>window.__store[k]=String(v),removeItem:k=>delete window.__store[k]}});window.fetch=async()=>({ok:false,json:async()=>({})});"
 html='<!doctype html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><style>'+css+'</style></head><body><div id="app"></div><div id="toast"></div><script>'+shim+js+'</script></body></html>'
 with sync_playwright() as pwt:
- b=pwt.chromium.launch(headless=True,executable_path='/usr/bin/chromium',args=['--no-sandbox','--disable-dev-shm-usage'])
+ import os
+ path=next((p for p in ('/usr/bin/chromium','/usr/bin/chromium-browser','/usr/local/bin/google-chrome','/usr/bin/google-chrome') if os.path.exists(p)),None)
+ b=pwt.chromium.launch(headless=True,**({'executable_path':path} if path else {}),args=['--no-sandbox','--disable-dev-shm-usage'])
  page=b.new_page(viewport={'width':390,'height':844},service_workers='block',accept_downloads=True)
  errors=[];page.on('pageerror',lambda err:errors.append(str(err)))
  page.route('https://**',lambda route:route.abort())

@@ -8,17 +8,17 @@ const cloudState=()=>({...CLOUD_STATUS});
 function cloudPanel(){
  const s=cloudState();const online=s.state==='ready';const signed=!!s.user;
  const status=s.accountConflict?'Protezione account: dati locali associati a un altro account. La sincronizzazione è sospesa.':signed?'Connesso come '+(s.user.email||'utente') : online?'Disponibile · non connesso':s.state==='loading'?'Verifica in corso…':s.message;
- const login=!signed?`<form class="cloud-email-form" data-cloud-form="account">
+ const login=signed?`<div class="row-buttons"><button class="button small primary" data-cloud-action="sync" ${s.accountConflict?'disabled':''}>Sincronizza adesso</button><button class="button small secondary" data-cloud-action="logout">Esci</button></div>`:online?`<form class="cloud-email-form" data-cloud-form="account">
    <label class="cloud-email-label" for="cloud-email">Email</label>
-   <input id="cloud-email" name="email" type="email" inputmode="email" autocomplete="username" required placeholder="tu@email.com" ${!online?'disabled':''}>
+   <input id="cloud-email" name="email" type="email" inputmode="email" autocomplete="username" required placeholder="tu@email.com">
    <label class="cloud-email-label" for="cloud-password">Password</label>
-   <input id="cloud-password" name="password" type="password" autocomplete="current-password" required minlength="8" placeholder="Almeno 8 caratteri" ${!online?'disabled':''}>
+   <input id="cloud-password" name="password" type="password" autocomplete="current-password" required minlength="8" placeholder="Almeno 8 caratteri">
    <div class="cloud-email-row">
-     <button class="button small primary" type="submit" data-cloud-action="login" ${!online?'disabled':''}>Accedi</button>
-     <button class="button small secondary" type="button" data-cloud-action="register" ${!online?'disabled':''}>Crea account</button>
+     <button class="button small primary" type="submit" data-cloud-action="login">Accedi</button>
+     <button class="button small secondary" type="button" data-cloud-action="register">Crea account</button>
    </div>
-   <small class="cloud-email-hint">Gratis e senza link email: usa la stessa email e password su iPhone, Android e PC. Alla prima sincronizzazione i progressi si uniscono.</small>
- </form>`:`<div class="row-buttons"><button class="button small primary" data-cloud-action="sync" ${s.accountConflict?'disabled':''}>Sincronizza adesso</button><button class="button small secondary" data-cloud-action="logout">Esci</button></div>`;
+   <small class="cloud-email-hint">Gratis: stessa email e password su iPhone, Android e PC. Alla prima sincronizzazione i progressi si uniscono.</small>
+ </form>`:`<p class="cloud-offline-note">La sincronizzazione cloud non è disponibile in questa sessione. I progressi restano salvati sul dispositivo: usa Esporta/Importa dalle Impostazioni.</p>`;
  return `<section class="paper-panel cloud-panel"><h3>${art('compass')} Account e sincronizzazione</h3><p class="cloud-status" role="status">${cleanText(status)}</p><p>Conserva i progressi sul dispositivo e sincronizza gratis la rotta tra iPhone, Android e PC. La prima sincronizzazione unisce i dati anziché cancellarli.</p>${login}
  ${s.accountConflict?'<div class="account-switch-warning"><strong>Account differente su questo dispositivo</strong><p>Esporta un backup prima di procedere. Per utilizzare il nuovo account è necessario cancellare esplicitamente i vecchi dati locali; non saranno trasferiti nel nuovo account.</p><button class="button small secondary" data-action="export">Esporta backup</button> <button class="button small danger" data-cloud-action="account-switch">Passa al nuovo account</button></div>':''}<div class="setting-item"><div><b>Notifiche nuove puntate</b><small>Notifiche push solo dopo consenso, login e installazione della PWA sui dispositivi che lo richiedono.</small></div><div class="row-buttons"><button class="button small secondary" data-cloud-action="push-on" ${!signed||s.accountConflict||!s.config?.vapidPublicKey?'disabled':''}>Attiva</button><button class="button small secondary" data-cloud-action="push-off" ${!signed||s.accountConflict?'disabled':''}>Disattiva</button></div></div><p class="smallprint">${s.state==='unconfigured'?'Il backend non è ancora configurato: i tuoi dati locali e i backup continuano a funzionare.':'La sincronizzazione usa il tuo account; i dati restano privati e puoi sempre esportarli.'}</p></section>`;
 }

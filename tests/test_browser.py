@@ -2,8 +2,8 @@ from playwright.sync_api import sync_playwright
 from pathlib import Path
 import mimetypes
 src=Path(__file__).resolve().parent.parent;base='https://rotta-canonica.local'
-css=(src/'styles.css').read_text()+(src/'features.css').read_text()+(src/'cloud.css').read_text()
-js=(src/'features.js').read_text()+(src/'cloud.js').read_text()+(src/'app.js').read_text()
+css=''.join((src/n).read_text() for n in ['styles.css','features.css','cloud.css','characters-v8.css','enhancements-v9.css','characters-v10.css','enhancements-audit.css'])
+js=''.join((src/n).read_text() for n in ['features.js','cloud.js','app.js'])
 shim="""window.__store={}; Object.defineProperty(window,'localStorage',{configurable:true,value:{getItem:(k)=>window.__store[k]||null,setItem:(k,v)=>{window.__store[k]=String(v)},removeItem:(k)=>{delete window.__store[k]}}});window.fetch=async(url)=>({ok:String(url).includes('/data/episodes.json'),json:async()=>({episodes:[]})});"""
 html='<!doctype html><html lang="it"><head><meta name="viewport" content="width=device-width,initial-scale=1"><style>'+css+'</style></head><body><div id="app"></div><div id="toast"></div><script>'+shim+js+'</script></body></html>'
 with sync_playwright() as pw:
@@ -30,13 +30,11 @@ with sync_playwright() as pw:
  page.locator('.mobile-nav button',has_text='Altro').click()
  page.locator('.more-menu .tool-tile',has_text='Impostazioni').click();page.wait_for_timeout(200)
  assert page.locator('.cloud-panel').count()==1
- assert page.locator('#cloud-email').count()==1
- assert page.locator('#cloud-password').count()==1
- assert page.locator('[data-cloud-action="login"]').is_disabled()
- assert page.locator('[data-cloud-action="register"]').is_disabled()
+ assert page.locator('#cloud-email').count()==0
+ assert page.locator('.cloud-offline-note').count()==1
  text=page.locator('.cloud-panel').inner_text().lower()
- assert 'configur' in text or 'non disponibile' in text or 'password' in text or 'email' in text
- print('local state intact and cloud password login present (disabled without backend)')
+ assert 'non è disponibile' in text or 'esporta' in text
+ print('local state intact and cloud form hidden when unconfigured')
  for w in [360,390,430,768,1024,1440]:
   page.set_viewport_size({'width':w,'height':850});page.evaluate("setTab('path')");n=page.evaluate('document.documentElement.scrollWidth')
   print('width',w,'scroll',n)
