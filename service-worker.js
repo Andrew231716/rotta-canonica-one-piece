@@ -1,4 +1,4 @@
-const CACHE='rotta-canonica-v12r2';
+const CACHE='rotta-canonica-v12r3';
 const ASSETS=["/","/index.html","/styles.css","/app.js","/features.js","/features.css","/characters-v8.css","/characters-v10.css","/enhancements-v9.css","/enhancements-audit.css","/polish-v11.css","/polish-v11.js","/cloud.js","/cloud.css","/data/episodes.json","/icon.svg","/icon-192.png","/icon-512.png","/manifest.webmanifest","/refinement-v12.css","/assets/world-sunset.webp","/assets/ui-flag.webp"];
 const NETWORK_FIRST=/\.(?:html?|css|js|webmanifest)$|\/$|\/index\.html$/i;
 self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)).then(()=>self.skipWaiting()))});
