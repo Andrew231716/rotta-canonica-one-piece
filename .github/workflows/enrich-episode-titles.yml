@@ -23,6 +23,8 @@ jobs:
         run: node scripts/enrich-episodes.mjs
       - name: Merge reviewed chapter/summary sources
         run: node scripts/merge-reviewed.mjs
+      - name: Validate catalog and provenance
+        run: node scripts/validate-data.mjs
       - name: Commit only if valid metadata changed
         run: |
           if ! git diff --quiet -- data/episodes.json; then

@@ -21,6 +21,8 @@ jobs:
           node-version: '22'
       - name: Fetch aired episodes
         run: node scripts/update-episodes.mjs
+      - name: Validate catalog and provenance
+        run: node scripts/validate-data.mjs
       - name: Commit source-derived release catalog
         run: |
           if ! git diff --quiet -- data/episodes-latest.json; then
