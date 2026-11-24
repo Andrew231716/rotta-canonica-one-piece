@@ -31,10 +31,12 @@ with sync_playwright() as pw:
  page.locator('.more-menu .tool-tile',has_text='Impostazioni').click();page.wait_for_timeout(200)
  assert page.locator('.cloud-panel').count()==1
  assert page.locator('#cloud-email').count()==1
- assert page.locator('[data-cloud-action="email-link"]').is_disabled()
+ assert page.locator('#cloud-password').count()==1
+ assert page.locator('[data-cloud-action="login"]').is_disabled()
+ assert page.locator('[data-cloud-action="register"]').is_disabled()
  text=page.locator('.cloud-panel').inner_text().lower()
- assert 'configur' in text or 'non disponibile' in text or 'email' in text
- print('local state intact and cloud email login present (disabled without backend)')
+ assert 'configur' in text or 'non disponibile' in text or 'password' in text or 'email' in text
+ print('local state intact and cloud password login present (disabled without backend)')
  for w in [360,390,430,768,1024,1440]:
   page.set_viewport_size({'width':w,'height':850});page.evaluate("setTab('path')");n=page.evaluate('document.documentElement.scrollWidth')
   print('width',w,'scroll',n)

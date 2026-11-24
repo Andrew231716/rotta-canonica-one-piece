@@ -7,9 +7,19 @@ const cloudState=()=>({...CLOUD_STATUS});
 function cloudPanel(){
  const s=cloudState();const online=s.state==='ready';const signed=!!s.user;
  const status=signed?'Connesso come '+(s.user.email||'utente') : online?'Disponibile · non connesso':s.state==='loading'?'Verifica in corso…':s.message;
- const login=!signed?`<form class="cloud-email-form" data-cloud-form="email"><label class="cloud-email-label" for="cloud-email">Email</label><div class="cloud-email-row"><input id="cloud-email" name="email" type="email" inputmode="email" autocomplete="email" required placeholder="tu@email.com" ${!online?'disabled':''}><button class="button small primary" type="submit" data-cloud-action="email-link" ${!online?'disabled':''}>Invia link di accesso</button></div><small class="cloud-email-hint">Gratis: ricevi un link via email, apri dal telefono o dal PC e i progressi si uniscono. Nessun abbonamento Apple/Google.</small></form>`:`<div class="row-buttons"><button class="button small primary" data-cloud-action="sync">Sincronizza adesso</button><button class="button small secondary" data-cloud-action="logout">Esci</button></div>`;
- return `<section class="paper-panel cloud-panel"><h3>${art('compass')} Account e sincronizzazione</h3><p class="cloud-status" role="status">${cleanText(status)}</p><p>Conserva i progressi sul dispositivo e sincronizza gratis la rotta tra iPhone, Android e PC con un link via email. La prima sincronizzazione unisce i dati anziché cancellarli.</p>${login}
- <div class="setting-item"><div><b>Notifiche nuove puntate</b><small>Notifiche push solo dopo consenso, login e installazione della PWA sui dispositivi che lo richiedono.</small></div><div class="row-buttons"><button class="button small secondary" data-cloud-action="push-on" ${!signed||!s.config?.vapidPublicKey?'disabled':''}>Attiva</button><button class="button small secondary" data-cloud-action="push-off" ${!signed?'disabled':''}>Disattiva</button></div></div><p class="smallprint">${s.state==='unconfigured'?'Il backend non è ancora configurato: i tuoi dati locali e i backup continuano a funzionare.':'La sincronizzazione usa il tuo account email; i dati restano privati e puoi sempre esportarli.'}</p></section>`;
+ const login=!signed?`<form class="cloud-email-form" data-cloud-form="account">
+   <label class="cloud-email-label" for="cloud-email">Email</label>
+   <input id="cloud-email" name="email" type="email" inputmode="email" autocomplete="username" required placeholder="tu@email.com" ${!online?'disabled':''}>
+   <label class="cloud-email-label" for="cloud-password">Password</label>
+   <input id="cloud-password" name="password" type="password" autocomplete="current-password" required minlength="8" placeholder="Almeno 8 caratteri" ${!online?'disabled':''}>
+   <div class="cloud-email-row">
+     <button class="button small primary" type="submit" data-cloud-action="login" ${!online?'disabled':''}>Accedi</button>
+     <button class="button small secondary" type="button" data-cloud-action="register" ${!online?'disabled':''}>Crea account</button>
+   </div>
+   <small class="cloud-email-hint">Gratis e senza link email: usa la stessa email e password su iPhone, Android e PC. Alla prima sincronizzazione i progressi si uniscono.</small>
+ </form>`:`<div class="row-buttons"><button class="button small primary" data-cloud-action="sync">Sincronizza adesso</button><button class="button small secondary" data-cloud-action="logout">Esci</button></div>`;
+ return `<section class="paper-panel cloud-panel"><h3>${art('compass')} Account e sincronizzazione</h3><p class="cloud-status" role="status">${cleanText(status)}</p><p>Conserva i progressi sul dispositivo e sincronizza gratis la rotta tra iPhone, Android e PC. La prima sincronizzazione unisce i dati anziché cancellarli.</p>${login}
+ <div class="setting-item"><div><b>Notifiche nuove puntate</b><small>Notifiche push solo dopo consenso, login e installazione della PWA sui dispositivi che lo richiedono.</small></div><div class="row-buttons"><button class="button small secondary" data-cloud-action="push-on" ${!signed||!s.config?.vapidPublicKey?'disabled':''}>Attiva</button><button class="button small secondary" data-cloud-action="push-off" ${!signed?'disabled':''}>Disattiva</button></div></div><p class="smallprint">${s.state==='unconfigured'?'Il backend non è ancora configurato: i tuoi dati locali e i backup continuano a funzionare.':'La sincronizzazione usa il tuo account; i dati restano privati e puoi sempre esportarli.'}</p></section>`;
 }
 function cloudChanged(){if(typeof tab!=='undefined'&&tab==='settings'&&typeof render==='function')render()}
 function epoch(x){const n=Number(x);return Number.isFinite(n)&&n>0?n:0}
@@ -86,19 +96,39 @@ async function initializeCloud(){try{
  if(CLOUD_STATUS.user)await cloudSync();
  }catch(e){CLOUD_STATUS.state='unconfigured';CLOUD_STATUS.message='Backend non disponibile: usa il backup locale';console.warn('Rotta cloud:',e)}finally{cloudChanged()}}
 function urlBase64ToUint8Array(base64){const padding='='.repeat((4-base64.length%4)%4);const str=atob((base64+padding).replace(/-/g,'+').replace(/_/g,'/'));return Uint8Array.from(str,c=>c.charCodeAt(0))}
-async function cloudEmailLink(email){
- const address=String(email||'').trim().toLowerCase();
- if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(address))throw Error('Inserisci un’email valida');
- const redirectTo=location.origin+(location.pathname||'/');
- const {error}=await cloudClient.auth.signInWithOtp({email:address,options:{emailRedirectTo:redirectTo,shouldCreateUser:true}});
+function cloudCredentials(fromEl){
+ const root=(fromEl&&fromEl.closest('form'))||document;
+ const email=String((root.querySelector('#cloud-email')||{}).value||'').trim().toLowerCase();
+ const password=String((root.querySelector('#cloud-password')||{}).value||'');
+ if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))throw Error('Inserisci un’email valida');
+ if(password.length<8)throw Error('La password deve avere almeno 8 caratteri');
+ return {email,password};
+}
+async function cloudRegister(email,password){
+ const res=await fetch('/api/auth/register',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password}),cache:'no-store'});
+ const data=await res.json().catch(()=>({}));
+ if(!res.ok)throw Error(data.error||'Registrazione non riuscita');
+}
+async function cloudPasswordLogin(email,password){
+ const {data,error}=await cloudClient.auth.signInWithPassword({email,password});
  if(error)throw error;
- toast('Controlla la casella email: apri il link per accedere');
+ CLOUD_STATUS.user=data.user||null;
+ cloudChanged();
+ await cloudSync();
+ toast('Accesso effettuato: sincronizzazione avviata');
 }
 async function cloudAction(action,fromEl){try{
  if(!cloudClient||CLOUD_STATUS.state!=='ready'){toast('Sincronizzazione cloud da configurare');return}
- if(action==='email-link'){
-  const input=(fromEl&&fromEl.closest('form')||document).querySelector('#cloud-email');
-  await cloudEmailLink(input&&input.value);return;
+ if(action==='register'){
+  const {email,password}=cloudCredentials(fromEl);
+  await cloudRegister(email,password);
+  await cloudPasswordLogin(email,password);
+  return;
+ }
+ if(action==='login'){
+  const {email,password}=cloudCredentials(fromEl);
+  await cloudPasswordLogin(email,password);
+  return;
  }
  if(action==='logout'){await cloudClient.auth.signOut();CLOUD_STATUS.user=null;cloudInitial=false;cloudChanged();toast('Account scollegato; dati locali conservati');return}
  if(action==='sync'){await cloudSync();toast(CLOUD_STATUS.message||'Sincronizzazione completata');return}
@@ -115,9 +145,14 @@ async function cloudAction(action,fromEl){try{
   if(sub){const {data}=await cloudClient.auth.getSession();await fetch('/api/push/subscription',{method:'DELETE',headers:{'Content-Type':'application/json','Authorization':'Bearer '+data.session.access_token},body:JSON.stringify({endpoint:sub.endpoint})});await sub.unsubscribe()}
   toast('Notifiche push disattivate');return;
  }
- }catch(err){toast('Operazione non riuscita: '+String(err.message||err).slice(0,90));console.warn('Cloud action',err)}}
+ }catch(err){
+  const msg=String(err.message||err);
+  const friendly=/rate limit|over_email/i.test(msg)?'Limite email gratuito raggiunto: usa “Crea account” / “Accedi” con password (senza link email).':msg;
+  toast('Operazione non riuscita: '+friendly.slice(0,110));console.warn('Cloud action',err)
+ }
+}
 document.addEventListener('click',e=>{const b=e.target.closest('[data-cloud-action]');if(!b||b.type==='submit')return;e.preventDefault();cloudAction(b.dataset.cloudAction,b)});
-document.addEventListener('submit',e=>{const form=e.target.closest('[data-cloud-form="email"]');if(!form)return;e.preventDefault();cloudAction('email-link',form)});
+document.addEventListener('submit',e=>{const form=e.target.closest('[data-cloud-form="account"]');if(!form)return;e.preventDefault();cloudAction('login',form)});
 window.addEventListener('online',()=>{if(CLOUD_STATUS.user)cloudSync()});
 window.addEventListener('focus',()=>{if(CLOUD_STATUS.user)cloudSync()});
 window.RottaCloud={queueSync:queueCloudSync,status:cloudState,sync:cloudSync};
