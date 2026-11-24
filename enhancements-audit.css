@@ -138,3 +138,14 @@ html:not([data-theme="ocean"]) .recover-range{
 @media(prefers-reduced-motion:reduce){
   .arc-card.is-current,.map-stop.you-are-here,.home-jump{animation:none}
 }
+
+/* Prevent more-menu parchment panel from clipping left edge of tool icons */
+.more-menu{
+  overflow:visible!important;
+  padding-left:16px!important;
+  padding-right:16px!important;
+}
+.more-menu .tool-tile{
+  overflow:visible!important;
+  padding-left:6px!important;
+}
