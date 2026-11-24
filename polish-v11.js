@@ -29,3 +29,15 @@
   schedule();
   window.addEventListener('pageshow',schedule,{passive:true});
 })();
+
+/* Force one reload when a new service worker claims the page (cache bust). */
+try{
+  if('serviceWorker' in navigator){
+    navigator.serviceWorker.addEventListener('message',ev=>{
+      if(ev.data&&ev.data.type==='ROTTA_SW_UPDATED'){
+        const key='rotta-sw-reload-'+ev.data.cache;
+        if(!sessionStorage.getItem(key)){sessionStorage.setItem(key,'1');location.reload()}
+      }
+    });
+  }
+}catch(_){ }

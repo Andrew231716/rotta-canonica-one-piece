@@ -1,11 +1,20 @@
-const CACHE='rotta-canonica-v11-visual-polish2';
-const ASSETS=["/polish-v11.css", "/polish-v11.js","/", "/index.html", "/styles.css", "/app.js", "/features.js", "/features.css", "/characters-v8.css", "/characters-v10.css", "/enhancements-v9.css", "/enhancements-audit.css", "/cloud.js", "/cloud.css", "/data/episodes.json", "/icon.svg", "/icon-192.png", "/icon-512.png", "/manifest.webmanifest", "/assets/brand-emblem.webp", "/assets/island-mobile.webp", "/assets/route-2.webp", "/assets/ui-map.webp", "/assets/ui-complete.webp", "/assets/sea-hero.webp", "/assets/section-recover.webp", "/assets/ui-filler.webp", "/assets/saga-east.webp","/assets/saga-alabasta.webp","/assets/saga-sky.webp","/assets/saga-enies.webp","/assets/saga-wano.webp","/assets/saga-egghead.webp","/assets/world-sunset.webp", "/assets/route-4.webp", "/assets/route-3.webp", "/assets/ui-anchor.webp", "/assets/route-6.webp", "/assets/scroll-texture.webp", "/assets/section-progress.webp", "/assets/ui-progress.webp", "/assets/ui-flag.webp", "/assets/ui-chest.webp", "/assets/section-filler.webp", "/assets/ui-route.webp", "/assets/ui-spyglass.webp", "/assets/ui-wheel.webp", "/assets/route-1.webp", "/assets/crew-hero.webp", "/assets/ui-loot.webp", "/assets/world-sky.webp", "/assets/ornate-banner.webp", "/assets/ui-episode.webp", "/assets/route-5.webp", "/assets/ui-locator.webp", "/assets/ui-compass.webp", "/assets/character-scenes/luffy.webp", "/assets/characters/luffy.webp", "/assets/character-scenes/zoro.webp", "/assets/characters/zoro.webp", "/assets/character-scenes/nami.webp", "/assets/characters/nami.webp", "/assets/character-scenes/usopp.webp", "/assets/characters/usopp.webp", "/assets/character-scenes/sanji.webp", "/assets/characters/sanji.webp", "/assets/character-scenes/chopper.webp", "/assets/characters/chopper.webp", "/assets/character-scenes/robin.webp", "/assets/characters/robin.webp", "/assets/character-scenes/franky.webp", "/assets/characters/franky.webp", "/assets/character-scenes/brook.webp", "/assets/characters/brook.webp", "/assets/character-scenes/jinbe.webp", "/assets/characters/jinbe.webp", "/assets/character-scenes/ace.webp", "/assets/characters/ace.webp", "/assets/character-scenes/law.webp", "/assets/characters/law.webp"];
-self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)));self.skipWaiting()});
-self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))));self.clients.claim()});
-self.addEventListener('fetch',event=>{const request=event.request;if(request.method!=='GET')return;const path=new URL(request.url);if(path.origin!==self.location.origin||path.pathname.startsWith('/api/')||path.pathname==='/data/episodes-latest.json')return;
- const fetchAndStore=()=>fetch(request).then(response=>{if(response.ok){const copy=response.clone();event.waitUntil(caches.open(CACHE).then(cache=>cache.put(request,copy)).catch(()=>{}))}return response});
- if(request.mode==='navigate'){event.respondWith(fetchAndStore().catch(()=>caches.match('/index.html')));return}
- event.respondWith(caches.match(request).then(cached=>cached||fetchAndStore().catch(()=>cached)))});
+const CACHE='rotta-canonica-v11p3-force';
+const ASSETS=["/","/index.html","/styles.css","/app.js","/features.js","/features.css","/characters-v8.css","/characters-v10.css","/enhancements-v9.css","/enhancements-audit.css","/polish-v11.css","/polish-v11.js","/cloud.js","/cloud.css","/data/episodes.json","/icon.svg","/icon-192.png","/icon-512.png","/manifest.webmanifest"];
+const NETWORK_FIRST=/\.(?:html?|css|js|webmanifest)$|\/$|\/index\.html$/i;
+self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)).then(()=>self.skipWaiting()))});
+self.addEventListener('activate',e=>{
+ e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()).then(()=>self.clients.matchAll({type:'window'})).then(list=>list.forEach(c=>c.postMessage({type:'ROTTA_SW_UPDATED',cache:CACHE}))))
+});
+self.addEventListener('fetch',event=>{
+ const request=event.request;if(request.method!=='GET')return;
+ const url=new URL(request.url);if(url.origin!==self.location.origin||url.pathname.startsWith('/api/')||url.pathname==='/data/episodes-latest.json')return;
+ const fetchAndStore=()=>fetch(request,{cache:'no-cache'}).then(response=>{if(response.ok){const copy=response.clone();event.waitUntil(caches.open(CACHE).then(cache=>cache.put(request,copy)).catch(()=>{}))}return response});
+ if(request.mode==='navigate'||NETWORK_FIRST.test(url.pathname)){
+  event.respondWith(fetchAndStore().catch(()=>caches.match(request).then(c=>c||caches.match('/index.html'))));
+  return;
+ }
+ event.respondWith(caches.match(request).then(cached=>cached?cached:fetchAndStore().catch(()=>cached)));
+});
 self.addEventListener('push',event=>{let data={title:'Rotta Canonica',body:'Nuova puntata disponibile',url:'/'};try{data={...data,...event.data.json()}}catch{}
  event.waitUntil(self.registration.showNotification(data.title,{body:data.body,icon:'/icon-192.png',badge:'/icon-192.png',data:{url:data.url||'/'}}))});
 self.addEventListener('notificationclick',event=>{event.notification.close();const target=event.notification.data?.url||'/';event.waitUntil(clients.matchAll({type:'window',includeUncontrolled:true}).then(list=>{for(const client of list){if('focus'in client){client.navigate(target);return client.focus()}}if(clients.openWindow)return clients.openWindow(target)}))});
