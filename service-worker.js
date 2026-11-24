@@ -1,5 +1,5 @@
-const CACHE='rotta-canonica-v13a1';
-const ASSETS=["/","/index.html","/styles.css","/app.js","/features.js","/features.css","/characters-v8.css","/characters-v10.css","/enhancements-v9.css","/enhancements-audit.css","/polish-v11.css","/polish-v11.js","/cloud.js","/cloud.css","/data/episodes.json","/icon.svg","/icon-192.png","/icon-512.png","/manifest.webmanifest","/refinement-v12.css","/characters-v13.css","/assets/world-sunset.webp","/assets/ui-flag.webp"];
+const CACHE='rotta-canonica-v15-style';
+const ASSETS=["/art-direction-v15.css","/","/index.html","/styles.css","/app.js","/features.js","/features.css","/characters-v8.css","/characters-v10.css","/enhancements-v9.css","/enhancements-audit.css","/polish-v11.css","/polish-v11.js","/cloud.js","/cloud.css","/data/episodes.json","/icon.svg","/icon-192.png","/icon-512.png","/manifest.webmanifest","/refinement-v12.css","/characters-v13.css","/assets/world-sunset.webp","/assets/ui-flag.webp"];
 const NETWORK_FIRST=/\.(?:html?|css|js|webmanifest)$|\/$|\/index\.html$/i;
 self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',e=>{
