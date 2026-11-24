@@ -1,0 +1,33 @@
+name: Rotta Canonica — Quality Gate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Controllo sintassi JavaScript
+        shell: bash
+        run: |
+          set -euo pipefail
+          for source in app.js features.js cloud.js polish-v11.js service-worker.js scripts/*.mjs api/*.js api/*/*.js lib/*.js; do
+            if [ -f "$source" ]; then node --check "$source"; fi
+          done
+      - name: Integrità catalogo
+        run: node scripts/validate-data.mjs
+      - name: Integrità asset grafici e PWA
+        run: node scripts/check-ui-assets.mjs
