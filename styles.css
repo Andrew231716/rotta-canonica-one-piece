@@ -266,7 +266,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;background-im
   }
   .breadcrumb{font-size:9px;letter-spacing:.6px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .tiny-tag{flex-shrink:0;padding:5px 8px;font-size:9px}
-  .main{padding:0 20px calc(env(safe-area-inset-bottom,0px) + 118px)!important}
+  .main{padding:0 20px calc(env(safe-area-inset-bottom,0px) + 132px)!important}
   .mobile-nav{
     display:flex!important;
     position:fixed;
@@ -274,25 +274,29 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;background-im
     z-index:100;
     min-height:64px;
     align-items:stretch;
-    padding:4px 4px calc(env(safe-area-inset-bottom,0px) + 4px)!important;
+    padding:6px 4px calc(env(safe-area-inset-bottom,0px) + 8px)!important;
   }
   .mobile-nav button{
     flex:1 1 0;
     min-width:0!important;
     max-width:none!important;
-    padding:4px 2px 6px!important;
-    gap:1px;
+    padding:6px 2px 8px!important;
+    gap:2px;
   }
-  .mobile-art{width:32px!important;height:32px!important}
-  .mobile-nav button span{font-size:9px;line-height:1.1}
-  #toast{bottom:calc(env(safe-area-inset-bottom,0px) + 78px)!important}
+  .mobile-art{width:30px!important;height:30px!important}
+  .mobile-nav button span{font-size:9px;line-height:1.15}
+  #toast{bottom:calc(env(safe-area-inset-bottom,0px) + 86px)!important}
+  .tool-tile-icon{overflow:visible;width:48px;height:48px}
+  .tool-tile-icon img{width:92%;height:92%;object-fit:contain;object-position:center}
+  .more-menu .tool-tile{overflow:visible}
+  .recover-list,.character-section,.filler-list,.arc-list{padding-bottom:12px}
 }
 @media(max-width:650px){
   .mobile-chrome{
     margin:0 -12px 10px;
     padding:calc(env(safe-area-inset-top,0px) + 6px) 12px 8px;
   }
-  .main{padding:0 12px calc(env(safe-area-inset-bottom,0px) + 148px)!important}
+  .main{padding:0 12px calc(env(safe-area-inset-bottom,0px) + 168px)!important}
   .metrics{margin:10px 0 18px!important;gap:8px!important}
   .metric{padding:10px 10px!important}
   .hero-visual{height:176px!important}
@@ -304,9 +308,12 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;background-im
   .hero p{font-size:11px!important;line-height:1.45!important;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
   .hero-buttons{margin-top:10px!important;gap:7px!important}
   .hero-buttons .button{min-height:42px!important}
-  .mobile-nav{min-height:66px}
-  .mobile-art{width:26px!important;height:26px!important}
-  .mobile-nav button span{font-size:8px!important}
+  .mobile-nav{min-height:70px}
+  .mobile-art{width:28px!important;height:28px!important}
+  .mobile-nav button span{font-size:8.5px!important}
+  .tool-tile-icon{width:50px!important;height:50px!important}
+  .more-menu{padding:14px!important;gap:10px!important}
+  .more-menu .tool-tile{min-height:74px;padding:10px 12px!important;gap:10px}
 }
 @media(max-width:390px){
   .mobile-brand-title{font-size:22px!important}

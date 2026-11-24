@@ -19,13 +19,17 @@ html[data-active-section="characters"] .main{overflow-x:clip}
  position:relative;display:block;width:100%;height:auto;aspect-ratio: .77;
  background:#2388ae;border-radius:14px 14px 0 0;overflow:hidden;
 }
-.character-section .char-photo-frame{position:absolute;inset:0;width:100%;height:100%;display:block}
+.character-section .char-photo-frame{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:hidden}
 .character-section .char-art .character-portrait{
- display:block;width:100%;height:100%;object-fit:cover!important;object-position:50% 50%!important;
- transform:none!important;filter:none;transition:transform .25s ease!important;
+ /* Scene assets are phone-strip composites with blurred side panels:
+    zoom the center so the figure fills the card width. */
+ display:block;width:100%;height:100%;object-fit:cover!important;object-position:50% 42%!important;
+ transform:scale(1.58)!important;transform-origin:center 42%;filter:none;
+ transition:transform .25s ease!important;
 }
-@media(hover:hover){.character-section .char-card:hover:not(.is-locked) .char-art .character-portrait{transform:scale(1.018)!important}}
+@media(hover:hover){.character-section .char-card:hover:not(.is-locked) .char-art .character-portrait{transform:scale(1.66)!important}}
 .character-section .char-card{outline:none!important}
+.character-section{padding-bottom:8px}
 .character-section .char-art::after{
  content:"";z-index:1;position:absolute;pointer-events:none;inset:auto 0 0;height:24%;
  background:linear-gradient(to bottom,rgba(250,238,208,0),rgba(250,238,208,.76) 69%,#faeed0 100%);
@@ -66,7 +70,7 @@ html[data-active-section="characters"] .main{overflow-x:clip}
  box-shadow:0 3px 8px #1f292f99;
 }
 .character-section .char-card.is-locked .char-art{background:#243747}
-.character-section .char-card.is-locked .char-art img.character-portrait{filter:brightness(0) opacity(.65)!important}
+.character-section .char-card.is-locked .char-art img.character-portrait{filter:brightness(0) opacity(.65)!important;transform:scale(1.58)!important}
 .character-section .char-card.is-locked .char-hidden-mark{z-index:2;font:900 70px system-ui;color:#e5be79}
 .character-section .char-card.is-locked .char-favorite{background:#334452;color:#d9c3a2}
 .character-detail .detail-portrait .character-portrait{object-fit:contain!important;background:#e1edee}

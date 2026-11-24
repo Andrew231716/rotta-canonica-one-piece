@@ -101,7 +101,7 @@
 .character-section .char-art img.character-portrait{
  display:block;width:100%!important;height:100%!important;max-width:none!important;
  object-fit:cover!important;object-position:50% 12%!important;filter:none!important;
- border-radius:0!important;transform:none;transition:transform .22s ease;
+ border-radius:0!important;transition:transform .22s ease;
 }
 .character-section .char-copy{
  display:flex;flex:1;flex-direction:column;align-items:stretch;min-width:0;
@@ -148,7 +148,7 @@
 .character-section .char-favorite:focus-visible{outline:3px solid #165c7e;outline-offset:2px}
 .character-section .char-card.is-locked .char-open{cursor:not-allowed}
 .character-section .char-card.is-locked .char-art{background:#31495a}
-.character-section .char-card.is-locked .char-art img.character-portrait{filter:brightness(0) opacity(.6)!important;transform:none!important}
+.character-section .char-card.is-locked .char-art img.character-portrait{filter:brightness(0) opacity(.6)!important}
 .character-section .char-card.is-locked .char-hidden-mark{font-size:68px;color:#e0c988}
 .character-section .char-favorite.locked{background:#283c48;color:#e4c58b;cursor:default;font-size:22px}
 .character-no-results[hidden]{display:none!important}
