@@ -159,3 +159,41 @@ button,select{touch-action:manipulation}
 
 /* Ricompensa: il forziere passa dall'icona chiusa a quella illuminata. */
 .reward-celebration{text-align:center;color:#423225;position:relative}.reward-celebration .eyebrow{justify-content:center;color:#ae5130}.reward-open-art{height:150px;position:relative;margin:10px auto 4px;display:grid;place-items:center}.reward-open-art img{height:120px;width:120px;object-fit:contain;position:absolute;left:calc(50% - 60px);top:12px}.reward-closed{animation:treasureClosed 2s ease-in-out both}.reward-open{opacity:0;animation:treasureOpen 2.6s ease-in-out .4s forwards}.reward-celebration h3{font-family:'Bangers',Impact,sans-serif!important;color:#a03e2b!important;font-size:34px!important}.reward-celebration .modal-buttons{justify-content:center;flex-wrap:wrap}@keyframes treasureClosed{0%,38%{opacity:1;transform:scale(1) rotate(-5deg)}70%,100%{opacity:0;transform:scale(.88) rotate(5deg)}}@keyframes treasureOpen{0%,15%{opacity:0;transform:scale(.7)}45%,100%{opacity:1;transform:scale(1.13);filter:drop-shadow(0 0 24px #ffca60)}}@media(prefers-reduced-motion:reduce){.reward-closed{display:none}.reward-open{opacity:1;animation:none;transform:none}}
+
+/* v7 · Schede reali della ciurma: immagini fan-made, non icone generiche */
+.character-section .character-intro{display:flex;align-items:center;justify-content:space-between;background:linear-gradient(115deg,#163c52,#0e6d8a);padding:16px 20px;border:3px solid #ce9a4b;border-radius:16px;box-shadow:0 5px 0 #76512d3d;color:#fff8db;margin:0 0 13px;min-height:100px}
+.character-intro>div{display:flex;flex-direction:column;gap:7px}
+.character-intro span{font-size:10px;letter-spacing:1.6px;font-weight:1000;color:#ffd68b}
+.character-intro strong{font-family:'Bangers',Impact,sans-serif;font-size:clamp(19px,2.5vw,31px);font-weight:400;letter-spacing:1px}
+.character-intro img{width:76px;height:76px;object-fit:contain;animation:compassFloat 7s ease-in-out infinite}
+.character-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
+.char-card{padding:0;text-align:left;display:flex;flex-direction:column;cursor:pointer;background:#fff5dc;border:3px solid #aa763b;border-radius:15px;box-shadow:0 5px 0 #80542c3b;transition:transform .18s ease,box-shadow .18s ease;position:relative;width:100%;color:inherit;font:inherit;overflow:hidden}
+.char-card:not(.is-locked):hover,.char-card:not(.is-locked):focus-visible{transform:translateY(-5px);box-shadow:0 10px 16px #4d321d3b;outline:3px solid #f3c459;outline-offset:2px}
+.char-art{height:200px;position:relative;overflow:hidden;border-bottom:4px solid #956738;background:linear-gradient(165deg,#91d5ed 3%,#dff6fd 65%,#fff0bf 100%);display:block}
+.char-photo-frame{position:relative;display:block;width:100%;height:100%;overflow:hidden}
+.char-art img.character-portrait{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 23%;border-radius:0;filter:drop-shadow(0 4px 0 #12334833);transition:transform .24s ease}
+.char-card:not(.is-locked):hover .char-art img{transform:scale(1.075)}
+.char-seal{position:absolute;right:9px;bottom:8px;display:grid;place-items:center;min-width:29px;height:29px;border:2px solid #ffd77b;border-radius:50%;color:#fff;background:#a53d28;font-size:15px;box-shadow:0 2px 6px #1c1e2580}
+.char-copy{padding:12px 14px 14px;flex:1;display:flex;flex-direction:column}
+.char-copy h3{font-size:clamp(23px,2.4vw,31px);line-height:1.05;margin:5px 0 7px}
+.char-copy p{font-size:11px;line-height:1.45;flex:1;min-height:0;margin:0 0 10px}
+.char-unlock{font-size:10px;padding-top:9px;border-top:1px dashed #bb9a66;color:#81572f}
+.char-card.is-locked{cursor:not-allowed;box-shadow:0 4px 0 #8b765c33;background:#ece6d7}
+.char-card.is-locked .char-art{background:linear-gradient(160deg,#6f8792,#1b303b)}
+.char-card.is-locked .char-art img.character-portrait{filter:brightness(0) opacity(.85)!important;transform:none!important;object-position:50% 20%}
+.char-hidden-mark{position:absolute;inset:0;display:grid;place-items:center;color:#f5e8c7;font:78px 'Bangers',Impact,sans-serif;text-shadow:3px 4px 0 #223f56}
+.char-card.is-locked .char-seal{background:#263d50}
+.character-detail{display:grid;grid-template-columns:36% minmax(0,1fr);gap:20px;color:#49351e;align-items:start}
+.detail-portrait{border:4px solid #c2924f;background:#c5e9f1;border-radius:13px;overflow:hidden;aspect-ratio:3/4}
+.detail-portrait img.portrait-large{width:100%;height:100%;object-fit:cover;object-position:50% 18%}
+.detail-profile h3{font:42px 'Bangers',Impact,sans-serif;color:#7f3b20;letter-spacing:.5px;line-height:1;margin:10px 0 8px}
+.detail-role{display:inline-block;background:#b44230;color:white;padding:5px 13px;border-radius:8px;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:1px}
+.detail-profile p{line-height:1.55;font-size:13px;font-weight:700}
+.detail-facts{display:grid;grid-template-columns:auto 1fr;gap:10px;border-top:1px dashed #c69d64;border-bottom:1px dashed #c69d64;padding:12px 0;font-size:12px}
+.detail-facts span{color:#8a6945}.detail-facts b{color:#3b4c4a;text-align:right}
+@media(min-width:1240px){.character-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:650px){.character-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.char-art{height:156px}.char-copy{padding:9px 8px 10px}.char-copy h3{font-size:21px}.char-copy p{font-size:10px;line-height:1.4}.char-kicker,.char-unlock{font-size:9px}.char-seal{min-width:25px;height:25px;font-size:12px}.character-intro{padding:13px!important}.character-intro img{width:58px;height:58px}.character-detail{grid-template-columns:1fr}.detail-portrait{max-height:280px;aspect-ratio:3/4}.detail-portrait img.portrait-large{object-position:50% 18%}.detail-profile h3{font-size:35px}}
+@media(max-width:370px){.char-art{height:138px}.char-copy h3{font-size:19px}}
+@media(prefers-reduced-motion:reduce){.char-card,.char-art img.character-portrait,.character-intro img{animation:none!important;transition:none!important}}
+/* Mantiene sempre visibili occhi e cappelli nel ritaglio delle miniature. */
+.char-art img.character-portrait{object-position:50% 0%}

@@ -28,17 +28,17 @@ const SAGA_GROUPS=[
  {name:'Saga finale',first:1086,last:1155,icon:'saga-egghead.webp',emoji:'✨',description:'Gli episodi più avanzati inclusi nell’archivio locale.'}
 ];
 const CHARACTERS=[
- {name:'Monkey D. Luffy',role:'Capitano',unlock:1,asset:'ui-compass.webp',profile:'Un giovane pirata determinato a raggiungere il proprio sogno.',tags:'capitano equipaggio'},
- {name:'Roronoa Zoro',role:'Spadaccino',unlock:2,asset:'ui-anchor.webp',profile:'Combatte con le spade e segue un rigoroso percorso personale.',tags:'spadaccino spade'},
- {name:'Nami',role:'Navigatrice',unlock:3,asset:'ui-map.webp',profile:'Esperta di navigazione, carte nautiche e condizioni meteorologiche.',tags:'navigatrice mappe'},
- {name:'Usopp',role:'Tiratore',unlock:9,asset:'ui-spyglass.webp',profile:'Ha fantasia, inventiva e un talento speciale per raccontare storie.',tags:'tiratore inventore'},
- {name:'Sanji',role:'Cuoco',unlock:20,asset:'ui-loot.webp',profile:'Cucina per la ciurma e affronta i problemi con il proprio stile.',tags:'cuoco'},
- {name:'Tony Tony Chopper',role:'Medico',unlock:81,asset:'ui-complete.webp',profile:'Un giovane medico con una grande curiosità verso il mondo.',tags:'medico'},
- {name:'Nico Robin',role:'Archeologa',unlock:130,asset:'ui-map.webp',profile:'Studia la storia e le tracce delle antiche civiltà.',tags:'archeologa'},
- {name:'Franky',role:'Carpentiere',unlock:233,asset:'ui-wheel.webp',profile:'È legato all’ingegneria navale e alle costruzioni più eccentriche.',tags:'carpentiere'},
- {name:'Brook',role:'Musicista',unlock:337,asset:'ui-flag.webp',profile:'Un musicista dalla personalità eccentrica.',tags:'musicista'},
- {name:'Jinbe',role:'Timoniere',unlock:430,asset:'ui-anchor.webp',profile:'Marinaio esperto con una profonda conoscenza del mare.',tags:'timoniere'}
-];
+ {id:'luffy',name:'Monkey D. Luffy',role:'Capitano',unlock:1,profile:'Parte all’avventura con il sogno di diventare il Re dei Pirati. Coraggioso, impulsivo e fedele ai propri amici.',tags:'capitano ciurma sogno'},
+ {id:'zoro',name:'Roronoa Zoro',role:'Spadaccino',unlock:2,profile:'Combatte usando tre spade e si allena per diventare il miglior spadaccino del mondo.',tags:'spadaccino spade'},
+ {id:'nami',name:'Nami',role:'Navigatrice',unlock:3,profile:'Esperta di rotte, mappe e meteorologia, guida la ciurma attraverso i mari.',tags:'navigatrice cartografia'},
+ {id:'usopp',name:'Usopp',role:'Tiratore',unlock:9,profile:'Inventore e narratore instancabile, sogna di diventare un coraggioso guerriero del mare.',tags:'tiratore inventore'},
+ {id:'sanji',name:'Sanji',role:'Cuoco',unlock:20,profile:'Cuoco del Baratie, porta nella ciurma la sua passione per la cucina e il combattimento.',tags:'cuoco combattente'},
+ {id:'chopper',name:'Tony Tony Chopper',role:'Medico',unlock:81,profile:'Un giovane medico e una renna molto speciale che vuole curare ogni malattia.',tags:'medico renna'},
+ {id:'robin',name:'Nico Robin',role:'Archeologa',unlock:130,profile:'Studia le antiche civiltà, i misteri della storia e le tracce del passato.',tags:'archeologa storia'},
+ {id:'franky',name:'Franky',role:'Carpentiere',unlock:233,profile:'Un costruttore di navi dall’estro incredibile, appassionato di ingegneria e invenzioni.',tags:'carpentiere invenzioni'},
+ {id:'brook',name:'Brook',role:'Musicista',unlock:337,profile:'Musicista e spadaccino dall’umorismo inconfondibile, ama portare musica in ogni viaggio.',tags:'musicista spadaccino'},
+ {id:'jinbe',name:'Jinbe',role:'Timoniere',unlock:430,profile:'Esperto uomo-pesce e navigatore con una conoscenza profonda del mare.',tags:'timoniere uomo pesce'}
+]
 const ACHIEVEMENTS=[
  {id:'first',title:'Prima vela',detail:'Guarda il tuo primo episodio canonico.',icon:'compass',test:()=>watched.size>=1},
  {id:'ten',title:'Prime dieci miglia',detail:'Completa 10 episodi canonici.',icon:'route',test:()=>counts().done>=10},
@@ -91,9 +91,22 @@ function mapView(){const horizon=spoilerHorizon();return `<div class="section-sh
  <div class="map-board"><div class="map-top"><span>LA ROTTA DEL NAVIGATORE</span><span>${counts().percent}% del viaggio</span></div><div class="map-compass">${art('compass')}</div><div class="map-trail">${SAGA_GROUPS.map((g,i)=>{const ns=allCanon.filter(n=>n>=g.first&&n<=g.last),done=ns.filter(n=>watched.has(n)).length,pct=Math.round(done/ns.length*100),lock=extra.spoiler&&g.first>horizon;
  return `<button class="map-stop ${pct===100?'conquered':''} ${lock?'fogged':''}" data-action="map-saga" data-first="${g.first}" aria-label="${lock?'Isola inesplorata':g.name}, episodi ${g.first}-${g.last}"><span class="map-stop-number">${String(i+1).padStart(2,'0')}</span><img src="/assets/${g.icon}" alt="" loading="lazy"><span class="map-stop-body"><b>${lock?'Isola inesplorata':cleanText(g.name)}</b><small>Ep. ${g.first}–${g.last} · ${pct}%</small><span class="mini-track"><i style="width:${pct}%"></i></span></span>${pct===100?'<span class="map-checked">✓</span>':''}</button>`}).join('')}</div><div class="map-bottom">${art('spyglass')} <span>La mappa è una rappresentazione tematica, non una cartografia ufficiale del mondo di One Piece.</span></div></div>
  </div>`}
-function characterView(){return `<div class="section-shell">${sectionHeader('Enciclopedia della ciurma','Scopri i protagonisti senza anticipazioni. Le schede si sbloccano avanzando nella storia.')}
+function characterPortrait(c,locked=false,large=false){return `<img class="character-portrait${large?' portrait-large':''}" src="/assets/characters/${c.id}.webp" alt="${locked?'':cleanText('Ritratto illustrato di '+c.name)}" loading="lazy" decoding="async">`}
+function characterView(){
+ const visible=CHARACTERS.filter(c=>!blocked(c.unlock)).length;
+ return `<div class="section-shell character-section">${sectionHeader('Personaggi di One Piece','Ritratti illustrati dei protagonisti della ciurma. Tocca un personaggio per aprire la sua scheda.')}
+ <div class="character-intro"><div><span>LA CIURMA DI CAPPELLO DI PAGLIA</span><strong>${visible} / ${CHARACTERS.length} personaggi scoperti</strong></div><img src="/assets/ui-compass.webp" alt="" loading="lazy"></div>
  <div class="spoiler-row"><span>${icon('shield')} Protezione spoiler <b>${extra.spoiler?'attiva':'disattivata'}</b></span><button class="button small secondary" data-action="spoiler-toggle">${extra.spoiler?'Mostra tutti':'Nascondi anticipazioni'}</button></div>
- <div class="character-grid">${CHARACTERS.map((c,i)=>{const locked=blocked(c.unlock);return `<article class="char-card ${locked?'is-locked':''}"><div class="char-art" style="background-image:linear-gradient(#11364b22,#143b50b8),url('${routeArt(i)}')">${art(c.asset.replace('ui-','').replace('.webp',''))}</div><div class="char-copy"><span class="char-kicker">${locked?'SCHEDA BLOCCATA':cleanText(c.role)}</span><h3>${locked?'Personaggio da scoprire':cleanText(c.name)}</h3><p>${locked?`Disponibile quando raggiungi l’episodio ${c.unlock}.`:cleanText(c.profile)}</p><span class="char-unlock">${locked?'🔒':'✓'} Sblocco: ep. ${c.unlock}</span></div></article>`}).join('')}</div><p class="smallprint">Le descrizioni sono sintetiche e prive di rivelazioni importanti. Non vengono utilizzate immagini ufficiali dei personaggi.</p></div>`}
+ <div class="character-grid">${CHARACTERS.map((c,i)=>{const locked=blocked(c.unlock);return `<button type="button" class="char-card ${locked?'is-locked':''}" data-action="character-detail" data-character="${i}" aria-label="${locked?`Personaggio non ancora sbloccato, episodio ${c.unlock}`:`Apri scheda di ${cleanText(c.name)}`}">
+ <div class="char-art"><span class="char-photo-frame">${characterPortrait(c,locked)}${locked?'<span class="char-hidden-mark" aria-hidden="true">?</span>':''}</span><span class="char-seal" aria-hidden="true">${locked?'🔒':'★'}</span></div>
+ <div class="char-copy"><span class="char-kicker">${locked?'SCHEDA BLOCCATA':cleanText(c.role)}</span><h3>${locked?'Personaggio da scoprire':cleanText(c.name)}</h3><p>${locked?`Disponibile dall’episodio ${c.unlock}.`:cleanText(c.profile)}</p><span class="char-unlock">${locked?'Non ancora incontrato':'Scopri la scheda'} · Ep. ${c.unlock}</span></div></button>`}).join('')}</div>
+ <p class="smallprint">Illustrazioni fan-made dei personaggi di One Piece, tratte dagli asset creati per questo progetto. Non sono immagini ufficiali. La modalità spoiler nasconde i personaggi futuri.</p></div>`
+}
+function characterDetail(i){
+ const c=CHARACTERS[i];if(!c)return;
+ if(blocked(c.unlock)){toast('Personaggio bloccato: raggiungi l’episodio '+c.unlock+' oppure disattiva la protezione spoiler.');return;}
+ modal(`<div class="character-detail"><div class="detail-portrait">${characterPortrait(c,false,true)}</div><div class="detail-profile"><span class="eyebrow">ENCICLOPEDIA DELLA CIURMA</span><h3>${cleanText(c.name)}</h3><span class="detail-role">${cleanText(c.role)}</span><p>${cleanText(c.profile)}</p><div class="detail-facts"><span>Ruolo</span><b>${cleanText(c.role)}</b><span>Scheda disponibile</span><b>Dall’episodio ${c.unlock}</b></div><p class="smallprint">Scheda senza anticipazioni importanti. Ritratto fan-made non ufficiale.</p><div class="modal-buttons"><button class="button primary" data-action="modal-cancel">Torna alla ciurma</button></div></div></div>`);
+}
 function notesSummary(){const rows=Object.entries(extra.notes).filter(([n,t])=>String(t).trim()&&Number(n)>=1&&Number(n)<=1155).sort((a,b)=>Number(b[0])-Number(a[0]));return rows}
 function journalView(){const dates=Object.values(extra.watchedAt).filter(s=>typeof s==='string').map(s=>s.slice(0,10)).sort().reverse();const unique=[...new Set(dates)].sort().reverse();const latest=unique[0];const rows=notesSummary();const favorites=extra.favorites.slice().sort((a,b)=>a-b);
  return `<div class="section-shell">${sectionHeader('Diario di bordo','Annota gli episodi, tieni i preferiti e conserva i ricordi del tuo viaggio.')}
@@ -122,6 +135,7 @@ function toggleFavorite(n){if(extra.favorites.includes(n))extra.favorites=extra.
 function downloadJSON(obj,name){const b=new Blob([JSON.stringify(obj,null,2)],{type:'application/json'});const u=URL.createObjectURL(b);const a=document.createElement('a');a.href=u;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(u),2000)}
 async function handleExtraAction(action,t){const n=Number(t.dataset.ep);
  switch(action){
+ case 'character-detail':{const i=Number(t.dataset.character);if(Number.isInteger(i)&&i>=0&&i<CHARACTERS.length)characterDetail(i);return true;}
  case 'go-next':openEpisode(getNext()||start);return true;
  case 'detail':if(Number.isInteger(n)&&n>=1&&n<=1155)episodeDetail(n);return true;
  case 'detail-watch':if(!filler.has(n)){watched.has(n)?watched.delete(n):watched.add(n);trackWatched(n,watched.has(n));save();closeModal();episodeDetail(n);toast('Episodio aggiornato')}return true;

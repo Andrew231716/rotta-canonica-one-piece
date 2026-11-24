@@ -1,6 +1,14 @@
-# Rotta Canonica · Cloud Ready v6
+# Rotta Canonica · Personaggi Illustrati v7 (da Cloud Ready v6)
 
 Web app/PWA **fan-made** in italiano per organizzare gli episodi di One Piece. Mantiene la grafica anime piratesca e tutte le funzioni local-first della v5: percorso senza filler, guida 1–1155, saghe, recuperi Netflix, diario, note, ricompense, preferiti, mappa e backup.
+
+## Novità v7 · Personaggi veri della ciurma
+
+La sezione **Personaggi** mostra finalmente ritratti fan-made riconoscibili di **Monkey D. Luffy, Roronoa Zoro, Nami, Usopp, Sanji, Tony Tony Chopper, Nico Robin, Franky, Brook e Jinbe**. I 10 ritratti WebP sono inclusi localmente in `assets/characters/` (nessun hotlink a immagini esterne). Ogni carta può aprire una scheda con ritratto ingrandito, ruolo, presentazione e riferimento all'episodio; le identità future rimangono coperte dalla modalità antispoiler e si sbloccano in funzione del tuo avanzamento.
+
+I ritratti derivano da illustrazioni fan-made create per il progetto, **non** sono asset grafici ufficiali e non implicano licenze o affiliazione con gli aventi diritto. La pubblicazione pubblica e l'eventuale uso commerciale richiedono una valutazione dei diritti sulle immagini e sui personaggi.
+
+Per installare questa versione usa i file dello ZIP sulla branch esistente: `features.js`, `features.css`, `service-worker.js`, `assets/characters/*` e gli altri file sono già compatibili. La chiave dei progressi `rotta-canonica-v1` e quella delle preferenze `rotta-canonica-extra-v1` non sono modificate. Lo ZIP include l'intero progetto, non soltanto una patch.
 
 ## Stato reale delle nuove funzionalità
 
