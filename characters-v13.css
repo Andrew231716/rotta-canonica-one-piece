@@ -1,0 +1,188 @@
+/* Rotta Canonica v13 — Character art + readable full-scene cards.
+   Only presentation selectors: search, spoiler, favorites and saves unchanged. */
+html[data-active-section="characters"] .character-section{
+  --char-paper:#fff1cf;
+  --char-ink:#422d1f;
+  --char-line:#9c733e;
+  padding-bottom:16px;
+}
+html[data-active-section="characters"] .characters-hero{
+  padding:12px 16px 14px;
+  margin-bottom:14px;
+  background:linear-gradient(115deg,rgba(221,246,250,.94),rgba(226,245,244,.83)),url('/assets/sea-hero.webp') center/cover;
+  border:2px solid #b58b52;
+  border-radius:17px;
+  box-shadow:0 3px 0 #7e583b35,0 8px 20px #123c5723;
+}
+html[data-active-section="characters"] .characters-hero-top{margin:0 0 7px;color:#234a5c;font-size:11px;letter-spacing:.35px}
+html[data-active-section="characters"] .characters-hero-title{
+  margin:0 auto 7px;min-height:48px;max-width:660px;
+  padding:6px 12px;border:2px solid #aa7e45;border-radius:11px;
+  background:linear-gradient(180deg,#6f4426,#49301c);box-shadow:0 3px 0 #32201480;
+}
+html[data-active-section="characters"] .characters-hero-title h1{font-size:clamp(25px,3.2vw,33px)!important;line-height:1!important;letter-spacing:.7px!important}
+html[data-active-section="characters"] .characters-hero-title img{width:34px!important;height:34px!important}
+html[data-active-section="characters"] .characters-hero>p{
+  max-width:740px!important;padding:4px 8px!important;margin:0 auto!important;
+  background:transparent!important;border:0!important;box-shadow:none!important;
+  font-size:clamp(12px,1.4vw,14px)!important;line-height:1.42!important;color:#315363;
+}
+html[data-active-section="characters"] .character-utility{margin:9px 0 14px}
+html[data-active-section="characters"] .character-grid{
+  display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:18px!important;align-items:stretch;
+}
+html[data-active-section="characters"] .char-card{
+  position:relative!important;display:flex!important;flex-direction:column!important;
+  min-width:0!important;min-height:276px!important;overflow:hidden!important;
+  border:2px solid #9d7748!important;border-radius:18px!important;
+  background:#fff5de!important;
+  box-shadow:0 4px 0 #86552d4d,0 12px 21px #21495825!important;
+  transition:box-shadow .24s ease,transform .24s ease;
+}
+html[data-active-section="characters"] .char-card[hidden]{display:none!important}
+html[data-active-section="characters"] .char-open{
+  width:100%!important;flex:1!important;min-height:0!important;
+  display:grid!important;grid-template-columns:minmax(0,53%) minmax(0,47%)!important;
+  grid-template-rows:minmax(0,1fr)!important;align-items:stretch!important;
+  padding:0!important;text-align:left!important;gap:0!important;
+  overflow:hidden!important;background:#fff3da!important;
+}
+html[data-active-section="characters"] .char-art{
+  grid-column:1!important;display:block!important;min-width:0!important;
+  height:100%!important;min-height:274px!important;aspect-ratio:auto!important;
+  background:#6eb7cf!important;overflow:hidden!important;
+  border-radius:16px 0 0 16px!important;position:relative!important;
+  isolation:isolate;
+}
+html[data-active-section="characters"] .char-photo-frame{
+  display:block!important;position:absolute!important;inset:0!important;width:100%!important;height:100%!important;
+  overflow:hidden!important;
+}
+html[data-active-section="characters"] .char-art img.character-portrait{
+  display:block!important;position:absolute!important;inset:0!important;
+  width:100%!important;height:100%!important;max-width:none!important;
+  object-fit:cover!important;object-position:50% 45%!important;
+  image-rendering:auto!important;filter:none!important;transform:none!important;
+  transition:none!important;
+}
+html[data-active-section="characters"] .char-card:not(.is-locked):hover .char-art img.character-portrait{transform:none!important;filter:none!important}
+html[data-active-section="characters"] .char-art::after{
+  content:''!important;position:absolute!important;z-index:2!important;
+  inset:0 0 0 auto!important;width:14%!important;height:100%!important;
+  background:linear-gradient(90deg,transparent,rgba(255,243,218,.95))!important;
+  pointer-events:none!important;
+}
+html[data-active-section="characters"] .char-copy{
+  grid-column:2!important;display:flex!important;flex-direction:column!important;
+  min-width:0!important;min-height:0!important;flex:1!important;
+  margin:0!important;padding:16px 13px 14px!important;
+  background:linear-gradient(130deg,#fff3da,#fff7e8 55%,#f6e3bf)!important;
+  position:relative!important;gap:0!important;
+}
+html[data-active-section="characters"] .char-copy::before{display:none!important}
+html[data-active-section="characters"] .char-kicker{
+  color:#92502c!important;letter-spacing:.8px!important;font-size:11px!important;
+  line-height:1.3!important;margin:0 0 6px!important;min-height:0!important;
+}
+html[data-active-section="characters"] .char-title{
+  display:block!important;color:var(--char-ink)!important;
+  margin:0 0 11px!important;min-height:0!important;max-height:none!important;
+  font:italic 900 clamp(21px,2.2vw,29px)/1.08 Georgia,'Times New Roman',serif!important;
+  letter-spacing:-.4px!important;overflow-wrap:anywhere!important;hyphens:auto!important;
+}
+html[data-active-section="characters"] .char-description{
+  color:#514338!important;font-size:clamp(12px,1.03vw,14px)!important;
+  line-height:1.48!important;font-weight:700!important;
+  display:block!important;flex:1!important;min-height:0!important;max-height:none!important;
+  overflow:visible!important;-webkit-line-clamp:unset!important;white-space:normal!important;
+}
+html[data-active-section="characters"] .char-cta{
+  display:flex!important;align-items:center!important;justify-content:space-between!important;
+  gap:5px!important;min-height:44px!important;max-width:100%!important;
+  margin:14px 0 0!important;padding:9px 10px!important;
+  font-size:clamp(11px,1vw,13px)!important;line-height:1.2!important;
+  text-align:left!important;background:linear-gradient(#ffe8aa,#e6b65d)!important;
+  border:1px solid #96632d!important;border-radius:10px!important;
+  box-shadow:inset 0 1px #fff9de,0 2px #6c471c40!important;
+  white-space:normal!important;
+}
+html[data-active-section="characters"] .char-cta small{font-size:.85em!important;white-space:normal!important}
+html[data-active-section="characters"] .char-favorite{
+  z-index:7!important;top:12px!important;left:12px!important;right:auto!important;
+  display:grid!important;place-items:center!important;width:40px!important;height:40px!important;
+  min-width:40px!important;min-height:40px!important;border:2px solid #ffe8b0!important;
+  box-shadow:0 3px 8px #1e293877!important;
+}
+html[data-active-section="characters"] .char-card.is-locked .char-photo-frame img{
+  filter:blur(9px) grayscale(1) brightness(.7)!important;
+}
+html[data-active-section="characters"] .char-card.is-locked .char-hidden-mark{
+  z-index:4!important;position:absolute!important;top:39%!important;left:42%!important;
+  font-size:65px!important;color:#fbe0a7!important;
+}
+/* Carefully frame the scenes: keep full figures visible and make tiny originals larger. */
+html[data-active-section="characters"] .char-card[data-id="chopper"] .char-art img{transform:scale(1.46)!important;transform-origin:50% 67%!important;object-position:50% 64%!important}
+html[data-active-section="characters"] .char-card[data-id="zoro"] .char-art img{transform:scale(1.12)!important;transform-origin:50% 52%!important}
+html[data-active-section="characters"] .char-card[data-id="sanji"] .char-art img{object-position:50% 35%!important}
+html[data-active-section="characters"] .char-card[data-id="brook"] .char-art img{object-position:50% 41%!important}
+html[data-active-section="characters"] .char-card[data-id="usopp"] .char-art img{object-position:50% 37%!important}
+html[data-active-section="characters"] .char-card[data-id="law"] .char-art img,
+html[data-active-section="characters"] .char-card[data-id="ace"] .char-art img,
+html[data-active-section="characters"] .char-card[data-id="robin"] .char-art img{object-position:50% 22%!important}
+/* Stately art shouldn't be animated or cropped during hover. */
+html[data-active-section="characters"] .char-card:hover img.character-portrait{filter:none!important}
+.character-detail .detail-portrait{background:linear-gradient(#90d5e8,#eaf5ea)!important}
+.character-detail .detail-portrait img.portrait-large{object-fit:contain!important;object-position:center!important}
+.modal-layer:has(.character-detail) .modal{width:min(94vw,760px)!important;max-height:calc(100dvh - 24px)!important;overflow:auto!important;overscroll-behavior:contain}
+@media(max-width:860px){
+ html[data-active-section="characters"] .character-grid{grid-template-columns:1fr!important;gap:13px!important}
+ html[data-active-section="characters"] .char-card{min-height:260px!important}
+ html[data-active-section="characters"] .char-art{min-height:258px!important}
+ html[data-active-section="characters"] .char-title{font-size:clamp(19px,4.6vw,27px)!important}
+ html[data-active-section="characters"] .char-description{font-size:clamp(12px,2.9vw,14px)!important}
+ html[data-active-section="characters"] .char-copy{padding:15px 13px 13px!important}
+}
+@media(max-width:440px){
+ html[data-active-section="characters"] .characters-hero{padding:9px 10px 11px!important}
+ html[data-active-section="characters"] .characters-hero-title{min-height:42px!important}
+ html[data-active-section="characters"] .characters-hero-title h1{font-size:26px!important}
+ html[data-active-section="characters"] .characters-hero>p{font-size:11px!important;line-height:1.35!important}
+ html[data-active-section="characters"] .character-grid{gap:11px!important}
+ html[data-active-section="characters"] .char-card{min-height:251px!important;border-radius:13px!important}
+ html[data-active-section="characters"] .char-open{grid-template-columns:minmax(0,52%) minmax(0,48%)!important}
+ html[data-active-section="characters"] .char-art{min-height:249px!important;border-radius:10px 0 0 10px!important}
+ html[data-active-section="characters"] .char-copy{padding:14px 10px 11px!important}
+ html[data-active-section="characters"] .char-kicker{font-size:10px!important;letter-spacing:.35px!important;margin-bottom:4px!important}
+ html[data-active-section="characters"] .char-title{font-size:clamp(18px,5vw,23px)!important;margin-bottom:8px!important}
+ html[data-active-section="characters"] .char-description{font-size:11.8px!important;line-height:1.35!important}
+ html[data-active-section="characters"] .char-cta{min-height:39px!important;font-size:11px!important;padding:7px 7px!important;margin-top:8px!important}
+ html[data-active-section="characters"] .char-cta small{font-size:9px!important}
+ html[data-active-section="characters"] .char-favorite{width:38px!important;height:38px!important;min-width:38px!important;min-height:38px!important;left:9px!important;top:9px!important}
+}
+@media(max-width:360px){
+ html[data-active-section="characters"] .char-open{grid-template-columns:minmax(0,48%) minmax(0,52%)!important}
+ html[data-active-section="characters"] .char-copy{padding:10px 8px!important}
+ html[data-active-section="characters"] .char-description{font-size:11.1px!important}
+ html[data-active-section="characters"] .char-title{font-size:17px!important}
+}
+@media(prefers-reduced-motion:reduce){
+ html[data-active-section="characters"] .char-card{transition:none!important}
+}
+/* Tablet uses two cards per row to preserve character proportions. */
+@media(min-width:680px) and (max-width:860px){
+ html[data-active-section="characters"] .character-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important}
+ html[data-active-section="characters"] .char-card{min-height:275px!important}
+ html[data-active-section="characters"] .char-art{min-height:273px!important}
+ html[data-active-section="characters"] .char-copy{padding:12px 10px!important}
+ html[data-active-section="characters"] .char-title{font-size:20px!important}
+ html[data-active-section="characters"] .char-description{font-size:11.2px!important;line-height:1.39!important}
+ html[data-active-section="characters"] .char-cta{min-height:39px!important;padding:7px!important;font-size:10px!important}
+}
+html[data-active-section="characters"] .char-art{
+ background:linear-gradient(180deg,#95ddf1,#7dbfd2 52%,#d7e4ce 78%,#e0c893)!important;
+}
+html[data-active-section="characters"] .char-card.is-locked .char-art{
+ background:linear-gradient(160deg,rgba(223,205,173,.92),rgba(179,150,98,.93)),url('/assets/scroll-texture.webp') center/cover!important;
+}
+
