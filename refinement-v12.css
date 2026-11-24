@@ -207,4 +207,16 @@ img{image-rendering:auto;max-width:100%}
   .hero-wave,.metric-art{animation:none!important}
   :where(.character-section .char-card,.arc-card,.recover-card,.tool-tile){transition:none!important;transform:none!important}
 }
+/* Show the crew, not a second oversized logo: mobile hero is an entry point. */
+@media(max-width:650px){
+ .hero-visual{height:clamp(166px,43vw,208px)!important}
+ .hero-banner{display:none!important}
+ .hero-top-stamp{top:9px!important;left:10px!important;padding:7px 9px!important;max-width:calc(100% - 20px)!important;font-size:9px!important}
+ .hero-copy{padding:15px 16px 17px!important}
+ .hero .eyebrow{font-size:9px!important;letter-spacing:1.5px!important}
+ .hero h1{font-size:clamp(31px,7.6vw,39px)!important;margin:7px 0 9px!important}
+ .hero-copy p{font-size:12px!important;line-height:1.5!important}
+ .hero-buttons{gap:8px!important;margin-top:15px!important}
+ .hero .button{min-height:41px!important;padding:9px 12px!important}
+}
 
