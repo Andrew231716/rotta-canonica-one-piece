@@ -211,6 +211,21 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;background-im
 .callout,.recover-card,.filler-card,.stat-panel,.tipbox{background:linear-gradient(#fff7daee,#f6e2b9ee),url('/assets/scroll-texture.webp') center/cover;border:3px solid #6c5238;border-radius:12px;box-shadow:3px 4px 0 #ad865b;color:#3f3329}
 .callout h3,.stat-panel h3,.recover-body h3{color:#513b29}.callout p,.recover-body p,.tipbox,.filler-detail{color:#745940;font-weight:700}
 .callout-icon{width:62px;height:62px;background:transparent;flex:none}.callout-image{width:100%;height:100%;object-fit:contain}
+.callout-start{display:flex;flex-direction:column;align-items:stretch;gap:12px;padding:16px 16px 14px;margin-bottom:18px}
+.callout-start-head{display:flex;align-items:center;gap:12px;min-width:0}
+.callout-start-art{width:52px;height:52px;object-fit:contain;flex:none;filter:drop-shadow(0 2px 1px #0003)}
+.callout-start-kicker{display:block;font-size:9px;font-weight:1000;letter-spacing:1.2px;color:#a54d2f;margin-bottom:3px}
+.callout-start h3{margin:0;font-size:clamp(22px,6vw,28px)!important;line-height:1.05;color:#3f2c1f}
+.callout-start>p{margin:0;font-size:12px;line-height:1.55;color:#6a5238;font-weight:750}
+.callout-start-btn{margin:2px 0 0!important;width:100%;justify-content:center;min-height:48px;font-size:14px!important;gap:8px}
+.callout-start-btn .button-art{width:26px;height:26px;object-fit:contain}
+@media(max-width:650px){
+  .callout-start{padding:14px 12px 12px;gap:10px}
+  .callout-start-art{width:44px;height:44px}
+  .callout-start h3{font-size:clamp(20px,5.8vw,24px)!important}
+  .callout-start>p{font-size:11px}
+  .callout-start-btn{min-height:46px;font-size:13px!important}
+}
 .recover-card{position:relative;overflow:hidden;display:flex;align-items:flex-start;gap:13px;padding:17px 16px 15px}.recover-image{width:56px;height:66px;object-fit:contain;flex:none}.recover-range{font-family:'Bangers',Impact,sans-serif;font-size:28px;color:#b44b31;min-width:65px}.recover-body h3{font-family:Georgia,serif!important;font-size:17px!important;font-weight:900!important;letter-spacing:0!important}.recover-body p{font-size:11px;line-height:1.58}.status-chip{color:#9b5b35}.status-chip.done{color:#187e63}
 .filler-card{align-items:center;gap:9px}.filler-symbol{background:transparent;padding:0;width:59px;height:59px;flex:none}.filler-art{width:100%;height:100%;object-fit:contain}.filler-title{font-size:23px!important;letter-spacing:.7px}.filler-detail{font-size:11px}.filler-n{color:#a24a30;font-weight:1000}
 .stat-panel{padding:20px}.stat-art-head{display:flex;align-items:center;gap:12px}.stat-loot{width:80px;height:79px;object-fit:contain;flex:none;animation:treasurePulse 5.5s ease-in-out infinite}.small-ribbon{font-size:9px;color:#bd4e2e;font-weight:1000;letter-spacing:1.4px}.stat-art-head h3{margin:4px 0}.stat-legend b,.ring-label{color:#224857}.ring:before{background:#fff1d2}.ring{background:conic-gradient(#22a894 0 var(--p),#cbb184 var(--p) 100%)}
@@ -284,6 +299,13 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;background-im
     gap:2px;
   }
   .mobile-art{width:30px!important;height:30px!important}
+  .mobile-netflix{
+    width:28px;height:28px;display:grid;place-items:center;flex:none;
+    background:linear-gradient(180deg,#e50914,#9f0810);
+    color:#fff;font:1000 15px/1 Impact,'Arial Black',sans-serif;
+    letter-spacing:-.5px;border-radius:7px;border:1.5px solid #ffc9c9;
+    box-shadow:0 1px 2px #0008, inset 0 1px 0 #ff7a7a88;
+  }
   .mobile-nav button span{font-size:9px;line-height:1.15}
   #toast{bottom:calc(env(safe-area-inset-bottom,0px) + 86px)!important}
   .tool-tile-icon{overflow:visible;width:48px;height:48px}
@@ -310,6 +332,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;background-im
   .hero-buttons .button{min-height:42px!important}
   .mobile-nav{min-height:70px}
   .mobile-art{width:28px!important;height:28px!important}
+  .mobile-netflix{width:26px;height:26px;font-size:14px;border-radius:6px}
   .mobile-nav button span{font-size:8.5px!important}
   .tool-tile-icon{width:50px!important;height:50px!important}
   .more-menu{padding:14px!important;gap:10px!important}
