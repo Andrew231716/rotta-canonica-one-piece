@@ -16,7 +16,7 @@
 body{background:radial-gradient(ellipse at 80% 0%,#174b64 0,transparent 44%),#091824;}
 .brand strong,.section-header h2,.arc-title,.stat-panel h3,.recover-body h3{font-family:'Pirata One',Georgia,serif;letter-spacing:.35px}
 .brand strong{font-size:23px}
-.hero{background:linear-gradient(90deg,rgba(7,29,45,.97) 0%,rgba(11,35,51,.91) 39%,rgba(17,61,72,.25) 85%),url('/assets/stella-salmastra.svg') center /cover no-repeat;border-color:#d4a6628a;min-height:324px}
+.hero{background:linear-gradient(90deg,rgba(7,29,45,.97) 0%,rgba(11,35,51,.91) 39%,rgba(17,61,72,.25) 85%),url('/assets/world-sunset.webp') center /cover no-repeat;border-color:#d4a6628a;min-height:324px}
 .hero:after{content:'';position:absolute;left:-8%;bottom:-48px;right:-8%;height:83px;background:radial-gradient(ellipse at 50% 0%,#97e5e65c 1%,transparent 58%);animation:seaDrift 7s ease-in-out infinite alternate;pointer-events:none}
 .hero-sea-art{position:absolute;inset:0;opacity:.18;background:repeating-linear-gradient(162deg,transparent 0 55px,rgba(240,232,200,.18) 58px,transparent 62px);animation:seaDrift 15s linear infinite alternate;pointer-events:none}
 .hero-copy{max-width:min(61%,570px)}
@@ -29,7 +29,7 @@ body{background:radial-gradient(ellipse at 80% 0%,#174b64 0,transparent 44%),#09
 .hero-sparkle{position:absolute;color:#ffdb77;text-shadow:0 0 13px #ffeeba;font-size:28px;animation:twinkle 2.9s ease-in-out infinite}
 .hero-sparkle.s1{top:30%;right:90%}.hero-sparkle.s2{top:12%;right:-9%;animation-delay:1.3s}
 .sidebar{background:linear-gradient(170deg,#0c2d46,#091b2a 60%,#0d222b);border-right-color:#a07a42}
-.sidebar:before{content:'';height:108px;display:block;flex-shrink:0;background:url('/assets/bandiera.svg') center/contain no-repeat;animation:shipSway 7s ease-in-out infinite;margin-bottom:-9px}
+.sidebar:before{content:'';height:108px;display:block;flex-shrink:0;background:url('/assets/ui-flag.webp') center/contain no-repeat;animation:shipSway 7s ease-in-out infinite;margin-bottom:-9px}
 .nav-button.active,.nav-button:hover{border-color:#a68a57 !important}
 .nav-button.active{background:linear-gradient(100deg,#4d3b27,#253f48)}
 .button.primary{background:linear-gradient(180deg,#ffe49c,#dfab59);box-shadow:0 4px 0 #825425;color:#2d2b25;border-color:#ffd484}
