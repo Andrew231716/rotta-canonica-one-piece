@@ -71,6 +71,14 @@ html:not([data-theme="ocean"]) .recover-range{
   .episode-jump{padding:10px}
   .mobile-more{width:26px;height:26px;gap:2.5px}
   .mobile-more i{width:4.5px;height:4.5px}
+  /* Home filters: search full-width, toggles on second row */
+  .section-header .section-extra{
+    display:flex;flex-wrap:wrap;gap:8px;align-items:center;width:100%;
+  }
+  .section-header .section-extra .search-box{
+    flex:1 1 100%;min-width:0;width:100%;
+  }
+  .section-header .section-extra .switch-holder{flex:0 0 auto}
 }
 @keyframes auditPulse{
   0%,100%{box-shadow:0 0 0 0 #e2b76c00}

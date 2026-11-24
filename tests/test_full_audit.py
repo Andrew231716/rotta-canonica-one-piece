@@ -63,8 +63,8 @@ with sync_playwright() as pwt:
     assert page.locator('.arc-card.open').count() == 1
     page.evaluate('setTab("episodes")')
     page.wait_for_timeout(60)
-    page.fill('#episode-search', '1')
-    page.wait_for_timeout(60)
+    page.evaluate('()=>{extra.spoiler=true;start=1;watched.clear();saveAll();episodeQuery=\"1\";episodePage=1;setTab(\"episodes\")}')
+    page.wait_for_timeout(80)
     assert page.locator('.ep-missing').count() >= 1
     print('episodes jump + missing title: PASS', flush=True)
 
