@@ -1,0 +1,95 @@
+/* Rotta Canonica v10: schede immersive con figura nel paesaggio e testo leggibile.
+   Nessuna modifica alla logica dati, spoiler, preferiti, account e progressi. */
+html[data-active-section="characters"] .main{overflow-x:clip}
+.character-section {--scene-border:#b28449;--scene-ink:#492918;}
+.character-section .character-grid{align-items:stretch;gap:16px}
+.character-section .char-card{
+ display:flex;flex-direction:column;min-width:0;position:relative;overflow:hidden;
+ border:3px solid #b68a53;border-radius:18px;
+ background:#faeed0;
+ box-shadow:inset 0 0 0 1px #ffdf8d,0 4px 0 #87633b55,0 13px 26px #2e4d4930;
+ transition:transform .18s ease,box-shadow .18s ease;
+}
+.character-section .char-card::before{
+ content:"";position:absolute;z-index:3;inset:5px 5px auto; height:1px;
+ border-radius:2px;background:linear-gradient(90deg,transparent,#ffe9a2 20%,#ffe9a2 80%,transparent);pointer-events:none;
+}
+.character-section .char-open{padding:0;display:flex;flex:1;flex-direction:column;min-height:0;border-radius:15px}
+.character-section .char-art{
+ position:relative;display:block;width:100%;height:auto;aspect-ratio: .77;
+ background:#2388ae;border-radius:14px 14px 0 0;overflow:hidden;
+}
+.character-section .char-photo-frame{position:absolute;inset:0;width:100%;height:100%;display:block}
+.character-section .char-art .character-portrait{
+ display:block;width:100%;height:100%;object-fit:cover!important;object-position:50% 50%!important;
+ transform:none!important;filter:none;transition:transform .25s ease!important;
+}
+@media(hover:hover){.character-section .char-card:hover:not(.is-locked) .char-art .character-portrait{transform:scale(1.018)!important}}
+.character-section .char-card{outline:none!important}
+.character-section .char-art::after{
+ content:"";z-index:1;position:absolute;pointer-events:none;inset:auto 0 0;height:24%;
+ background:linear-gradient(to bottom,rgba(250,238,208,0),rgba(250,238,208,.76) 69%,#faeed0 100%);
+}
+.character-section .char-copy{
+ padding:0 12px 11px;z-index:2;flex:1;display:flex;min-height:0;flex-direction:column;
+ margin-top:-9px;position:relative;align-items:stretch;gap:0;
+ background:linear-gradient(180deg,#faeed0 0%,#fff3d9 42%,#f8e7c4 100%);
+}
+.character-section .char-copy::before{
+ content:"";position:absolute;top:-7px;left:0;right:0;height:8px;
+ background:radial-gradient(ellipse at 50% 100%,#faeed0 60%,transparent 65%);background-size:20px 10px;
+}
+.character-section .char-kicker{
+ display:block;font:900 10px/1.15 'Nunito Sans',system-ui,sans-serif;
+ text-transform:uppercase;letter-spacing:1.15px;color:#93512a;margin:7px 0 0;
+}
+.character-section .char-title{
+ color:#442318;display:block;font:italic 900 clamp(21px,2.2vw,27px)/1.05 Georgia,'Times New Roman',serif!important;
+ min-height:2.15em;max-height:none;margin:6px 0 8px;overflow-wrap:anywhere;
+}
+.character-section .char-description{
+ color:#4a3e2f;font:750 12px/1.47 'Nunito Sans',system-ui,sans-serif;
+ min-height:4.42em;flex:1;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;
+}
+.character-section .char-cta{
+ border-radius:11px;padding:9px 10px;margin:12px 0 0;
+ background:linear-gradient(180deg,#ffe9aa,#e7b862);color:#542f16;
+ border:1px solid #9d6a2f;box-shadow:0 2px 0 #91572f65,inset 0 1px 0 #fff9dc;
+ line-height:1.14;min-height:37px;font:900 11px 'Nunito Sans',system-ui,sans-serif;
+}
+.character-section .char-cta small{color:#80502b;font-size:10px}
+.character-section .char-cta>span:last-child{font-size:22px;line-height:10px}
+.character-section .char-favorite{
+ top:12px!important;right:12px!important;left:auto!important;z-index:5;
+ width:38px;height:38px;border-radius:50%;border:2px solid #ffe4a9;
+ background:linear-gradient(#aa5539,#833522);color:#ffefb5;font-size:23px;
+ box-shadow:0 3px 8px #1f292f99;
+}
+.character-section .char-card.is-locked .char-art{background:#243747}
+.character-section .char-card.is-locked .char-art img.character-portrait{filter:brightness(0) opacity(.65)!important}
+.character-section .char-card.is-locked .char-hidden-mark{z-index:2;font:900 70px system-ui;color:#e5be79}
+.character-section .char-card.is-locked .char-favorite{background:#334452;color:#d9c3a2}
+.character-detail .detail-portrait .character-portrait{object-fit:contain!important;background:#e1edee}
+/* On mobile show two well-proportioned cards with consistent art and text blocks. */
+@media(max-width:650px){
+ .character-section .character-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+ .character-section .char-card{border-width:2px;border-radius:14px}
+ .character-section .char-art{aspect-ratio:.74;border-radius:11px 11px 0 0}
+ .character-section .char-copy{padding:0 9px 9px;margin-top:-8px}
+ .character-section .char-kicker{font-size:9px;letter-spacing:.9px}
+ .character-section .char-title{font-size:clamp(17px,4.8vw,21px)!important;line-height:1.06;min-height:2.12em;margin:5px 0 7px}
+ .character-section .char-description{font-size:10px;line-height:1.36;min-height:4.08em}
+ .character-section .char-cta{min-height:37px;margin-top:10px;padding:7px 7px;font-size:10px;gap:3px}
+ .character-section .char-cta small{font-size:8px}
+ .character-section .char-cta>span:last-child{font-size:17px}
+ .character-section .char-favorite{top:9px!important;right:9px!important;width:33px;height:33px;font-size:19px}
+ .character-section .characters-hero{margin-bottom:12px}
+}
+@media(max-width:350px){
+ .character-section .char-copy{padding:0 6px 7px}
+ .character-section .char-title{font-size:16px!important}
+ .character-section .char-description{font-size:9.2px}
+ .character-section .char-cta{font-size:9px;padding:7px 5px}
+ .character-section .char-cta small{font-size:7px}
+}
+@media(prefers-reduced-motion:reduce){.character-section .char-art img.character-portrait,.character-section .char-card{transition:none!important}}
