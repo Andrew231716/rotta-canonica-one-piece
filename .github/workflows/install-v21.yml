@@ -42,22 +42,11 @@ jobs:
           assert 'visual-style' in Path('features.js').read_text()
           assert 'anime-art-direction-v21.css' in Path('index.html').read_text()
           assert 'rotta-canonica-v21-anime-customizer' in Path('service-worker.js').read_text()
-          checker=Path('scripts/check-ui-assets.mjs')
-          check=checker.read_text()
-          old='rotta-canonica-v20-email-auth'
-          if old not in check:raise RuntimeError('Unexpected graphics checker version')
-          check=check.replace(old,'rotta-canonica-v21-anime-customizer')
-          check=check.replace("const pwaCss=await read('catalog-pwa-v19.css');","const pwaCss=await read('catalog-pwa-v19.css');\nconst animeCss=await read('anime-art-direction-v21.css');")
-          check=check.replace("if(!html.includes('/catalog-pwa-v19.css'))throw Error('Foglio PWA/catalogo v19 non collegato');","if(!html.includes('/catalog-pwa-v19.css'))throw Error('Foglio PWA/catalogo v19 non collegato');\nif(!html.includes('/anime-art-direction-v21.css'))throw Error('Stile anime v21 non caricato');\nif((animeCss.match(/\\{/g)||[]).length!==(animeCss.match(/\\}/g)||[]).length)throw Error('CSS anime non bilanciato');")
-          check += "\nfor(const name of ['anchor','chest','compass','complete','download','episode','filler','flag','locator','loot','map','netflix','progress','route','saga','sea-divider','spyglass','treasure','warning','wheel']){if(!assets.includes('/assets/anime-icons/'+name+'.webp'))throw Error('Icona anime fuori cache: '+name)}\nconsole.log('Rotta Canonica v21: 20 illustrazioni anime verificate');\n"
-          checker.write_text(check)
-          testfile=Path('tests/test_security_offline.cjs')
-          test=testfile.read_text()
-          if 'rotta-canonica-v20-email-auth' not in test or 'service-worker\\.js\\?v=20email' not in test:raise RuntimeError('Unexpected security test version')
-          test=test.replace('rotta-canonica-v20-email-auth','rotta-canonica-v21-anime-customizer')
-          test=test.replace('service-worker\\.js\\?v=20email','service-worker\\.js\\?v=21anime')
-          test += "\nassert.match(features,/appearanceStyle/);assert.match(features,/symbolStyle/);assert.match(features,/colorPalette/);assert.match(features,/animationLevel/);assert.match(app,/visual-style/);assert.match(app,/visual-palette/);\n"
-          testfile.write_text(test)
+          # v21 is already present in the repository: retain its more thorough current tests.
+          check=Path('scripts/check-ui-assets.mjs').read_text()
+          test=Path('tests/test_security_offline.cjs').read_text()
+          if 'rotta-canonica-v21-anime-customizer' not in check or 'animeCss' not in check:raise RuntimeError('v21 visual checks are absent')
+          if 'rotta-canonica-v21-anime-customizer' not in test or 'service-worker\\.js\\?v=21anime' not in test:raise RuntimeError('v21 security checks are absent')
           print('Imported',len(entries),'illustrated source files with cache and security checks')
           PY
       - name: Check app, catalog, local auth and illustrated assets
