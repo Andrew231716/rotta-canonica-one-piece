@@ -6,11 +6,15 @@ const html=await read('index.html');
 const sw=await read('service-worker.js');
 const css=await read('design-system-v16.css');
 const newCss=await read('nautical-finish-v18.css');
+const pwaCss=await read('catalog-pwa-v19.css');
 if(!html.includes('/nautical-finish-v18.css'))throw Error('Foglio grafico v18 non collegato');
+if(!html.includes('/catalog-pwa-v19.css'))throw Error('Foglio PWA/catalogo v19 non collegato');
+if((pwaCss.match(/\{/g)||[]).length!==(pwaCss.match(/\}/g)||[]).length)throw Error('CSS PWA v19 non valido');
 if((newCss.match(/\{/g)||[]).length!==(newCss.match(/\}/g)||[]).length)throw Error('CSS v18 non valido');
 const feature=await read('features.js');
 if(!html.includes('/design-system-v16.css'))throw Error('Foglio grafico v16 non collegato');
-if(!/rotta-canonica-v18-1-ui/.test(sw))throw Error('Cache PWA non aggiornata alla v18');
+if(!/rotta-canonica-v19-catalog-offline/.test(sw))throw Error('Cache PWA non aggiornata alla v19');
+if(!sw.includes("'/data/episodes-latest.json'"))throw Error('Feed delle nuove uscite non incluso nella cache offline');
 if(!feature.includes('[2,5,4,6,2,5][i%6]'))throw Error('Mappa priva delle miniature illustrate per le saghe');
 if((css.match(/\{/g)||[]).length!==(css.match(/\}/g)||[]).length)throw Error('Parentesi CSS non bilanciate');
 const precache=sw.match(/const ASSETS=(\[[\s\S]*?\]);/);
@@ -27,4 +31,5 @@ for(const rel of referenced){
  try{await access('.'+rel)}catch{missing.push(rel)}
 }
 if(missing.length)throw Error('Asset mancanti: '+missing.join(', '));
-console.log('UI assets OK:',referenced.size,'file verificati, 12 personaggi, 6 tappe illustrate');
+if(!assets.includes('/catalog-pwa-v19.css')||!assets.includes('/data/episodes-latest.json'))throw Error('Cache offline incompleta');
+console.log('UI assets OK:',referenced.size,'file verificati, 12 personaggi, 6 tappe illustrate, catalogo e feed offline');

@@ -1,0 +1,15 @@
+/* Rotta Canonica v19 — catalog provenance and iPhone PWA controls. */
+.episode-source-links{display:flex;flex-wrap:wrap;gap:7px;margin:11px 0}
+.episode-source-links a,.attribution-links a{display:inline-flex;align-items:center;min-height:35px;padding:7px 10px;border:1px solid #b58b55;border-radius:9px;background:linear-gradient(#fff8e6,#f1dfbd);color:#65452a;font-size:12px;font-weight:900;text-decoration:none}
+.episode-source-links a:hover,.attribution-links a:hover{background:#ffe9b8;text-decoration:underline}
+.chapter-details{margin:10px 0;padding:11px 12px;border:1px solid #b88a50;border-radius:12px;background:linear-gradient(135deg,#fff6e2,#f4e1bd)}
+.chapter-details>b{display:block;margin-bottom:8px;color:#5c3d27;font-size:12px;text-transform:uppercase;letter-spacing:.4px}
+.chapter-details>div{display:flex;flex-wrap:wrap;gap:7px}
+.chapter-details a,.chapter-details span{display:inline-flex;padding:6px 9px;border-radius:8px;background:#fffaf0;border:1px solid #d2b789;color:#65452a;font-size:12px;font-weight:800;text-decoration:none}
+.episode-detail .detail-source{line-height:1.6}
+.pwa-install-panel{border:2px solid #b38a52!important;background:linear-gradient(145deg,#fff8e8,#e9f4f2)!important}
+.ios-install-steps{padding-left:22px;margin:12px 0;color:#584633}
+.ios-install-steps li{padding:5px 0 5px 3px;font-size:13px;line-height:1.55}
+.attribution-links{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.settings-columns .paper-panel{min-width:0}
+@media(max-width:650px){.episode-source-links a,.attribution-links a{min-height:40px;font-size:11px}.chapter-details{padding:9px}.chapter-details a,.chapter-details span{font-size:11px}.ios-install-steps li{font-size:12px}}

@@ -39,7 +39,8 @@ const arcData = [
   ['Whole Cake Island',783,877,'Yonko'],
   ['Reverie',878,889,'Yonko'],
   ['Wano',890,1085,'Wano'],
-  ['Egghead',1086,1155,'Saga finale']
+  ['Egghead',1086,1155,'Saga finale'],
+  ['Elbaph',1156,1180,'Saga finale']
 ];
 const fillerData = [
   ['50–51','Loguetown: sfide extra'],['54–60','Warship Island (Apis e draghi)'],['98–99','Avventure extra ad Alabasta'],['102','Tappa aggiuntiva ad Alabasta'],
@@ -138,14 +139,11 @@ function validReview(e){
     && typeof review?.checkedAt==='string' && /^\d{4}-\d{2}-\d{2}$/.test(review.checkedAt);
 }
 function validatedRelease(e){
-  const n=Number(e?.number);
-  if(!Number.isInteger(n)||n<=BASE_MAX||n>CATALOG_LIMIT)return null;
-  const date=typeof e.aired==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(e.aired)?e.aired:null;
-  if(!date || Number.isNaN(Date.parse(date)) || Date.parse(date)>Date.now()+86400000)return null;
-  const reviewed=validReview(e);
-  return {number:n,title:typeof e.title==='string'?e.title.slice(0,160):'',aired:date,
-    classification:reviewed?e.classification:'unverified',
-    classificationReview:reviewed?{url:e.classificationReview.url,checkedAt:e.classificationReview.checkedAt}:null};
+ const n=Number(e?.number);if(!Number.isInteger(n)||n<=BASE_MAX||n>CATALOG_LIMIT)return null;
+ const date=typeof e.aired==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(e.aired)?e.aired:null;if(!date||Number.isNaN(Date.parse(date))||Date.parse(date)>Date.now()+86400000)return null;
+ const reviewed=validReview(e),safeSource=s=>s&&typeof s.url==='string'&&/^https:\/\/[^\s]+$/.test(s.url)?{provider:String(s.provider||'Fonte esterna').slice(0,100),url:s.url,checkedAt:String(s.checkedAt||'').slice(0,40),revisionId:s.revisionId||null,license:s.license||null,fields:Array.isArray(s.fields)?s.fields.slice(0,8):[]}:null;
+ const chapterDetails=Array.isArray(e.chapterDetails)?e.chapterDetails.slice(0,20).filter(x=>Number.isInteger(Number(x.chapter))&&Number(x.chapter)>0).map(x=>({chapter:Number(x.chapter),pages:String(x.pages||'').slice(0,70),url:typeof x.url==='string'&&/^https:\/\/[^\s]+$/.test(x.url)?x.url:''})):[];
+ return {number:n,title:typeof e.title==='string'?e.title.slice(0,160):'',aired:date,classification:reviewed?e.classification:'unverified',classificationReview:reviewed?{url:e.classificationReview.url,checkedAt:e.classificationReview.checkedAt}:null,summary:typeof e.summary==='string'?e.summary.slice(0,650):null,chapter:typeof e.chapter==='string'?e.chapter.slice(0,150):null,chapterDetails,chapterStatus:String(e.chapterStatus||'').slice(0,40),summaryStatus:String(e.summaryStatus||'').slice(0,40),summaryLanguage:String(e.summaryLanguage||'').slice(0,8),source:safeSource(e.source),titleSource:safeSource(e.titleSource),summarySource:safeSource(e.summarySource),chapterSource:safeSource(e.chapterSource),editorialSource:safeSource(e.editorialSource),verifiedAt:String(e.verifiedAt||'').slice(0,40)};
 }
 function availableEpisodeNumbers(){return Array.from({length:BASE_MAX},(_,i)=>i+1).concat(weeklyEpisodes.map(e=>e.number));}
 function releaseByNumber(n){return weeklyEpisodes.find(e=>e.number===n)||null;}
@@ -233,4 +231,9 @@ document.addEventListener('keydown',e=>{
  else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}
 });
 applyTheme();render();loadCatalog();loadWeeklyEpisodes();checkReminder();
-if('serviceWorker' in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('/service-worker.js?v=17safe').catch(()=>{}));
+if('serviceWorker' in navigator){
+ navigator.serviceWorker.addEventListener('message',event=>{if(event.data?.type==='ROTTA_SW_UPDATED')toast('Rotta aggiornata: catalogo e nuove uscite pronti per l’uso offline.')});
+ window.addEventListener('load',()=>navigator.serviceWorker.register('/service-worker.js?v=19offline',{updateViaCache:'none'}).then(reg=>reg.update().catch(()=>{})).catch(()=>{}));
+}
+window.addEventListener('offline',()=>toast('Sei offline: puoi continuare con il catalogo già caricato.'));
+window.addEventListener('online',()=>{toast('Connessione ripristinata.');loadWeeklyEpisodes()});

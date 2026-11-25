@@ -20,7 +20,7 @@ for(let n=1;n<=last;n++){
 let changed=0;const now=new Date().toISOString();
 for(const ep of doc.episodes){const found=titles.get(ep.n);if(!found)continue;
  if(ep.title===null||ep.title===undefined||ep.title===''){
- ep.title=found.title;ep.source={provider:'Jikan API (MyAnimeList, community metadata)',url:'https://myanimelist.net/anime/21/One_Piece',checkedAt:now,fields:['title']};ep.verifiedAt=now;changed++;
+ ep.title=found.title;ep.source={provider:'Jikan API (MyAnimeList, fallback)',url:'https://myanimelist.net/anime/21/One_Piece/episode/'+ep.n,checkedAt:now,fields:['title']};ep.titleSource=ep.source;ep.verifiedAt=now;changed++;
  }
 }
 doc.catalogDisclaimer='Titoli tratti da Jikan/MyAnimeList (fonte terza); sinossi, capitoli e classificazione manga devono essere verificati separatamente.';
