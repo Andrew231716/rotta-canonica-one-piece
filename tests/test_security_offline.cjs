@@ -12,6 +12,6 @@ assert.match(cloud,/signInWithOAuth/);
 assert.match(sw,/OFFLINE_CORE/);
 assert.match(sw,/Promise\.allSettled/);
 assert.match(sw,/ignoreSearch\s*:\s*true/);
-assert.match(sw,/rotta-canonica-v17-safe-offline/);
+assert.match(sw,/rotta-canonica-v18-vector-ui/);
 assert.match(app,/service-worker\.js\?v=17safe/);
 console.log('Security and offline checks passed');
