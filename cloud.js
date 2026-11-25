@@ -19,7 +19,11 @@ function cloudPanel(){
    </div>
    <small class="cloud-email-hint">Gratis: stessa email e password su iPhone, Android e PC. Alla prima sincronizzazione i progressi si uniscono.</small>
  </form>`:`<p class="cloud-offline-note">La sincronizzazione cloud non è disponibile in questa sessione. I progressi restano salvati sul dispositivo: usa Esporta/Importa dalle Impostazioni.</p>`;
- return `<section class="paper-panel cloud-panel"><h3>${art('compass')} Account e sincronizzazione</h3><p class="cloud-status" role="status">${cleanText(status)}</p><p>Conserva i progressi sul dispositivo e sincronizza gratis la rotta tra iPhone, Android e PC. La prima sincronizzazione unisce i dati anziché cancellarli.</p>${login}
+ const oauthButtons=(!signed&&online)?[
+  s.config?.oauthGoogleEnabled?'<button type="button" class="button small secondary" data-cloud-action="google">Continua con Google</button>':'',
+  s.config?.oauthAppleEnabled?'<button type="button" class="button small secondary" data-cloud-action="apple">Continua con Apple</button>':''
+ ].filter(Boolean).join(''):'';
+ return `<section class="paper-panel cloud-panel"><h3>${art('compass')} Account e sincronizzazione</h3><p class="cloud-status" role="status">${cleanText(status)}</p><p>Conserva i progressi sul dispositivo e sincronizza gratis la rotta tra iPhone, Android e PC. La prima sincronizzazione unisce i dati anziché cancellarli.</p>${login}${oauthButtons?'<div class="cloud-oauth-options" role="group" aria-label="Accesso con account esterno">'+oauthButtons+'</div>':''}
  ${s.accountConflict?'<div class="account-switch-warning"><strong>Account differente su questo dispositivo</strong><p>Esporta un backup prima di procedere. Per utilizzare il nuovo account è necessario cancellare esplicitamente i vecchi dati locali; non saranno trasferiti nel nuovo account.</p><button class="button small secondary" data-action="export">Esporta backup</button> <button class="button small danger" data-cloud-action="account-switch">Passa al nuovo account</button></div>':''}<div class="setting-item"><div><b>Notifiche nuove puntate</b><small>Notifiche push solo dopo consenso, login e installazione della PWA sui dispositivi che lo richiedono.</small></div><div class="row-buttons"><button class="button small secondary" data-cloud-action="push-on" ${!signed||s.accountConflict||!s.config?.vapidPublicKey?'disabled':''}>Attiva</button><button class="button small secondary" data-cloud-action="push-off" ${!signed||s.accountConflict?'disabled':''}>Disattiva</button></div></div><p class="smallprint">${s.state==='unconfigured'?'Il backend non è ancora configurato: i tuoi dati locali e i backup continuano a funzionare.':'La sincronizzazione usa il tuo account; i dati restano privati e puoi sempre esportarli.'}</p></section>`;
 }
 function cloudChanged(){if(typeof tab!=='undefined'&&tab==='settings'&&typeof render==='function')render()}
@@ -122,9 +126,9 @@ function cloudCredentials(fromEl){
  return {email,password};
 }
 async function cloudRegister(email,password){
- const res=await fetch('/api/auth/register',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password}),cache:'no-store'});
- const data=await res.json().catch(()=>({}));
- if(!res.ok)throw Error(data.error||'Registrazione non riuscita');
+ const {data,error}=await cloudClient.auth.signUp({email,password,options:{emailRedirectTo:window.location.origin+'/'}});
+ if(error)throw error;
+ return Boolean(data?.session);
 }
 async function cloudPasswordLogin(email,password){
  const {data,error}=await cloudClient.auth.signInWithPassword({email,password});
@@ -138,13 +142,21 @@ async function cloudAction(action,fromEl){try{
  if(!cloudClient||CLOUD_STATUS.state!=='ready'){toast('Sincronizzazione cloud da configurare');return}
  if(action==='register'){
   const {email,password}=cloudCredentials(fromEl);
-  await cloudRegister(email,password);
-  await cloudPasswordLogin(email,password);
+  const hasSession=await cloudRegister(email,password);
+  if(hasSession)await cloudPasswordLogin(email,password);
+  else toast('Controlla la tua email e conferma l’indirizzo prima di accedere');
   return;
  }
  if(action==='login'){
   const {email,password}=cloudCredentials(fromEl);
   await cloudPasswordLogin(email,password);
+  return;
+ }
+ if(action==='google'||action==='apple'){
+  const enabled=action==='google'?CLOUD_STATUS.config?.oauthGoogleEnabled:CLOUD_STATUS.config?.oauthAppleEnabled;
+  if(!enabled)throw Error('Accesso non ancora configurato per questo provider');
+  const {error}=await cloudClient.auth.signInWithOAuth({provider:action,options:{redirectTo:window.location.origin+'/'}});
+  if(error)throw error;
   return;
  }
  if(action==='logout'){await cloudClient.auth.signOut();CLOUD_STATUS.user=null;CLOUD_STATUS.accountConflict=false;cloudInitial=false;cloudChanged();toast('Account scollegato; dati locali conservati');return}
