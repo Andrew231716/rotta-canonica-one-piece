@@ -1,0 +1,88 @@
+name: Publish anime scenic visual fidelity v22
+on:
+  push:
+    branches: [main]
+    paths:
+      - staging/rotta-v22-illustrations-release.zip
+      - .github/workflows/install-v22.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install original anime art and scenic styles
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path, PurePosixPath
+          import zipfile
+          portraits=['luffy','zoro','nami','usopp','sanji','chopper','robin','franky','brook','jinbe']
+          expected={'anime-scenic-v22.css','features.js','index.html','service-worker.js','tests/test_security_offline.cjs','assets/anime-v22-archipelago.webp','assets/anime-v22-sunset.webp'}
+          expected.update('assets/anime-v22-portraits/'+name+'.webp' for name in portraits)
+          zpath=Path('staging/rotta-v22-illustrations-release.zip')
+          with zipfile.ZipFile(zpath,'r') as z:
+              found=set(z.namelist())
+              if found!=expected:raise RuntimeError('Unexpected release content: '+str(sorted(found^expected)))
+              for name in sorted(found):
+                  p=PurePosixPath(name)
+                  if p.is_absolute() or '..' in p.parts:raise RuntimeError('Unsafe archive member '+name)
+                  data=z.read(name)
+                  if not data:raise RuntimeError('Empty file '+name)
+                  out=Path(name);out.parent.mkdir(parents=True,exist_ok=True);out.write_bytes(data)
+          assert 'v22FeaturedCharacters' in Path('features.js').read_text()
+          assert 'anime-scenic-v22.css?v=22a1' in Path('index.html').read_text()
+          assert 'rotta-canonica-v22-scenic-anime' in Path('service-worker.js').read_text()
+          checker=Path('scripts/check-ui-assets.mjs')
+          src=checker.read_text()
+          if "const animeCss=await read('anime-art-direction-v21.css');" not in src:raise RuntimeError('Unknown graphics checker version')
+          src=src.replace("const animeCss=await read('anime-art-direction-v21.css');",
+            "const animeCss=await read('anime-art-direction-v21.css');\nconst scenicCss=await read('anime-scenic-v22.css');")
+          src=src.replace("['v21',animeCss]","['v21',animeCss],['v22',scenicCss]")
+          src=src.replace('rotta-canonica-v21-anime-customizer','rotta-canonica-v22-scenic-anime')
+          src += """
+          if(!html.includes('/anime-scenic-v22.css?v=22a1'))throw Error('Scenic anime v22 CSS missing from HTML');
+          if(!features.includes('v22FeaturedCharacters')||!features.includes('char-role-icon'))throw Error('Full-body manga cards not installed');
+          for(const asset of ['/anime-scenic-v22.css','/assets/anime-v22-archipelago.webp','/assets/anime-v22-sunset.webp'])if(!assets.includes(asset))throw Error('Missing offline scenery: '+asset);
+          for(const char of ['luffy','zoro','nami','usopp','sanji','chopper','robin','franky','brook','jinbe']){
+            const file='/assets/anime-v22-portraits/'+char+'.webp';
+            if(!assets.includes(file))throw Error('Portrait missing from offline cache: '+char);
+            try{await access('.'+file)}catch{throw Error('Portrait file missing: '+char)}
+          }
+          console.log('Scenic manga v22: 10 portraits, 2 backgrounds, UI roles and offline cache verified.');
+          """
+          checker.write_text(src)
+          with Path('README.md').open('a') as note:
+              note.write("""\n## Anime scenografico v22\nNuova composizione fedele al concept: Nami, Usopp, Sanji e Chopper in primo piano in pannelli illustrati con pergamene, conservando tutti gli altri personaggi. Il progetto integra 10 ritratti full-body, 2 scenari marini e il foglio di stile anime-scenic-v22.css. Le altre sezioni usano la stessa palette. Temi vintage/vettoriale, colorazioni personalizzabili, antispoiler, salvataggi e login email sono preservati. Movimento del mare, bandiera e scintille sono discreti e disattivabili. La preferenza di sistema prefers-reduced-motion è rispettata. Cache PWA: rotta-canonica-v22-scenic-anime.\n""")
+          print('Installed',len(expected),'release files')
+          PY
+      - name: Verify source integrity, email auth and PWA
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --check app.js
+          node --check features.js
+          node --check cloud.js
+          node --check service-worker.js
+          node scripts/validate-data.mjs
+          node scripts/check-ui-assets.mjs
+          node tests/test_security_offline.cjs
+      - name: Commit verified v22 assets and code, remove staging
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "Rotta Canonica Bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add anime-scenic-v22.css index.html features.js service-worker.js tests/test_security_offline.cjs scripts/check-ui-assets.mjs README.md assets/anime-v22-archipelago.webp assets/anime-v22-sunset.webp assets/anime-v22-portraits/
+          git rm -- staging/rotta-v22-illustrations-release.zip .github/workflows/install-v22.yml
+          git commit -m "feat(ui): release full-body scenic anime character art and manga panels"
+          git push
