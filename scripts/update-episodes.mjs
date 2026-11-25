@@ -19,5 +19,9 @@ for(const page of pages)for(const ep of page.data){const number=Number(ep.mal_id
 const previous=new Map((Array.isArray(old.episodes)?old.episodes:[]).filter(e=>Number.isInteger(e.number)&&e.number>BASE&&e.number<=3000).map(e=>[e.number,e]));
 for(const [n,entry] of observed){const prior=previous.get(n)||{};const wikiTitle=!!prior.titleSource&&/One Piece Wiki Italia|One Piece Wiki|Crunchyroll|Prime Video/i.test(prior.titleSource.provider||'');const merged={...prior,...entry,title:wikiTitle?prior.title:entry.title,source:wikiTitle?prior.source:{provider:'Jikan API (MyAnimeList, fallback)',url:'https://myanimelist.net/anime/21/One_Piece/episode/'+n,checkedAt:new Date().toISOString(),fields:['title']},classification:['canon','mixed','filler'].includes(prior.classification)?prior.classification:'unverified',classificationReview:prior.classificationReview||null};if(wikiTitle)merged.titleSource=prior.titleSource;previous.set(n,merged)}
 const episodes=[...previous.values()].sort((a,b)=>a.number-b.number);
-const data={schemaVersion:1,source:'Jikan API (MyAnimeList, fonte terza non ufficiale)',checkedAt:new Date().toISOString(),latest:Math.max(BASE,...episodes.map(e=>e.number)),episodes};
-await writeFile(OUT,JSON.stringify(data,null,2)+'\n');console.log('Nuove uscite:',episodes.length,'· Da verificare:',episodes.filter(e=>e.classification==='unverified').length);
+const latest=Math.max(BASE,...episodes.map(e=>e.number));
+const previousComparable=JSON.stringify((old.episodes||[]).map(e=>{const {source,...rest}=e; if(source?.checkedAt){const {checkedAt,...s}=source;return {...rest,source:s}}return e}));
+const nextComparable=JSON.stringify(episodes.map(e=>{const {source,...rest}=e; if(source?.checkedAt){const {checkedAt,...s}=source;return {...rest,source:s}}return e}));
+if(previousComparable===nextComparable && Number(old.latest||BASE)===latest){console.log('Nessuna nuova puntata: feed invariato');process.exit(0)}
+const data={...old,schemaVersion:1,source:'Jikan API (MyAnimeList, fonte terza non ufficiale)',checkedAt:new Date().toISOString(),latest,episodes};
+await writeFile(OUT,JSON.stringify(data,null,2)+'\n');console.log('Puntate rilevate:',episodes.length,'· Ultima:',latest,'· Da verificare:',episodes.filter(e=>e.classification==='unverified').length);
