@@ -24,6 +24,8 @@ for(const ep of doc.episodes){const found=titles.get(ep.n);if(!found)continue;
  }
 }
 doc.catalogDisclaimer='Titoli tratti da Jikan/MyAnimeList (fonte terza); sinossi, capitoli e classificazione manga devono essere verificati separatamente.';
-doc.lastTitleImport=now;
-await writeFile(DEST,JSON.stringify(doc,null,2)+'\n','utf8');
+if(changed>0){
+ doc.lastTitleImport=now;
+ await writeFile(DEST,JSON.stringify(doc,null,2)+'\n','utf8');
+}
 console.log('Titoli aggiunti:',changed,'· Episodi catalogati:',doc.episodes.length,'· Episodi disponibili nella fonte:',titles.size);

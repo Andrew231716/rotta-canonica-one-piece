@@ -7,7 +7,7 @@ const sw=await read('service-worker.js');
 const css=await read('design-system-v16.css');
 const feature=await read('features.js');
 if(!html.includes('/design-system-v16.css'))throw Error('Foglio grafico v16 non collegato');
-if(!/rotta-canonica-v16-ui/.test(sw))throw Error('Cache PWA non aggiornata alla v16');
+if(!/rotta-canonica-v17-safe-offline/.test(sw))throw Error('Cache PWA non aggiornata alla v17');
 if(!feature.includes('route-$'+'{(i%6)+1}.webp'))throw Error('Mappa priva di paesaggi anti-spoiler');
 if((css.match(/\{/g)||[]).length!==(css.match(/\}/g)||[]).length)throw Error('Parentesi CSS non bilanciate');
 const precache=sw.match(/const ASSETS=(\[[\s\S]*?\]);/);

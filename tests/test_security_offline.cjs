@@ -1,0 +1,17 @@
+'use strict';
+const assert=require('node:assert/strict');
+const {readFileSync}=require('node:fs');
+const read=p=>readFileSync(p,'utf8');
+const reg=read('api/auth/register.js'),cloud=read('cloud.js'),sw=read('service-worker.js'),app=read('app.js');
+assert.match(reg,/status\(410\)/);
+assert.doesNotMatch(reg,/email_confirm\s*:\s*true/);
+assert.doesNotMatch(reg,/auth\/v1\/admin\/users/);
+assert.match(cloud,/cloudClient\.auth\.signUp/);
+assert.doesNotMatch(cloud,/fetch\('\/api\/auth\/register'/);
+assert.match(cloud,/signInWithOAuth/);
+assert.match(sw,/OFFLINE_CORE/);
+assert.match(sw,/Promise\.allSettled/);
+assert.match(sw,/ignoreSearch\s*:\s*true/);
+assert.match(sw,/rotta-canonica-v17-safe-offline/);
+assert.match(app,/service-worker\.js\?v=17safe/);
+console.log('Security and offline checks passed');
