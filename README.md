@@ -18,3 +18,15 @@ Scene illustrate a tutta card in Personaggi (`/assets/character-scenes/`). Vedi 
 - I contenuti della community One Piece Wiki Italia / Fandom e le traduzioni delle schede inglesi per le nuove uscite sono attribuiti alle rispettive revisioni e restano soggetti a CC BY-SA 3.0 salvo diversa indicazione. Consulta `DATA_ATTRIBUTION.md`.
 - Il service worker usa cache network-first per HTML/CSS/JS/JSON e mantiene offline sia `episodes.json` sia `episodes-latest.json`.
 - Su iPhone: aprire il sito in Safari → Condividi → Aggiungi alla schermata Home. Per l'offline, caricare l'app una prima volta con rete.
+
+## Grafica anime illustrata e personalizzazione (v21)
+
+**Percorso:** in app apri **Altro → Impostazioni → Personalizza l'avventura**.
+
+- **Stile grafico:** Anime avventura (predefinito), Oceano celeste, Notte dei pirati oppure Pergamena classica.
+- **Simboli:** 20 icone originali anime dettagliate, stemmi nautici vintage o simboli vettoriali essenziali.
+- **Colori:** Rosso avventura, Blu mare, Oro del tesoro, Viola misterioso, oppure un colore esadecimale selezionato manualmente.
+- **Animazioni:** Complete, Delicate o Disattivate. La preferenza di accessibilità del dispositivo per movimento ridotto prevale sulle animazioni.
+- **Ripristino:** il pulsante «Ripristina la grafica anime» reimposta stile, simboli, colori e movimenti.
+
+Le preferenze visive sono salvate **solo nel browser locale** insieme alle altre impostazioni del viaggio. Nessuna modifica alla registrazione email via Supabase, ai progressi degli episodi o al monitoraggio delle nuove uscite. Gli asset sono immagini ottimizzate e le icone decorative hanno sfondi trasparenti. La PWA usa la cache `rotta-canonica-v21-anime-customizer`.
