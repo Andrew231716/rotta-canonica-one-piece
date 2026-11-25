@@ -1,0 +1,206 @@
+/* Rotta Canonica v28 — Grand Line Interactive Atlas
+   Additive map experience. Preserves SAGA_GROUPS progress + antispoiler. */
+.gl-atlas-shell{max-width:1200px}
+.gl-atlas.map-board{
+  position:relative;overflow:hidden;padding:16px!important;
+  border:3px solid var(--gl-wood,#5C3A24)!important;border-radius:22px!important;
+  background:
+    linear-gradient(160deg,rgba(7,30,43,.55),rgba(11,58,79,.28) 40%,rgba(243,234,219,.88)),
+    url('/assets/anime-v22-archipelago.webp') center 40%/cover no-repeat!important;
+  box-shadow:var(--gl-shadow,0 4px 0 #3a241880,0 14px 28px #05253633)!important;
+  color:var(--gl-ink,#1F3340);
+}
+.gl-atlas-top{
+  display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
+  padding:4px 6px 14px;border-bottom:1px dashed rgba(201,162,39,.45);margin-bottom:14px;
+}
+.gl-atlas-kicker{
+  display:block;font-size:10px;letter-spacing:.18em;font-weight:800;color:var(--gl-coral,var(--anime-accent,#C44536));
+}
+.gl-atlas-top strong{
+  font-family:Georgia,"Palatino Linotype",Palatino,serif;font-size:clamp(18px,2.4vw,26px);
+  color:#FFF6E0;text-shadow:0 2px 0 #0006;
+}
+.gl-atlas-voyage{
+  display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border-radius:999px;
+  background:rgba(251,246,236,.92);border:1px solid rgba(201,162,39,.5);font-size:12px;font-weight:700;
+}
+.gl-atlas-dial{width:26px;height:26px;flex:none}
+
+.gl-atlas-layout{
+  display:grid;grid-template-columns:minmax(0,1.35fr) minmax(260px,.85fr);gap:14px;align-items:stretch;
+}
+.gl-atlas-stage{
+  position:relative;isolation:isolate;min-height:clamp(320px,52vw,460px);
+  border-radius:18px;overflow:hidden;
+  border:2px solid rgba(92,58,36,.55);
+  background:
+    radial-gradient(120% 80% at 50% 100%,rgba(63,169,201,.35),transparent 55%),
+    linear-gradient(180deg,rgba(11,58,79,.35),rgba(7,30,43,.25)),
+    url('/assets/anime-ocean-bg.webp') center 60%/cover no-repeat;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.12);
+}
+.gl-atlas-sea{
+  position:absolute;inset:auto 0 0 0;height:34%;pointer-events:none;z-index:0;
+  background:
+    linear-gradient(0deg,rgba(7,30,43,.5),transparent),
+    radial-gradient(ellipse at 30% 80%,rgba(184,228,239,.35),transparent 50%),
+    radial-gradient(ellipse at 70% 100%,rgba(63,169,201,.3),transparent 45%);
+}
+.gl-atlas-routes{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
+.gl-atlas-route-line{
+  fill:none;stroke:rgba(201,162,39,.28);stroke-width:1.2;stroke-linecap:round;
+}
+.gl-atlas-route-dash{
+  fill:none;stroke:rgba(243,234,219,.85);stroke-width:.7;stroke-linecap:round;
+  stroke-dasharray:2.2 2.4;
+}
+
+.gl-atlas-islands{position:absolute;inset:0;z-index:2}
+.gl-island{
+  position:absolute;left:var(--ix);top:var(--iy);transform:translate(-50%,-50%);
+  width:min(132px,28vw);padding:0;border:0;background:transparent;cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;
+  touch-action:manipulation;z-index:2;
+}
+.gl-island-pin{
+  position:relative;z-index:3;min-width:28px;padding:2px 7px;border-radius:999px;
+  background:linear-gradient(180deg,#C44536,#8a2e22);color:#fff8e8;font:800 11px/1.2 Georgia,serif;
+  border:1px solid #f0d27a;box-shadow:0 2px 0 #3a1a14aa;
+}
+.gl-island-media{
+  position:relative;width:92px;height:70px;border-radius:16px;overflow:hidden;
+  border:2px solid var(--gl-wood,#5C3A24);background:#0b3a4f;
+  box-shadow:0 4px 0 #3a241866,0 8px 16px #04182044;
+  transition:transform .22s cubic-bezier(.22,.7,.28,1),box-shadow .22s ease;
+}
+.gl-island-media>img:first-child{width:100%;height:100%;object-fit:cover;display:block}
+.gl-island-badge{
+  position:absolute;right:4px;bottom:4px;width:28px;height:28px;object-fit:contain;
+  filter:drop-shadow(0 2px 1px #0008);
+}
+.gl-island-label{
+  max-width:118px;padding:4px 7px;border-radius:10px;
+  background:rgba(251,246,236,.94);border:1px solid rgba(92,58,36,.35);
+  box-shadow:0 2px 0 #5c3a2422;color:#1F3340;
+}
+.gl-island-label b{display:block;font-size:11px;line-height:1.2;font-family:Georgia,serif}
+.gl-island-label small{display:block;font-size:10px;color:#4A5F6B;margin-top:2px}
+.gl-island:hover .gl-island-media,.gl-island:focus-visible .gl-island-media{transform:translateY(-3px) scale(1.04)}
+.gl-island.is-selected{z-index:4}
+.gl-island.is-selected .gl-island-media{
+  outline:2px solid var(--gl-gold,#C9A227);outline-offset:2px;
+  box-shadow:0 0 0 3px rgba(196,69,54,.28),0 6px 0 #3a241866;
+}
+.gl-island.you-are-here .gl-island-pin{background:linear-gradient(180deg,#C9A227,#8a6a18);color:#1F3340}
+.gl-island.is-completed .gl-island-pin{background:linear-gradient(180deg,#2f8f5b,#1d5f3c)}
+.gl-island.fogged .gl-island-media{filter:grayscale(.85) brightness(.7) opacity(.55)}
+.gl-island.fogged .gl-island-label{opacity:.75}
+.gl-island[aria-disabled="true"]{cursor:not-allowed}
+.gl-island[aria-disabled="true"]:hover .gl-island-media{transform:none}
+
+.gl-atlas-compass{position:absolute;right:10px;top:10px;opacity:.55;z-index:1;pointer-events:none}
+.gl-atlas-compass img{width:56px;height:56px;object-fit:contain}
+
+.gl-atlas-panel{
+  display:flex;flex-direction:column;gap:0;min-width:0;border-radius:18px;overflow:hidden;
+  border:2px solid var(--gl-wood,#5C3A24);
+  background:linear-gradient(155deg,#FBF6EC,#E8D9B5);
+  box-shadow:var(--gl-shadow,0 4px 0 #3a241880,0 14px 28px #05253633);
+  animation:glAtlasPanel .35s cubic-bezier(.22,.7,.28,1) both;
+}
+.gl-atlas-panel-empty{padding:22px 18px;text-align:center;color:#4A5F6B}
+.gl-atlas-panel-empty b{display:block;margin:8px 0 4px;color:#1F3340;font-family:Georgia,serif;font-size:20px}
+.gl-atlas-panel-art{width:64px;height:64px;margin:0 auto;object-fit:contain}
+.gl-atlas-panel-art-wrap{position:relative;min-height:132px;background:#0B3A4F}
+.gl-atlas-panel-scene{width:100%;height:132px;object-fit:cover;display:block;filter:saturate(1.05)}
+.gl-atlas-panel-stamp{
+  position:absolute;left:12px;top:12px;padding:4px 9px;border-radius:999px;
+  background:rgba(251,246,236,.95);border:1px solid #C9A227;font:800 11px Georgia,serif;color:#1F3340;
+}
+.gl-atlas-panel-copy{padding:14px 16px 16px;display:flex;flex-direction:column;gap:8px}
+.gl-atlas-panel-copy h3{
+  margin:0;font-family:Georgia,serif;font-size:clamp(22px,2.5vw,28px);line-height:1.1;color:#1F3340;
+}
+.gl-atlas-panel-copy p{margin:0;font-size:13px;line-height:1.5;color:#4A5F6B}
+.gl-atlas-meta{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:12px;font-weight:700;color:#1F3340}
+.gl-atlas-status{
+  padding:3px 8px;border-radius:999px;border:1px solid rgba(92,58,36,.35);background:#fff8e8;font-size:11px;
+}
+.gl-atlas-status.is-completed{background:#e4f5ea;border-color:#2f8f5b;color:#1d5f3c}
+.gl-atlas-status.is-active{background:#fff0e6;border-color:#C44536;color:#8a2e22}
+.gl-atlas-track{height:8px;border-radius:999px;background:rgba(92,58,36,.15);overflow:hidden}
+.gl-atlas-track>i{display:block;height:100%;background:linear-gradient(90deg,var(--anime-accent,#C44536),#C9A227);border-radius:inherit}
+.gl-atlas-panel-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.gl-atlas-panel-actions .button{min-height:42px}
+
+.gl-atlas-rail{
+  display:flex;gap:8px;overflow-x:auto;padding:12px 2px 4px;margin-top:12px;
+  scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;
+}
+.gl-atlas-rail-item{
+  flex:0 0 auto;scroll-snap-align:start;min-height:44px;padding:8px 12px;border-radius:12px;
+  border:2px solid rgba(92,58,36,.45);background:rgba(251,246,236,.94);color:#1F3340;
+  font:700 12px/1.2 system-ui,sans-serif;display:inline-flex;align-items:center;gap:8px;cursor:pointer;
+}
+.gl-atlas-rail-item span{max-width:140px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gl-atlas-rail-item em{font-style:normal;color:#4A5F6B}
+.gl-atlas-rail-item.is-selected{outline:2px solid #C9A227;outline-offset:1px;border-color:#C44536}
+.gl-atlas-rail-item.fogged{opacity:.55}
+.gl-atlas-rail .map-stop-new{flex:0 0 auto;min-width:220px;margin:0}
+.gl-atlas-footnote{margin-top:10px;color:rgba(255,246,224,.9)}
+.gl-atlas-footnote span{color:inherit}
+
+@keyframes glAtlasPanel{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes glAtlasWave{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@keyframes glAtlasDash{to{stroke-dashoffset:-18}}
+@keyframes glAtlasBob{0%,100%{transform:translate(-50%,-50%)}50%{transform:translate(-50%,calc(-50% - 4px))}}
+
+html[data-animation-level="full"] .gl-atlas-sea{animation:glAtlasWave 8s ease-in-out infinite}
+html[data-animation-level="full"] .gl-atlas-route-dash{animation:glAtlasDash 18s linear infinite}
+html[data-animation-level="full"] .gl-island.you-are-here{animation:glAtlasBob 3.8s ease-in-out infinite}
+html[data-animation-level="full"] .gl-atlas-dial{animation:glPose 3.6s ease-in-out infinite}
+html[data-animation-level="soft"] .gl-atlas-sea{animation:glAtlasWave 16s ease-in-out infinite}
+html[data-animation-level="soft"] .gl-atlas-route-dash{animation:glAtlasDash 32s linear infinite}
+html[data-animation-level="off"] .gl-atlas-sea,
+html[data-animation-level="off"] .gl-atlas-route-dash,
+html[data-animation-level="off"] .gl-island.you-are-here,
+html[data-animation-level="off"] .gl-atlas-panel,
+html[data-animation-level="off"] .gl-atlas-dial{animation:none!important}
+
+@media (prefers-reduced-motion:reduce){
+  .gl-atlas-sea,.gl-atlas-route-dash,.gl-island.you-are-here,.gl-atlas-panel,.gl-atlas-dial{animation:none!important}
+}
+
+@media (max-width:920px){
+  .gl-atlas-layout{grid-template-columns:1fr}
+  .gl-atlas-stage{min-height:300px}
+  .gl-island{width:min(118px,30vw)}
+  .gl-island-media{width:78px;height:60px}
+  .gl-island-label{max-width:100px}
+  .gl-island-label b{font-size:10px}
+}
+@media (max-width:650px){
+  .gl-atlas.map-board{padding:12px!important;border-radius:18px!important}
+  .gl-atlas-top strong{color:#FFF6E0}
+  .gl-atlas-stage{min-height:280px}
+  .gl-island-media{width:68px;height:52px;border-radius:12px}
+  .gl-island-badge{width:22px;height:22px}
+  .gl-atlas-compass{display:none}
+  .gl-atlas-panel-actions .button{flex:1 1 140px}
+  /* Hide absolute islands on very small screens — rail remains the primary touch UI */
+}
+@media (max-width:390px){
+  .gl-atlas-islands{display:none}
+  .gl-atlas-routes{opacity:.35}
+  .gl-atlas-stage{min-height:120px}
+  .gl-atlas-stage::after{
+    content:"Scorri le tappe sotto · tocca per aprire il diario";
+    position:absolute;inset:auto 12px 12px;z-index:2;padding:10px 12px;border-radius:12px;
+    background:rgba(251,246,236,.94);color:#1F3340;font:700 12px/1.35 Georgia,serif;text-align:center;
+  }
+}
+
+/* Night theme readability */
+html[data-visual-style="night"] .gl-atlas-panel{background:linear-gradient(155deg,#f6e7c8,#e2c48c)}
+html[data-visual-style="night"] .gl-atlas-rail-item{background:#f6e7c8}

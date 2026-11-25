@@ -135,18 +135,111 @@ function episodeDetail(n){const x=epInfo(n),lock=blocked(n),fav=extra.favorites.
  <div class="detail-actions"><button class="button small ${done?'secondary':'primary'}" data-action="detail-watch" data-ep="${n}" ${x.status==='filler'||x.status==='unverified'?'disabled':''}>${done?'✓ Già visto · annulla':'✓ Segna come visto'}</button><button class="button secondary small" data-action="favorite" data-ep="${n}">${fav?'★ Nei preferiti':'☆ Preferito'}</button></div>
  <div class="rating-group" role="group" aria-label="La tua valutazione">Valutazione personale ${[1,2,3,4,5].map(k=>`<button class="rate-star ${rate>=k?'selected':''}" data-action="rate" data-ep="${n}" data-score="${k}" aria-label="${k} stelle">★</button>`).join('')}</div>
  <label class="note-label">Note private <textarea id="detail-notes" data-ep="${n}" maxlength="2500" rows="4" placeholder="Scrivi una nota personale. Viene salvata su questo dispositivo.">${cleanText(text)}</textarea></label><small id="draft-status" role="status">${Object.hasOwn(extra.noteDrafts,n)?"Bozza ripristinata":"Le modifiche vengono salvate in bozza."}</small><div class="modal-buttons"><button class="button secondary" data-action="modal-cancel">Chiudi</button><button class="button primary" data-action="note-save" data-ep="${n}">Salva note</button></div></div>`)}
+/* Interactive Grand Line Atlas — in-memory selection only (no LocalStorage). */
+let selectedMapFirst=null;
+const ATLAS_ISLAND_POS=[
+ {x:7,y:74},{x:16,y:56},{x:26,y:38},{x:36,y:58},{x:46,y:34},
+ {x:55,y:52},{x:64,y:70},{x:73,y:44},{x:81,y:28},{x:88,y:48},{x:94,y:22}
+];
+const ATLAS_ROUTE_ART=[2,5,4,6,2,5,3,1,4,6,2];
+function sagaProgress(g){
+ const ns=allCanon.filter(n=>n>=g.first&&n<=g.last);
+ const done=ns.filter(n=>watched.has(n)).length;
+ const pct=ns.length?Math.round(done/ns.length*100):0;
+ return {ns,done,total:ns.length,pct};
+}
+function sagaStatus(g,pct,here){
+ if(pct===100)return 'completed';
+ if(here||pct>0)return 'active';
+ return 'explore';
+}
+function sagaStatusLabel(status){
+ return status==='completed'?'Completata':status==='active'?'In corso':'Da esplorare';
+}
+function resolveSelectedMap(horizon,next){
+ if(selectedMapFirst!=null){
+  const g=SAGA_GROUPS.find(s=>s.first===selectedMapFirst);
+  if(g&&!(extra.spoiler&&g.first>horizon))return g.first;
+ }
+ if(next){
+  const current=SAGA_GROUPS.find(s=>next>=s.first&&next<=s.last);
+  if(current&&!(extra.spoiler&&current.first>horizon))return current.first;
+ }
+ const firstOpen=SAGA_GROUPS.find(s=>!(extra.spoiler&&s.first>horizon));
+ return firstOpen?firstOpen.first:null;
+}
+function atlasPanelMarkup(g,horizon,next){
+ if(!g)return `<aside class="gl-atlas-panel" id="atlas-panel" aria-live="polite"><div class="gl-atlas-panel-empty">${art('compass','gl-atlas-panel-art')}<b>Scegli un’isola</b><p>Tocca una tappa sulla Rotta Maggiore per aprire il diario di navigazione.</p></div></aside>`;
+ const lock=extra.spoiler&&g.first>horizon;
+ const {done,total,pct}=sagaProgress(g);
+ const here=!!next&&next>=g.first&&next<=g.last;
+ const status=lock?'locked':sagaStatus(g,pct,here);
+ const title=lock?'Isola inesplorata':cleanText(g.name);
+ const desc=lock?'La modalità antispoiler protegge questa tappa finché non avanzi sulla rotta.':cleanText(g.description);
+ const meta=lock?'Protetta dagli spoiler':`Ep. ${g.first}–${g.last} · ${done}/${total} · ${pct}%`;
+ const nextInSaga=lock?null:allCanon.find(n=>n>=g.first&&n<=g.last&&!watched.has(n));
+ return `<aside class="gl-atlas-panel is-${status}" id="atlas-panel" aria-live="polite">
+  <div class="gl-atlas-panel-art-wrap"><img class="gl-atlas-panel-scene" src="/assets/${g.icon}" alt="" loading="lazy"><span class="gl-atlas-panel-stamp">${here?'◎ QUI':String(SAGA_GROUPS.indexOf(g)+1).padStart(2,'0')}</span></div>
+  <div class="gl-atlas-panel-copy">
+   <span class="gl-atlas-kicker">DIARIO DI NAVIGAZIONE</span>
+   <h3>${title}</h3>
+   <p>${desc}</p>
+   <div class="gl-atlas-meta"><span>${meta}</span>${lock?'':`<span class="gl-atlas-status is-${status}">${sagaStatusLabel(status)}</span>`}</div>
+   ${lock?'':`<div class="gl-atlas-track" aria-hidden="true"><i style="width:${pct}%"></i></div>`}
+   <div class="gl-atlas-panel-actions">
+    ${lock?`<button class="button secondary small" disabled>Ancora nascosta</button>`:`<button class="button primary small" data-action="map-open-episodes" data-first="${g.first}">${art('episode','button-art')} Apri episodi</button>
+    <button class="button secondary small" data-action="map-open-arc" data-first="${g.first}">${art('route','button-art')} ${nextInSaga?`Continua · ep. ${nextInSaga}`:'Apri sulla rotta'}</button>`}
+   </div>
+  </div>
+ </aside>`;
+}
 function newMapStop(){
  const recent=weeklyEpisodes.filter(confirmedForRoute);if(!recent.length)return '';
  const remaining=recent.filter(e=>!watched.has(e.number)).length;
  const locked=extra.spoiler&&recent[0].number>spoilerHorizon();
- return `<button class="map-stop map-stop-new ${locked?'fogged':''}" data-action="open-latest" ${locked?'disabled aria-disabled="true"':''} aria-label="${locked?'Rotta ancora inesplorata':'Nuove uscite con fonte editoriale'}">
+ return `<button class="map-stop map-stop-new gl-atlas-latest ${locked?'fogged':''}" data-action="open-latest" ${locked?'disabled aria-disabled="true"':''} aria-label="${locked?'Rotta ancora inesplorata':'Nuove uscite con fonte editoriale'}">
    <span class="map-stop-number">★</span><img src="/assets/route-6.webp" alt="" loading="lazy"><span class="map-stop-body"><b>${locked?'Rotta inesplorata':'Nuove uscite documentate'}</b><small>${recent.length} nuove puntate · ${remaining} da guardare</small><span class="mini-track"><i style="width:${recent.length?(recent.length-remaining)/recent.length*100:0}%"></i></span></span>
   </button>`;
 }
-function mapView(){const horizon=spoilerHorizon(),next=getNext();return `<div class="section-shell">${sectionHeader('Mappa della Grand Line','Ogni tappa corrisponde a una saga; salpa verso un’isola per aprire i suoi episodi canonici.')}
- <div class="map-board"><div class="map-top"><span>LA ROTTA DEL NAVIGATORE</span><span>${counts().percent}% del viaggio</span></div><div class="map-compass">${art('compass')}</div><div class="map-trail">${SAGA_GROUPS.map((g,i)=>{const ns=allCanon.filter(n=>n>=g.first&&n<=g.last),done=ns.filter(n=>watched.has(n)).length,pct=ns.length?Math.round(done/ns.length*100):0,lock=extra.spoiler&&g.first>horizon,here=!!next&&next>=g.first&&next<=g.last;
- return `<button class="map-stop ${pct===100?'conquered':''} ${lock?'fogged':''} ${here?'you-are-here':''}" data-action="map-saga" data-first="${g.first}" ${lock?'disabled aria-disabled="true" title="Tappa protetta dagli spoiler"':''} aria-label="${lock?'Isola inesplorata':g.name}, episodi ${g.first}-${g.last}"><span class="map-stop-number">${here?'◎':String(i+1).padStart(2,'0')}</span><img src="/assets/route-${[2,5,4,6,2,5][i%6]}.webp" alt="" loading="lazy"><span class="map-stop-body"><b>${lock?'Isola inesplorata':cleanText(g.name)}</b><small>${lock?'Protetta dagli spoiler':`Ep. ${g.first}–${g.last} · ${done}/${ns.length} · ${pct}%`}${here?' · sei qui':''}</small><span class="mini-track"><i style="width:${pct}%"></i></span></span>${pct===100?'<span class="map-checked">✓</span>':here?'<span class="map-here">Qui</span>':''}</button>`}).join('')}${newMapStop()}</div><div class="map-bottom">${art('spyglass')} <span>La mappa è una rappresentazione tematica, non una cartografia ufficiale del mondo di One Piece.</span></div></div>
- </div>`}
+function mapView(){
+ const horizon=spoilerHorizon(),next=getNext(),voyage=counts().percent;
+ selectedMapFirst=resolveSelectedMap(horizon,next);
+ const selected=SAGA_GROUPS.find(g=>g.first===selectedMapFirst)||null;
+ const islands=SAGA_GROUPS.map((g,i)=>{
+  const {done,total,pct}=sagaProgress(g);
+  const lock=extra.spoiler&&g.first>horizon;
+  const here=!!next&&next>=g.first&&next<=g.last;
+  const status=lock?'locked':sagaStatus(g,pct,here);
+  const selectedCls=selectedMapFirst===g.first?'is-selected':'';
+  const pos=ATLAS_ISLAND_POS[i]||{x:10+i*8,y:50};
+  const label=lock?'Isola inesplorata':cleanText(g.name);
+  const routeArt=`/assets/route-${ATLAS_ROUTE_ART[i%ATLAS_ROUTE_ART.length]}.webp`;
+  return `<button type="button" class="gl-island map-stop ${selectedCls} is-${status} ${here?'you-are-here':''} ${lock?'fogged':''}" style="--ix:${pos.x}%;--iy:${pos.y}%" data-action="map-select" data-first="${g.first}" ${lock?'aria-disabled="true" title="Tappa protetta dagli spoiler"':''} aria-pressed="${selectedMapFirst===g.first?'true':'false'}" aria-label="${label}${lock?'':`, episodi ${g.first}-${g.last}, ${pct}%`}">
+   <span class="gl-island-pin" aria-hidden="true">${here?'◎':String(i+1).padStart(2,'0')}</span>
+   <span class="gl-island-media"><img src="${routeArt}" alt="" loading="lazy"><img class="gl-island-badge" src="/assets/${g.icon}" alt="" loading="lazy"></span>
+   <span class="gl-island-label"><b>${label}</b><small>${lock?'Protetta':`${pct}% · ${done}/${total}`}</small></span>
+  </button>`;
+ }).join('');
+ return `<div class="section-shell gl-atlas-shell">${sectionHeader('Atlante della Rotta Maggiore','Esplora le isole della Grand Line, segui il Log Pose e apri gli episodi della tappa scelta.')}
+ <div class="gl-atlas map-board" aria-label="Atlante interattivo della Grand Line">
+  <div class="gl-atlas-top"><div><span class="gl-atlas-kicker">LA ROTTA DEL NAVIGATORE</span><strong>Grand Line · Archipelago</strong></div><div class="gl-atlas-voyage" aria-label="Progresso complessivo ${voyage} percento"><span class="gl-log-pose-dial gl-atlas-dial" style="--gl-pose:${voyage}%" aria-hidden="true"></span><span>${voyage}% del viaggio</span></div></div>
+  <div class="gl-atlas-layout">
+   <div class="gl-atlas-stage">
+    <div class="gl-atlas-sea" aria-hidden="true"></div>
+    <svg class="gl-atlas-routes" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+     <path class="gl-atlas-route-line" d="M7 74 C12 64, 14 58, 16 56 S22 44, 26 38 S32 50, 36 58 S42 40, 46 34 S52 48, 55 52 S60 66, 64 70 S70 50, 73 44 S78 32, 81 28 S85 42, 88 48 S92 30, 94 22"/>
+     <path class="gl-atlas-route-dash" d="M7 74 C12 64, 14 58, 16 56 S22 44, 26 38 S32 50, 36 58 S42 40, 46 34 S52 48, 55 52 S60 66, 64 70 S70 50, 73 44 S78 32, 81 28 S85 42, 88 48 S92 30, 94 22"/>
+    </svg>
+    <div class="gl-atlas-islands">${islands}</div>
+    <div class="gl-atlas-compass map-compass" aria-hidden="true">${art('compass')}</div>
+   </div>
+   ${atlasPanelMarkup(selected,horizon,next)}
+  </div>
+  <div class="gl-atlas-rail" aria-label="Elenco tappe">${SAGA_GROUPS.map((g,i)=>{const lock=extra.spoiler&&g.first>horizon;const here=!!next&&next>=g.first&&next<=g.last;const {pct}=sagaProgress(g);return `<button type="button" class="gl-atlas-rail-item ${selectedMapFirst===g.first?'is-selected':''} ${lock?'fogged':''} ${here?'you-are-here':''}" data-action="map-select" data-first="${g.first}" ${lock?'aria-disabled="true"':''}>${here?'◎':String(i+1).padStart(2,'0')} <span>${lock?'Isola inesplorata':cleanText(g.name)}</span> <em>${lock?'?':pct+'%'}</em></button>`}).join('')}${newMapStop()}</div>
+  <div class="map-bottom gl-atlas-footnote">${art('spyglass')} <span>Atlante tematico della Rotta Maggiore: non è una cartografia ufficiale del mondo di One Piece.</span></div>
+ </div>
+ </div>`;
+}
 const v22FeaturedCharacters=['nami','usopp','sanji','chopper'];
 const v22PortraitIds=new Set(['luffy','zoro','nami','usopp','sanji','chopper','robin','franky','brook','jinbe']);
 const v22RoleIcons={luffy:'flag',zoro:'anchor',nami:'compass',usopp:'spyglass',sanji:'treasure',chopper:'complete',robin:'map',franky:'wheel',brook:'flag',jinbe:'wheel',ace:'flag',law:'complete'};
@@ -301,7 +394,7 @@ async function handleExtraAction(action,t){const n=Number(t.dataset.ep);
  case 'character-star':{const id=t.dataset.characterId;if(!id)return true;const selected=toggleCharacterFavorite(id);t.classList.toggle('is-favorite',selected);t.setAttribute('aria-pressed',String(selected));const c=CHARACTERS.find(x=>x.id===id);t.setAttribute('aria-label',`${selected?'Rimuovi':'Aggiungi'} ${c?.name||'personaggio'} ${selected?'dai':'ai'} preferiti`);const opt=document.querySelector('#character-filter option[value=\"favorites\"]');if(opt)opt.textContent=`Preferiti ★ (${extra.characterFavorites.length})`;if(characterFilter==='favorites')applyCharacterFilters();toast(selected?'Personaggio aggiunto ai preferiti':'Personaggio rimosso dai preferiti');return true;}
  case 'route-search':modal('<h3>Cerca nella rotta</h3><label class="note-label">Episodi, saghe e diario<input type="search" id="route-query" autocomplete="off" placeholder="Numero, titolo, saga o nota"></label><p role="status" id="route-count"></p><div id="route-results"></div>');document.getElementById('route-query').focus();return true;
  case 'search-more':showRouteResults(Number(t.dataset.limit));return true;
- case 'search-map':{const first=Number(t.dataset.first);if(blocked(first))return true;closeModal(false);setTab('map');const stop=document.querySelector('.map-stop[data-first="'+first+'"]');stop?.focus({preventScroll:true});stop?.scrollIntoView({block:'center',behavior:motionScrollBehavior()});return true}
+ case 'search-map':{const first=Number(t.dataset.first);if(blocked(first))return true;selectedMapFirst=first;closeModal(false);setTab('map');const stop=document.querySelector('.gl-island[data-first="'+first+'"],.map-stop[data-first="'+first+'"]');stop?.focus({preventScroll:true});stop?.scrollIntoView({block:'center',behavior:motionScrollBehavior()});document.getElementById('atlas-panel')?.scrollIntoView({block:'nearest',behavior:motionScrollBehavior()});return true}
  case 'go-next':openEpisode(getNext()||start);return true;
  case 'detail':if(Number.isInteger(n)&&n>=1&&(n<=BASE_MAX||!!releaseByNumber(n)))episodeDetail(n);return true;
  case 'detail-watch':if(allCanon.includes(n)){watched.has(n)?watched.delete(n):watched.add(n);trackWatched(n,watched.has(n));saveAll();refreshEpisodeDetail(n);toast('Episodio aggiornato')}return true;
@@ -311,7 +404,10 @@ async function handleExtraAction(action,t){const n=Number(t.dataset.ep);
  case 'clear-episode-filters':episodeFilter='all';episodeSaga='all';episodeQuery='';episodePage=1;render();return true;
  case 'episodes-more':episodePage++;render();return true;
  case 'open-latest':{if(extra.spoiler&&weeklyEpisodes.filter(confirmedForRoute)[0]?.number>spoilerHorizon()){toast('Rotta protetta dagli spoiler');return true}episodeFilter='all';episodeSaga='Saga finale';episodeQuery='';episodePage=1;setTab('episodes');return true}
- case 'map-saga':{let first=Number(t.dataset.first);if(extra.spoiler&&first>spoilerHorizon()){toast('Isola ancora protetta dagli spoiler');return true}const group=SAGA_GROUPS.find(g=>g.first===first);const firstCanon=allCanon.find(n=>n>=first&&n<=(group?.last||1155))||first;const arc=arcData.findIndex(a=>a[1]<=firstCanon&&a[2]>=firstCanon);tab='path';openArc=arc>=0?arc:null;search='';render();setTimeout(()=>document.getElementById(`arc-${arc}`)?.scrollIntoView({behavior:motionScrollBehavior(),block:'center'}),50);return true}
+ case 'map-select':{const first=Number(t.dataset.first);if(!Number.isInteger(first))return true;if(extra.spoiler&&first>spoilerHorizon()){toast('Isola ancora protetta dagli spoiler');return true}selectedMapFirst=first;render();document.getElementById('atlas-panel')?.scrollIntoView({block:'nearest',behavior:motionScrollBehavior()});document.querySelector('.gl-island[data-first="'+first+'"]')?.focus({preventScroll:true});return true}
+ case 'map-open-episodes':{const first=Number(t.dataset.first);const group=SAGA_GROUPS.find(g=>g.first===first);if(!group||(extra.spoiler&&first>spoilerHorizon())){toast('Isola ancora protetta dagli spoiler');return true}episodeSaga=group.name;episodeFilter='canon';episodeQuery='';episodePage=1;setTab('episodes');toast('Episodi di '+group.name);return true}
+ case 'map-open-arc':
+ case 'map-saga':{let first=Number(t.dataset.first);if(extra.spoiler&&first>spoilerHorizon()){toast('Isola ancora protetta dagli spoiler');return true}selectedMapFirst=first;const group=SAGA_GROUPS.find(g=>g.first===first);const firstCanon=allCanon.find(n=>n>=first&&n<=(group?.last||1155))||first;const nextIn=allCanon.find(n=>n>=first&&n<=(group?.last||1155)&&!watched.has(n));const target=nextIn||firstCanon;const arc=arcData.findIndex(a=>a[1]<=target&&a[2]>=target);tab='path';openArc=arc>=0?arc:null;search='';render();setTimeout(()=>document.getElementById(`arc-${arc}`)?.scrollIntoView({behavior:motionScrollBehavior(),block:'center'}),50);return true}
  case 'jump-episode':{const raw=document.getElementById('jump-episode')?.value;const n=Number(raw);if(!Number.isInteger(n)||n<1||n>MAX){toast('Inserisci un numero episodio valido');return true}openEpisode(n);return true}
  case 'filter-unwatched':episodeFilter='unwatched';episodePage=1;render();return true;
  case 'jump-current':{const n=getNext();if(!n){toast('Hai completato la rotta');return true}openEpisode(n);return true}
