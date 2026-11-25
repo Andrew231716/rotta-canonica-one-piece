@@ -1,7 +1,7 @@
 // Importa metadati italiani dalle schede One Piece Wiki Italia e i capitoli da Template:WC.
 // Non assegna mai la canonicità: la classificazione rimane gestita separatamente.
 import {readFile,writeFile} from 'node:fs/promises';
-const BASE=1155, IT_API='https://onepiece.fandom.com/it/api.php', ROOT_API='https://onepiece.fandom.com/api.php';
+const BASE=1155, KNOWN_LATEST=1180, IT_API='https://onepiece.fandom.com/it/api.php', ROOT_API='https://onepiece.fandom.com/api.php';
 const EPISODE_URL=n=>'https://onepiece.fandom.com/it/wiki/Episodio_'+n;
 const TEMPLATE_URL='https://onepiece.fandom.com/wiki/Template:WC';
 const wait=ms=>new Promise(resolve=>setTimeout(resolve,ms));
@@ -26,17 +26,24 @@ function concise(value,max=650){const text=plainWiki(value);if(text.length<=max)
 function titleFromPage(page,wikitext,n){const raw=page?.displaytitle||((wikitext.match(/\{\{DISPLAYTITLE\s*:\s*([^}]+)\}\}/i)||[])[1])||'';const title=plainWiki(raw).replace(new RegExp('^Episodio\\s+'+n+'\\s*[:–—-]?\\s*','i'),'').trim();if(title&&title.toLowerCase()!==('episodio '+n))return title.slice(0,150);for(const line of String(wikitext).split(/\r?\n/)){const h=headingInfo(line);if(!h||h.level!==2)continue;if(!/^(informazioni episodio|crediti|statistiche|riassunto|personaggi|differenze tra manga e anime|collegamenti esterni)$/i.test(h.name)){const candidate=plainWiki(h.name);if(candidate&&candidate.toLowerCase()!==('episodio '+n))return candidate.slice(0,150)}}return ''}
 function chapterListFromTemplate(wikitext){const map=new Map();let rows=0,mappings=0,match;const regex=/\{\{WC\/f\|\{\{\{1\}\}\}\|([^}]*)\}\}/g;while((match=regex.exec(wikitext))){rows++;const args=match[1].split('|');if(args.length<3||((args.length-1)%2)!==0)continue;const cm=args[0].trim().match(/^Chapter\s+(\d+)$/i);if(!cm)continue;const chapter=Number(cm[1]);for(let i=1;i+1<args.length;i+=2){const ep=args[i].trim().match(/^Episode\s+(\d+)$/i);if(!ep)continue;const n=Number(ep[1]);if(!map.has(n))map.set(n,[]);const pages=args[i+1].trim(),url='https://onepiece.fandom.com/wiki/Chapter_'+chapter;if(!map.get(n).some(x=>x.chapter===chapter&&x.pages===pages))map.get(n).push({chapter,pages,url});mappings++}}for(const list of map.values())list.sort((a,b)=>a.chapter-b.chapter);return {map,rows,mappings}}
 function chaptersFromItalianPage(wikitext){const stats=section(wikitext,['Statistiche']),text=stats||wikitext,found=[],regex=/Capitolo\s+(\d+)(?:\s*(?:pag\.?|pagine?)\s*([0-9,\s–-]+))?/gi;let m;while((m=regex.exec(text))){const chapter=Number(m[1]),pages=String(m[2]||'').trim();if(!found.some(x=>x.chapter===chapter&&x.pages===pages))found.push({chapter,pages,url:'https://onepiece.fandom.com/it/wiki/Capitolo_'+chapter})}return found.sort((a,b)=>a.chapter-b.chapter)}
+function parseAirDate(wikitext){
+ const months={gennaio:1,febbraio:2,marzo:3,aprile:4,maggio:5,giugno:6,luglio:7,agosto:8,settembre:9,ottobre:10,novembre:11,dicembre:12};
+ const candidates=[...String(wikitext).matchAll(/\\|\\s*(?:data|aired|airdate)\\s*=\\s*([^\\n|]+)/gi),...String(wikitext).matchAll(/\\bData(?:\\s+originale)?\\s*:\\s*([^\\n]+)/gi)].map(m=>m[1].replace(/<[^>]*>/g,'').trim());
+ for(const raw of candidates){const iso=raw.match(/(20\\d{2})-(\\d{2})-(\\d{2})/);if(iso)return iso[0];const it=raw.match(/(\\d{1,2})\\s+(gennaio|febbraio|marzo|aprile|maggio|giugno|luglio|agosto|settembre|ottobre|novembre|dicembre)\\s+(20\\d{2})/i);if(it){const mm=String(months[it[2].toLowerCase()]).padStart(2,'0'),dd=String(it[1]).padStart(2,'0');return it[3]+'-'+mm+'-'+dd}}
+ return null;
+}
 function compactChapters(items){const nums=[...new Set(items.map(x=>x.chapter).filter(Number.isInteger))].sort((a,b)=>a-b);if(!nums.length)return null;const out=[];let start=nums[0],last=start;for(const n of nums.slice(1)){if(n===last+1){last=n;continue}out.push(start===last?String(start):start+'–'+last);start=last=n}out.push(start===last?String(start):start+'–'+last);return out.join(', ')}
 async function getTemplate(){const url=apiUrl(ROOT_API,{action:'query',prop:'revisions',titles:'Template:WC',rvprop:'ids|timestamp|content',rvslots:'main',format:'json',formatversion:2,origin:'*'});const json=await getJson(url,'One Piece Wiki Template:WC'),page=(json?.query?.pages||[])[0],rev=page?.revisions?.[0],text=String(rev?.slots?.main?.content||'');if(!text)throw Error('Template:WC senza contenuto');const parsed=chapterListFromTemplate(text);if(parsed.rows<1000||parsed.mappings<1500)throw Error('Template:WC incompleto: righe '+parsed.rows+', mappature '+parsed.mappings);return {...parsed,source:{provider:'One Piece Wiki / Template:WC',url:TEMPLATE_URL,revisionId:rev.revid,checkedAt:rev.timestamp,license:'CC BY-SA 3.0'}}}
 function manualSource(source){return /manual|redazion|curat/i.test(String(source?.provider||''))}
 const doc=JSON.parse(await readFile('data/episodes.json','utf8')),feed=JSON.parse(await readFile('data/episodes-latest.json','utf8'));
 if(!Array.isArray(doc.episodes)||doc.episodes.length!==BASE||!Array.isArray(feed.episodes))throw Error('Catalogo principale o feed non valido');
 const baseMap=new Map(doc.episodes.map(e=>[e.n,e])),latestMap=new Map(feed.episodes.map(e=>[e.number,e]));
-const max=Math.max(BASE,Number(feed.latest)||BASE,...feed.episodes.map(e=>Number(e.number)||BASE));
+const max=Math.max(BASE,KNOWN_LATEST,Number(feed.latest)||BASE,...feed.episodes.map(e=>Number(e.number)||BASE));
 let api=null,firstPages=null,lastApiError=null;for(const candidate of [IT_API,ROOT_API]){try{const pages=await queryPages(candidate,[1]);if(pages.some(p=>!p.missing&&pageText(p))){api=candidate;firstPages=pages;break}}catch(e){lastApiError=e}}
 if(!api)throw Error('API One Piece Wiki Italia non raggiungibile: '+String(lastApiError?.message||'pagina episodio 1 assente'));
 const pageMap=new Map();for(const p of firstPages){const n=episodeNumber(p);if(n&&pageText(p))pageMap.set(n,p)}
 for(let start=2;start<=max;start+=25){const nums=Array.from({length:Math.min(25,max-start+1)},(_,i)=>start+i),pages=await queryPages(api,nums);for(const p of pages){const n=episodeNumber(p);if(n&&pageText(p))pageMap.set(n,p)}if(start+25<=max)await wait(750)}
+for(let n=BASE+1;n<=max;n++){if(latestMap.has(n))continue;const page=pageMap.get(n);if(!page)continue;const aired=parseAirDate(pageText(page));if(aired)latestMap.set(n,{number:n,title:'',aired,classification:'unverified'})}
 let template=null;try{template=await getTemplate()}catch(e){console.warn('Template:WC non disponibile; uso le statistiche delle schede italiane:',e.message)}
 const checkedAt=new Date().toISOString();let titles=0,summaries=0,chapters=0,italianPages=0;
 for(let n=1;n<=max;n++){const row=n<=BASE?baseMap.get(n):latestMap.get(n);if(!row)continue;const page=pageMap.get(n),wikitext=pageText(page),revision=page?.revisions?.[0],pageUrl=EPISODE_URL(n),pageDate=revision?.timestamp||checkedAt,pageSource={provider:'One Piece Wiki Italia / Fandom',url:pageUrl,revisionId:revision?.revid||null,checkedAt:pageDate,license:'CC BY-SA 3.0'},manualTitle=manualSource(row.source),manualSummary=manualSource(row.summarySource),manualChapter=manualSource(row.chapterSource);
@@ -47,6 +54,7 @@ for(let n=1;n<=max;n++){const row=n<=BASE?baseMap.get(n):latestMap.get(n);if(!ro
  else if(!row.chapter){row.chapterStatus=template?'no-manga-mapping':page?'not-mapped-in-episode-page':'not-verified';if(template)row.chapterSource={...template.source,fields:['chapter','pages']}}
  const fields=[];if(row.summarySource?.url)fields.push('summary');if(row.chapterSource?.url)fields.push('chapter');if(fields.length)row.editorialSource={url:row.summarySource?.url||row.chapterSource.url,checkedAt:row.summarySource?.checkedAt||row.chapterSource?.checkedAt||checkedAt,fields};
  if(!row.source&&row.title)row.source={provider:'Jikan API (MyAnimeList, fallback)',url:'https://myanimelist.net/anime/21/One_Piece/episode/'+n,checkedAt,fields:['title']}}
+feed.episodes=[...latestMap.values()].sort((a,b)=>a.number-b.number);feed.latest=Math.max(BASE,...feed.episodes.map(e=>e.number));
 const baseTitles=doc.episodes.filter(e=>e.title).length,baseSummaries=doc.episodes.filter(e=>e.summary).length,baseChapters=doc.episodes.filter(e=>e.chapter).length;
 doc.metadataSource={name:'One Piece Wiki Italia / Fandom',url:'https://onepiece.fandom.com/it/wiki/Episodi_e_film',license:'CC BY-SA 3.0 salvo diversa indicazione',lastChecked:checkedAt};
 doc.metadataCoverage={titles:baseTitles,summaries:baseSummaries,chapterMappings:baseChapters,episodes:BASE};

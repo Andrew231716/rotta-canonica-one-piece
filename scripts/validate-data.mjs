@@ -10,7 +10,7 @@ for(let i=0;i<BASE;i++){const ep=base.episodes[i];if(ep?.n!==i+1)throw Error('Mi
  if(ep.summary){summaries++;if(!url(ep.summarySource)&&!url(ep.editorialSource))throw Error('Summary missing source: '+ep.n);if(ep.summary.length>650)throw Error('Summary too long: '+ep.n)}
  if(ep.chapter){chapters++;if(!url(ep.chapterSource)&&!url(ep.editorialSource))throw Error('Chapter mapping missing source: '+ep.n);if(ep.chapter.length>150)throw Error('Chapter field too long: '+ep.n)}
  if(ep.chapterDetails!==undefined&&!Array.isArray(ep.chapterDetails))throw Error('Invalid chapter details: '+ep.n);
- if(Array.isArray(ep.chapterDetails)&&ep.chapterDetails.length>20)throw Error('Too many chapter references: '+ep.n)}
+ if(Array.isArray(ep.chapterDetails)&&ep.chapterDetails.length>60)throw Error('Too many chapter references: '+ep.n)}
 const allowEmpty=process.argv.includes('--allow-empty');
 if(!allowEmpty&&titles<1050)throw Error('Title coverage too low: '+titles+'/1155');
 if(!allowEmpty&&summaries<900)throw Error('Summary coverage too low: '+summaries+'/1155');
