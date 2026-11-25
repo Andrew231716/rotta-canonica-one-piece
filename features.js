@@ -51,14 +51,21 @@ const SAGA_GROUPS=[
  {name:'Wano',first:890,last:1085,icon:'saga-wano.webp',emoji:'⛩️',description:'Una terra dalle tradizioni particolari.'},
  {name:'Saga finale',first:1086,last:1155,icon:'saga-egghead.webp',emoji:'✨',description:'Gli episodi più avanzati inclusi nell’archivio locale.'}
 ];
-/* Wanted dossiers: optional alias only when safe at unlock. No invented Berry bounties. */
+/* Wanted dossiers: optional alias only when safe. No invented Berry bounties.
+   aliasUnlock = prima disponibilità narrativa verificabile dell’epiteto (anime).
+   Se assente, l’alias segue la soglia del personaggio. */
 const CHARACTERS=[
  {id:'luffy',name:'Monkey D. Luffy',alias:'Cappello di Paglia',role:'Capitano',org:'Ciurma di Cappello di Paglia',unlock:1,profile:'Parte all’avventura con il sogno di diventare il Re dei Pirati. Coraggioso, impulsivo e fedele ai propri amici.',tags:'capitano ciurma sogno'},
  {id:'zoro',name:'Roronoa Zoro',alias:'Cacciatore di pirati',role:'Spadaccino',org:'Ciurma di Cappello di Paglia',unlock:2,profile:'Combatte usando tre spade e si allena per diventare il miglior spadaccino del mondo.',tags:'spadaccino spade'},
- {id:'nami',name:'Nami',alias:'Gatta ladra',role:'Navigatrice',org:'Ciurma di Cappello di Paglia',unlock:3,profile:'Esperta di rotte, mappe e meteorologia, guida la ciurma attraverso i mari.',tags:'navigatrice cartografia'},
- {id:'usopp',name:'Usopp',alias:'Re dei cecchini',role:'Tiratore',org:'Ciurma di Cappello di Paglia',unlock:9,profile:'Inventore e narratore instancabile, sogna di diventare un coraggioso guerriero del mare.',tags:'tiratore inventore'},
+ // "Gatta ladra": epiteto ufficiale sul primo manifesto di taglia post-Enies Lobby (ep. 320).
+ {id:'nami',name:'Nami',alias:'Gatta ladra',aliasUnlock:320,role:'Navigatrice',org:'Ciurma di Cappello di Paglia',unlock:3,profile:'Esperta di rotte, mappe e meteorologia, guida la ciurma attraverso i mari.',tags:'navigatrice cartografia'},
+ // "Re dei cecchini" = Sogeking, prima apparizione narrativa ~ep. 278 (Enies Lobby).
+ {id:'usopp',name:'Usopp',alias:'Re dei cecchini',aliasUnlock:278,role:'Tiratore',org:'Ciurma di Cappello di Paglia',unlock:9,profile:'Inventore e narratore instancabile, sogna di diventare un coraggioso guerriero del mare.',tags:'tiratore inventore'},
+ // "Gamba Nera": noto fin dal debutto al Baratie (soglia personaggio).
  {id:'sanji',name:'Sanji',alias:'Gamba Nera',role:'Cuoco',org:'Ciurma di Cappello di Paglia',unlock:20,profile:'Cuoco del Baratie, porta nella ciurma la sua passione per la cucina e il combattimento.',tags:'cuoco combattente'},
- {id:'chopper',name:'Tony Tony Chopper',alias:'Amorevole',role:'Medico',org:'Ciurma di Cappello di Paglia',unlock:81,profile:'Un giovane medico e una renna molto speciale che vuole curare ogni malattia.',tags:'medico renna'},
+ // Epithet canonico sul manifesto post-Enies Lobby (ep. 320); "Amorevole" non era un epiteto ufficiale.
+ {id:'chopper',name:'Tony Tony Chopper',alias:'Amante del cotone dolce',aliasUnlock:320,role:'Medico',org:'Ciurma di Cappello di Paglia',unlock:81,profile:'Un giovane medico e una renna molto speciale che vuole curare ogni malattia.',tags:'medico renna'},
+ // "Bambina demoniaca": già nota al pubblico prima della soglia conservativa 130.
  {id:'robin',name:'Nico Robin',alias:'Bambina demoniaca',role:'Archeologa',org:'Ciurma di Cappello di Paglia',unlock:130,profile:'Studia le antiche civiltà, i misteri della storia e le tracce del passato.',tags:'archeologa storia'},
  {id:'franky',name:'Franky',alias:'Cyborg',role:'Carpentiere',org:'Ciurma di Cappello di Paglia',unlock:233,profile:'Un costruttore di navi dall’estro incredibile, appassionato di ingegneria e invenzioni.',tags:'carpentiere invenzioni'},
  {id:'brook',name:'Brook',alias:'Humming',role:'Musicista',org:'Ciurma di Cappello di Paglia',unlock:337,profile:'Musicista e spadaccino dall’umorismo inconfondibile, ama portare musica in ogni viaggio.',tags:'musicista spadaccino'},
@@ -75,6 +82,9 @@ function characterSaga(c){
  return g||SAGA_GROUPS[0];
 }
 function characterOrg(c){return c.org||(c.group?'Incontri':'Ciurma di Cappello di Paglia')}
+function characterAliasThreshold(c){return Number.isInteger(c.aliasUnlock)?c.aliasUnlock:c.unlock}
+function characterAliasReady(c){return !blocked(c.unlock)&&!!c.alias&&!blocked(characterAliasThreshold(c))}
+function characterAliasLabel(c){return characterAliasReady(c)?c.alias:c.role}
 function characterCollected(c){return !blocked(c.unlock)&&(extra.characterFavorites||[]).includes(c.id)}
 function characterIsNew(c){return !blocked(c.unlock)&&!wantedSeen.has(c.id)&&!characterCollected(c)}
 function wantedPosterSrc(c){return '/assets/characters/'+c.id+'.webp'}
@@ -284,10 +294,13 @@ function applyCharacterFilters(){
  let visible=0;
  for(const card of area.querySelectorAll('.wanted-poster, .char-card')){
   const locked=card.dataset.locked==='true';
-  const favorite=(extra.characterFavorites||[]).includes(card.dataset.id);
-  const group=card.dataset.group;
-  const eligible=characterFilter==='all'||characterFilter==='discovered'&&!locked||characterFilter==='locked'&&locked||characterFilter==='favorites'&&favorite||characterFilter==='crew'&&group==='crew'||characterFilter==='encounters'&&group==='encounters';
-  const ok=eligible&&(!q||(!locked&&card.dataset.search.includes(q)));
+  const id=card.dataset.id||'';
+  const favorite=!!id&&(extra.characterFavorites||[]).includes(id);
+  const group=card.dataset.group||'';
+  // Filtri crew/encounters: solo poster sbloccati (i sigillati non espongono il gruppo).
+  const eligible=characterFilter==='all'||characterFilter==='discovered'&&!locked||characterFilter==='locked'&&locked||characterFilter==='favorites'&&favorite||characterFilter==='crew'&&!locked&&group==='crew'||characterFilter==='encounters'&&!locked&&group==='encounters';
+  const searchHay=card.dataset.search||'';
+  const ok=eligible&&(!q||(!locked&&!!id&&searchHay.includes(q)));
   card.hidden=!ok;if(ok)visible++;
  }
  const count=area.querySelector('#character-match-count');if(count)count.textContent=`${visible} ${visible===1?'manifesto trovato':'manifesti trovati'}`;
@@ -299,24 +312,42 @@ function wantedPosterMarkup(c,i){
  const isNew=characterIsNew(c);
  const saga=characterSaga(c);
  const group=c.group?'encounters':'crew';
- const searchable=locked?'':`${c.name} ${c.alias||''} ${c.role} ${characterOrg(c)} ${saga.name} ${c.tags}`.toLocaleLowerCase('it');
+ const aliasLabel=characterAliasLabel(c);
+ const aliasForSearch=characterAliasReady(c)?c.alias:'';
+ const searchable=locked?'':`${c.name} ${aliasForSearch} ${c.role} ${characterOrg(c)} ${saga.name} ${c.tags}`.toLocaleLowerCase('it');
  const stamp=locked?'???':collected?'ARCHIVIATO':isNew?'NUOVO':'SCOPERTO';
  const face=locked
   ?`<span class="wanted-face wanted-face-sealed" aria-hidden="true"><span class="wanted-seal-mark">?</span></span>`
   :`<span class="wanted-face"><img src="${wantedPosterSrc(c)}" alt="" loading="lazy" decoding="async"></span>`;
- return `<article class="wanted-poster ${locked?'is-locked':''} ${collected?'is-collected':''} ${isNew?'is-new':''}" data-id="${c.id}" data-group="${group}" data-locked="${locked}" data-search="${cleanText(searchable)}" data-unlock="${c.unlock}">
-  <button type="button" class="wanted-open" data-action="character-detail" data-character="${i}" aria-label="${locked?`Manifesto ancora sigillato`:`Apri il dossier di ${cleanText(c.name)}`}" ${locked?'aria-disabled="true"':''}>
+ // Locked: attributi DOM neutri — niente id, gruppo, soglia, indice o search leak.
+ if(locked){
+  return `<article class="wanted-poster is-locked" data-locked="true" data-search="">
+  <button type="button" class="wanted-open" data-action="wanted-sealed" aria-label="Manifesto ancora sigillato" title="Manifesto ancora sigillato">
    <span class="wanted-frame">
     <span class="wanted-banner">WANTED</span>
     ${face}
-    <span class="wanted-name">${locked?'????????':cleanText(c.name)}</span>
-    <span class="wanted-alias">${locked?'Identità nascosta':cleanText(c.alias||c.role)}</span>
-    <span class="wanted-bounty"><em>DEAD OR ALIVE</em><strong>${locked?'—':'TAGLIA NON CATALOGATA'}</strong></span>
-    <span class="wanted-meta">${locked?'Sigillo Marina':`${art(v22RoleIcons[c.id]||'compass','char-role-icon')} ${cleanText(characterOrg(c))} · ${cleanText(saga.name)}`}</span>
-    <span class="wanted-stamp is-${locked?'locked':collected?'collected':isNew?'new':'open'}">${stamp}</span>
+    <span class="wanted-name">????????</span>
+    <span class="wanted-alias">Identità nascosta</span>
+    <span class="wanted-bounty"><em>DEAD OR ALIVE</em><strong>—</strong></span>
+    <span class="wanted-meta">Sigillo Marina</span>
+    <span class="wanted-stamp is-locked">${stamp}</span>
    </span>
   </button>
-  ${locked?'':`<button type="button" class="wanted-collect ${collected?'is-favorite':''}" data-action="character-star" data-character-id="${c.id}" aria-pressed="${collected}" aria-label="${collected?'Rimuovi':'Archivia'} ${cleanText(c.name)} ${collected?'dalla':'nella'} collezione">★</button>`}
+ </article>`;
+ }
+ return `<article class="wanted-poster ${collected?'is-collected':''} ${isNew?'is-new':''}" data-id="${c.id}" data-group="${group}" data-locked="false" data-search="${cleanText(searchable)}" data-unlock="${c.unlock}">
+  <button type="button" class="wanted-open" data-action="character-detail" data-character="${i}" aria-label="Apri il dossier di ${cleanText(c.name)}">
+   <span class="wanted-frame">
+    <span class="wanted-banner">WANTED</span>
+    ${face}
+    <span class="wanted-name">${cleanText(c.name)}</span>
+    <span class="wanted-alias">${cleanText(aliasLabel)}</span>
+    <span class="wanted-bounty"><em>DEAD OR ALIVE</em><strong>TAGLIA NON CATALOGATA</strong></span>
+    <span class="wanted-meta">${art(v22RoleIcons[c.id]||'compass','char-role-icon')} ${cleanText(characterOrg(c))} · ${cleanText(saga.name)}</span>
+    <span class="wanted-stamp is-${collected?'collected':isNew?'new':'open'}">${stamp}</span>
+   </span>
+  </button>
+  <button type="button" class="wanted-collect ${collected?'is-favorite':''}" data-action="character-star" data-character-id="${c.id}" aria-pressed="${collected}" aria-label="${collected?'Rimuovi':'Archivia'} ${cleanText(c.name)} ${collected?'dalla':'nella'} collezione">★</button>
  </article>`;
 }
 function characterView(){
@@ -347,11 +378,12 @@ function characterView(){
 }
 function characterDetail(i){
  const c=CHARACTERS[i];if(!c)return;
- if(blocked(c.unlock)){toast('Manifesto sigillato: raggiungi l’episodio '+c.unlock+' oppure disattiva la protezione spoiler.');return;}
+ if(blocked(c.unlock)){toast('Manifesto ancora sigillato. Avanza sulla Rotta Maggiore o disattiva la protezione spoiler.');return;}
  wantedSeen.add(c.id);
  const saga=characterSaga(c);
  const collected=characterCollected(c);
  const firstCanon=allCanon.find(n=>n>=c.unlock)||c.unlock;
+ const aliasShown=characterAliasReady(c);
  modal(`<div class="wanted-dossier character-detail">
   <div class="wanted-dossier-poster" aria-hidden="true">
    <span class="wanted-banner">WANTED</span>
@@ -361,10 +393,11 @@ function characterDetail(i){
   <div class="wanted-dossier-copy detail-profile">
    <span class="eyebrow">DOSSIER DELLA MARINA</span>
    <h3>${cleanText(c.name)}</h3>
-   <span class="detail-role">${cleanText(c.alias||c.role)}</span>
+   <span class="detail-role">${cleanText(characterAliasLabel(c))}</span>
    <p>${cleanText(c.profile)}</p>
    <div class="detail-facts wanted-facts">
     <span>Ruolo</span><b>${cleanText(c.role)}</b>
+    ${aliasShown?`<span>Epiteto</span><b>${cleanText(c.alias)}</b>`:''}
     <span>Organizzazione</span><b>${cleanText(characterOrg(c))}</b>
     <span>Saga di riferimento</span><b>${cleanText(saga.name)}</b>
     <span>Soglia antispoiler</span><b>Episodio ${c.unlock}</b>
@@ -466,6 +499,7 @@ function refreshEpisodeDetail(n){
 }
 async function handleExtraAction(action,t){const n=Number(t.dataset.ep);
  switch(action){
+ case 'wanted-sealed':{toast('Manifesto ancora sigillato. Avanza sulla Rotta Maggiore o disattiva la protezione spoiler.');return true;}
  case 'character-detail':{const i=Number(t.dataset.character);if(Number.isInteger(i)&&i>=0&&i<CHARACTERS.length)characterDetail(i);return true;}
  case 'character-star':{const id=t.dataset.characterId;if(!id)return true;const selected=toggleCharacterFavorite(id);t.classList.toggle('is-favorite',selected);t.classList.toggle('is-collected',selected);t.setAttribute('aria-pressed',String(selected));const c=CHARACTERS.find(x=>x.id===id);t.setAttribute('aria-label',`${selected?'Rimuovi':'Archivia'} ${c?.name||'personaggio'} ${selected?'dalla':'nella'} collezione`);const opt=document.querySelector('#character-filter option[value=\"favorites\"]');if(opt)opt.textContent=`Archiviati ★ (${extra.characterFavorites.length})`;document.querySelector(`.wanted-poster[data-id="${id}"]`)?.classList.toggle('is-collected',selected);if(characterFilter==='favorites')applyCharacterFilters();if(document.querySelector('.wanted-dossier')&&c){const idx=CHARACTERS.indexOf(c);if(idx>=0)characterDetail(idx)}toast(selected?'Manifesto archiviato':'Manifesto rimosso dall’archivio');return true;}
  case 'wanted-open-episodes':{const first=Number(t.dataset.first);const group=SAGA_GROUPS.find(g=>g.first===first);if(!group||(extra.spoiler&&first>spoilerHorizon())){toast('Saga ancora protetta dagli spoiler');return true}closeModal(false);episodeSaga=group.name;episodeFilter='canon';episodeQuery='';episodePage=1;setTab('episodes');toast('Episodi di '+group.name);return true}
