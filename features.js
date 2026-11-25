@@ -217,8 +217,8 @@ function journalView(){const dates=Object.values(extra.watchedAt).filter(s=>type
  return `<div class="section-shell">${sectionHeader('Diario di bordo','Annota gli episodi, tieni i preferiti e conserva i ricordi del tuo viaggio.')}
  ${Object.keys(extra.noteDrafts).length?`<section class="paper-panel"><h3>Bozze da completare</h3><div class="favorite-chips">${Object.keys(extra.noteDrafts).reverse().map(n=>`<button data-action="detail" data-ep="${n}">Riprendi · Ep. ${n}</button>`).join('')}</div></section>`:''}
  <div class="journal-metrics"><div><b>${Object.keys(extra.watchedAt).length}</b><span>Visioni registrate da questa versione</span></div><div><b>${unique.length}</b><span>Giorni di attività</span></div><div><b>${favorites.length}</b><span>Episodi preferiti</span></div><div><b>${rows.length}</b><span>Note personali</span></div></div>
- <div class="journal-columns"><section class="paper-panel"><h3>${art('map')} Appunti di viaggio</h3>${rows.length?rows.slice(0,12).map(([n,t])=>`<button class="journal-entry" data-action="detail" data-ep="${n}"><b>Ep. ${n}</b><span>${cleanText(String(t).slice(0,180))}</span></button>`).join(''):'<p>Ancora nessun appunto. Apri la scheda di un episodio e scrivi la tua prima nota.</p>'}<button class="button small secondary" data-tab="episodes">Apri guida episodi</button></section>
- <section class="paper-panel"><h3>${art('loot')} I miei tesori</h3>${favorites.length?`<div class="favorite-chips">${favorites.slice(0,50).map(n=>`<button data-action="detail" data-ep="${n}">★ Ep. ${n}</button>`).join('')}</div>`:'<p>Nessun episodio nei preferiti. Premi ★ accanto a una puntata per aggiungerla.</p>'}<div class="journal-date">${latest?'Ultima attività registrata: '+cleanText(latest):'Le date vengono registrate quando segni un nuovo episodio visto.'}</div><button class="button small secondary" data-tab="achievements">Visualizza ricompense</button></section></div>
+ <div class="journal-columns"><section class="paper-panel"><h3>${art('map')} Appunti di viaggio</h3>${rows.length?rows.slice(0,12).map(([n,t])=>`<button class="journal-entry" data-action="detail" data-ep="${n}"><b>Ep. ${n}</b><span>${cleanText(String(t).slice(0,180))}</span></button>`).join(''):`<div class="gl-empty"><img src="/assets/atlas/nami.webp" alt="" width="72" height="72" loading="lazy"><p>Ancora nessun appunto. Apri la scheda di un episodio e scrivi la tua prima nota.</p></div>`}<button class="button small secondary" data-tab="episodes">Apri guida episodi</button></section>
+ <section class="paper-panel"><h3>${art('loot')} I miei tesori</h3>${favorites.length?`<div class="favorite-chips">${favorites.slice(0,50).map(n=>`<button data-action="detail" data-ep="${n}">★ Ep. ${n}</button>`).join('')}</div>`:`<div class="gl-empty"><img src="/assets/atlas/usopp.webp" alt="" width="72" height="72" loading="lazy"><p>Nessun episodio nei preferiti. Premi ★ accanto a una puntata per aggiungerla.</p></div>`}<div class="journal-date">${latest?'Ultima attività registrata: '+cleanText(latest):'Le date vengono registrate quando segni un nuovo episodio visto.'}</div><button class="button small secondary" data-tab="achievements">Visualizza ricompense</button></section></div>
  </div>`}
 function achievementView(){const wins=ACHIEVEMENTS.filter(x=>x.test()).length;return `<div class="section-shell">${sectionHeader('Ricompense del viaggio','Le ricompense sono traguardi simbolici, non premi acquistabili.')}
  <div class="achievement-head">${art('chest')}<div><b>${wins} / ${ACHIEVEMENTS.length}</b><span>Obiettivi conquistati</span></div></div>
@@ -336,10 +336,11 @@ function applyTheme(){
  const motion=['full','soft','off'].includes(extra.animationLevel)?extra.animationLevel:'full';
  const colors={coral:'#d94d34',sea:'#117fa9',gold:'#b98524',violet:'#8355bb',custom:extra.customAccent};
  root.dataset.theme=style==='ocean'||style==='night'?'ocean':'light';
- root.dataset.atlas=['anime','atlas-grid'].includes(style)?style:'off';
+ root.dataset.atlas=style==='atlas-grid'?'atlas-grid':(style==='anime'?'anime':'off');
  root.dataset.visualStyle=['atlas-grid','scenic'].includes(style)?'anime':style;root.dataset.symbolStyle=symbols;root.dataset.colorPalette=palette;root.dataset.animationLevel=motion;
  const hex=/^#[0-9a-fA-F]{6}$/.test(colors[palette])?colors[palette]:'#d94d34';
  root.style.setProperty('--anime-accent',hex);
+ root.style.setProperty('--gl-coral',hex);
  const rgb=[1,3,5].map(i=>parseInt(hex.slice(i,i+2),16)/255).map(c=>c<=0.04045?c/12.92:Math.pow((c+0.055)/1.055,2.4));
  const lum=.2126*rgb[0]+.7152*rgb[1]+.0722*rgb[2];
  root.style.setProperty('--anime-accent-ink',lum>0.37?'#2d2018':'#fff8e3');
