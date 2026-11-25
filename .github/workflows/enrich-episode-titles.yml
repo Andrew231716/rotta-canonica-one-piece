@@ -39,7 +39,7 @@ jobs:
       - name: Merge reviewed chapter/summary sources
         run: node scripts/merge-reviewed.mjs
       - name: Validate catalog and provenance
-        run: node scripts/validate-data.mjs --allow-empty
+        run: node scripts/validate-data.mjs
       - name: Commit only if valid metadata changed
         run: |
           if ! git diff --quiet -- data/episodes.json data/episodes-latest.json; then

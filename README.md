@@ -30,3 +30,8 @@ Scene illustrate a tutta card in Personaggi (`/assets/character-scenes/`). Vedi 
 - **Ripristino:** il pulsante «Ripristina la grafica anime» reimposta stile, simboli, colori e movimenti.
 
 Le preferenze visive sono salvate **solo nel browser locale** insieme alle altre impostazioni del viaggio. Nessuna modifica alla registrazione email via Supabase, ai progressi degli episodi o al monitoraggio delle nuove uscite. Gli asset sono immagini ottimizzate e le icone decorative hanno sfondi trasparenti. La PWA usa la cache `rotta-canonica-v21-anime-customizer`.
+
+## Audit catalogo 25 novembre 2026
+Una verifica semantica ha individuato titoli errati ("Navigazione", "Curiosità" e intestazioni di pagina) precedentemente introdotti dall'importatore wiki. L'importatore ora legge solo campi titolo espliciti, il catalogo viene sanificato prima di ogni aggiornamento e il validatore respinge i titoli editoriali generici.
+I titoli mancanti vengono visualizzati onestamente come "Episodio N", non come titoli inventati. Le schede mantengono sinossi, capitoli e attribuzioni delle fonti.
+La Quality Gate controlla anche una soglia minima di copertura reale: almeno 900 titoli sui 1155 episodi dell'archivio base.

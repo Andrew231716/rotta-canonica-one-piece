@@ -28,7 +28,7 @@ jobs:
             if [ -f "$source" ]; then node --check "$source"; fi
           done
       - name: Integrità catalogo
-        run: node scripts/validate-data.mjs --allow-empty
+        run: node scripts/validate-data.mjs
       - name: Integrità asset grafici e PWA
         run: node scripts/check-ui-assets.mjs
       - name: Sicurezza registrazione e cache offline

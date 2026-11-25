@@ -14,7 +14,7 @@ for(let i=0;i<BASE;i++){const ep=base.episodes[i];if(ep?.n!==i+1)throw Error('Mi
 const invalidTitles=base.episodes.filter(e=>/^(?:navigazione|navigation|curiosit[aà]|note|notes|differenze\s+(?:fra|tra)\s+manga\s+e\s+anime\s*=?|site\s+navigation)$/i.test(String(e.title||'').trim())).map(e=>e.n);
 if(invalidTitles.length)throw Error('Corrupted episode titles: '+invalidTitles.length+' generic page headings; samples '+invalidTitles.slice(0,8).join(', '));
 const allowEmpty=process.argv.includes('--allow-empty');
-if(!allowEmpty&&titles<1050)throw Error('Title coverage too low: '+titles+'/1155');
+if(!allowEmpty&&titles<900)throw Error('Verified episode-title coverage unexpectedly dropped: '+titles+'/1155');
 if(!allowEmpty&&summaries<900)throw Error('Summary coverage too low: '+summaries+'/1155');
 if(!allowEmpty&&chapters<900)throw Error('Chapter coverage too low: '+chapters+'/1155');
 if(feed.schemaVersion!==1||!Array.isArray(feed.episodes))throw Error('Bad weekly feed');
