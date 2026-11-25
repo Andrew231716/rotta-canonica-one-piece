@@ -11,7 +11,7 @@ if((newCss.match(/\{/g)||[]).length!==(newCss.match(/\}/g)||[]).length)throw Err
 const feature=await read('features.js');
 if(!html.includes('/design-system-v16.css'))throw Error('Foglio grafico v16 non collegato');
 if(!/rotta-canonica-v18-1-ui/.test(sw))throw Error('Cache PWA non aggiornata alla v18');
-if(!feature.includes('route-))throw Error('Mappa priva di paesaggi anti-spoiler');
+if(!feature.includes('[2,5,4,6,2,5][i%6]'))throw Error('Mappa priva delle miniature illustrate per le saghe');
 if((css.match(/\{/g)||[]).length!==(css.match(/\}/g)||[]).length)throw Error('Parentesi CSS non bilanciate');
 const precache=sw.match(/const ASSETS=(\[[\s\S]*?\]);/);
 if(!precache)throw Error('Lista precache del service worker assente');
