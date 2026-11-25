@@ -18,9 +18,10 @@ assert.doesNotMatch(config,/oauthGoogleEnabled|oauthAppleEnabled|vapidPublicKey|
 assert.match(sw,/OFFLINE_CORE/);
 assert.match(sw,/Promise\.allSettled/);
 assert.match(sw,/ignoreSearch\s*:\s*true/);
-assert.match(sw,/rotta-canonica-v25-spoiler-mobile/);
+assert.match(sw,/rotta-canonica-v27-grand-line-premium/);
 assert.match(sw,/data\/episodes-latest\.json/);
-assert.match(app,/service-worker\.js\?v=25mobile/);
+assert.match(sw,/premium-grand-line\.css/);
+assert.match(app,/service-worker\.js\?v=27premium/);
 const animeCSS=read('anime-art-direction-v21.css');
 assert.match(animeCSS,/@keyframes animeShip\{0%,100%\{translate:0 0;rotate:-1\.4deg\}/);
 assert.match(animeCSS,/html\[data-animation-level="off"\] #app \*/);

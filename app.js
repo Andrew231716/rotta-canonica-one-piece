@@ -86,7 +86,7 @@ function art(name,cls='',alt=''){
 }
 function toolTile(tabId,title,subtitle,asset){return `<button class="tool-tile" data-tab="${tabId}" aria-label="Vai a ${title}"><span class="tool-tile-icon">${art(asset)}</span><span class="tool-tile-copy"><b>${title}</b><small>${subtitle}</small></span><span class="tool-tile-chevron" aria-hidden="true">›</span></button>`}
 
-function isAtlas(){return ['anime','atlas-grid'].includes(extra.appearanceStyle)}
+function isAtlas(){return extra.appearanceStyle==='atlas-grid'}
 function atlasLanding(next){
  const entries=[
   ['journal','Diario di bordo','Note e preferiti','loot'],
@@ -104,18 +104,16 @@ function atlasLanding(next){
   <div class="atlas-links ${grid?'tiles':''}">${entries.map(([id,label,hint,symbol])=>extra.symbolStyle!=='anime'?toolTile(id,label,hint,symbol):`<button data-tab="${id}" aria-label="${label} · ${hint}"><img src="/assets/atlas/${grid?'tile-':''}${id}.webp" alt="${label} · ${hint}"></button>`).join('')}</div>
  </section>`;
 }
-function heroPanel(next){return `<section class="hero" aria-label="Benvenuto in Rotta Canonica">
+function heroPanel(next){const c=counts();const pose=Math.max(0,Math.min(100,c.percent));return `<section class="hero gl-hero" aria-label="Benvenuto in Rotta Canonica">
   <div class="hero-visual">
     <img class="hero-visual-img" src="/assets/anime-hero-portrait.webp" alt="Capitano anime sul ponte di una nave verso un'isola fantastica" fetchpriority="high">
-    <span class="hero-lightflare" aria-hidden="true"></span>
-    <div class="hero-top-stamp">${art('compass','stamp-art')} <span>LA GRANDE AVVENTURA COMINCIA QUI</span></div>
-    <div class="hero-banner" aria-hidden="true"><img src="/assets/ornate-banner.webp" alt=""><b>ROTTA CANONICA</b><small>LA GUIDA DEGLI EPISODI</small></div>
-    
+    <span class="hero-sea" aria-hidden="true"></span>
   </div>
   <div class="hero-copy">
-    <div class="eyebrow">IL TUO DIARIO DI BORDO</div>
-    <h1>Salpa verso la <em>storia canonica!</em></h1>
-    <p>Segui il manga attraverso l’anime, riscopri le avventure tagliate dal live action e naviga senza filler.</p>
+    <p class="gl-brand-mark"><img src="/icon.svg" alt="" width="42" height="42" decoding="async"><span class="gl-brand-text"><span class="gl-brand-kicker">GRAND LINE · FAN GUIDE</span><strong>Rotta Canonica</strong></span></p>
+    <h1>Salpa sulla <em>Rotta Maggiore</em></h1>
+    <p>Segui il manga nell’anime, recupera ciò che il live action ha tagliato e lascia i filler fuori rotta.</p>
+    <div class="gl-log-pose" aria-label="Progresso del viaggio ${pose} percento"><span class="gl-log-pose-dial" style="--gl-pose:${pose}%" aria-hidden="true"></span><span>${pose}% della rotta · ${next?`prossimo ep. ${next}`:'rotta completata'}</span></div>
     <div class="hero-buttons"><button class="button primary" data-action="next">${art('episode','button-art')} ${next?`Riprendi dall’episodio ${next}`:'Hai completato la rotta!'}</button><button class="button secondary" data-tab="recover">${art('map','button-art')} Recuperi live action</button></div>
   </div>
 </section>`}
@@ -129,19 +127,32 @@ function getNext(){return allCanon.find(n=>n>=start&&!watched.has(n))||allCanon.
 function counts(){const done=allCanon.filter(n=>watched.has(n)).length;return{done,total:allCanon.length,remaining:allCanon.length-done,percent:Math.round(done/allCanon.length*100),filler:filler.size}}
 function navBtn(t,label,ico){return `<button class="nav-button ${tab===t?'active':''}" data-tab="${t}" aria-current="${tab===t?'page':'false'}">${art(UI_ASSET[t],'nav-art')}<span>${label}</span></button>`}
 function mobNavBtn(t,label,ico){const mark=t==='recover'?art('netflix','mobile-art mobile-netflix-art'):t==='more'?art('treasure','mobile-art mobile-more-art'):art(UI_ASSET[t],'mobile-art');return `<button class="${tab===t||(t==='more'&&['filler','stats','characters','journal','achievements','settings'].includes(tab))?'active':''}" data-tab="${t}" aria-current="${tab===t?'page':'false'}">${mark}<span>${label}</span></button>`}
-function shell(content){const c=counts(),next=getNext(),section=tab==='recover'?'section-recover.webp':tab==='filler'?'section-filler.webp':'section-progress.webp';return `<div class="shell">
+function sectionBanner(kind){
+ const map={
+  recover:{img:'section-recover.webp',title:'STORIE DA RECUPERARE',desc:'Scopri ciò che il live action ha lasciato indietro',art:'locator'},
+  filler:{img:'section-filler.webp',title:'FUORI ROTTA!',desc:'Naviga soltanto lungo la storia del manga',art:'flag'},
+  stats:{img:'section-progress.webp',title:'IL TUO DIARIO DI BORDO',desc:'Ogni episodio visto è un tesoro conquistato',art:'chest'},
+  journal:{img:'section-progress.webp',title:'DIARIO DI BORDO',desc:'Note, preferiti e tappe del tuo viaggio',art:'loot'},
+  achievements:{img:'section-progress.webp',title:'TESORI SBLUCCATI',desc:'Traguardi simbolici lungo la Grand Line',art:'treasure'},
+  settings:{img:'section-progress.webp',title:'CABINA DI COMANDO',desc:'Aspetto, backup e protezione antispoiler',art:'wheel'}
+ };
+ const s=map[kind];if(!s)return'';
+ return `<div class="secondary-topline" style="background-image:linear-gradient(100deg,rgba(7,30,43,.55),rgba(11,58,79,.2)),url('/assets/${s.img}')"><div class="secondary-copy"><span class="eyebrow">ROTTA CANONICA • ESPLORA</span><strong>${s.title}</strong><span class="secondary-desc">${s.desc}</span></div>${art(s.art,'secondary-art')}</div>`;
+}
+function voyageLine(){return `<div class="gl-voyage-line" aria-label="Tappe illustrate della rotta">${[1,2,3,4,5,6].map(i=>`<img src="/assets/route-${i}.webp" alt="" loading="lazy" width="88" height="56">`).join('')}</div>`}
+function shell(content){const c=counts(),next=getNext();return `<div class="shell">
   <aside class="sidebar">
-    <a href="#" class="brand" data-tab="path">${art('compass','brand-icon')}<span><strong>Rotta Canonica</strong><small>GUIDA ONE PIECE • FAN PROJECT</small></span></a>
+    <a href="#" class="brand" data-tab="path"><img class="brand-icon illustrated-icon" src="/icon.svg" alt="" width="48" height="48" decoding="async"><span><strong>Rotta Canonica</strong><small>GUIDA ONE PIECE • FAN PROJECT</small></span></a>
     <div class="nav"><div class="nav-label">SALPA VERSO...</div>${navBtn('path','La tua rotta','route')}${navBtn('episodes','Guida episodi','episode')}${navBtn('map','Mappa delle saghe','map')}${navBtn('recover','Live action','bookmark')}${navBtn('filler','Filler da saltare','skip')}${navBtn('characters','Personaggi','spyglass')}${navBtn('journal','Diario di bordo','map')}${navBtn('achievements','Ricompense','chest')}${navBtn('stats','Progressi','chart')}${navBtn('settings','Impostazioni','wheel')}</div>
     <div class="sidebar-bottom"><div class="sidebar-treasure">${art('chest','sidebar-treasure-art')}<span>IL TESORO È LA TUA STORIA</span></div><div class="sidebar-info"><span>CONSIGLIO DI ROTTA</span><strong>Episodio 92</strong><p>Hai visto le prime due stagioni Netflix? La nuova traversata comincia da Alabasta.</p></div><div class="side-disclaimer">Guida indipendente non ufficiale, senza affiliazione ai titolari di One Piece.</div></div>
   </aside>
   <main class="main">
     <div class="mobile-chrome">
-      <header class="mobile-brand">${art('compass','mobile-brand-mark')}<div><span class="mobile-brand-title">ROTTA CANONICA</span><span class="mobile-brand-sub">GUIDA ONE PIECE • FAN PROJECT</span></div><span class="mobile-brand-stamp">PWA</span></header>
+      <header class="mobile-brand"><img class="mobile-brand-mark illustrated-icon" src="/icon.svg" alt="" width="40" height="40" decoding="async"><div><span class="mobile-brand-title">ROTTA CANONICA</span><span class="mobile-brand-sub">GUIDA ONE PIECE • FAN PROJECT</span></div><span class="mobile-brand-stamp">PWA</span></header>
       <div class="topline"><div class="breadcrumb">${art('anchor','tiny-art')} GRANDE ROTTA <b>/</b> ${({path:'IL TUO PERCORSO',episodes:'GUIDA EPISODI',map:'MAPPA DELLE SAGHE',recover:'RECUPERI LIVE ACTION',filler:'EPISODI FILLER',characters:'PERSONAGGI',journal:'DIARIO DI BORDO',achievements:'RICOMPENSE',settings:'IMPOSTAZIONI',more:'TUTTE LE SEZIONI',stats:'STATISTICHE'})[tab]||'IL TUO PERCORSO'}</div><div class="top-actions"><span class="tiny-tag"><span class="dot"></span> ARCHIVIO 1–${MAX}</span></div></div>
     </div>
-    ${tab==='path'?(isAtlas()?atlasLanding(next):heroPanel(next)):['recover','filler','stats'].includes(tab)?`<div class="secondary-topline" style="--section-bg:url('/assets/${section}')"><div class="secondary-copy"><span class="eyebrow">ROTTA CANONICA • ESPLORA</span><strong>${tab==='recover'?'STORIE DA RECUPERARE':tab==='filler'?'FUORI ROTTA!':'IL TUO DIARIO DI BORDO'}</strong><span class="secondary-desc">${tab==='recover'?'Scopri ciò che il live action ha lasciato indietro':tab==='filler'?'Naviga soltanto lungo la storia del manga':'Ogni episodio visto è un tesoro conquistato'}</span></div>${art(tab==='recover'?'locator':tab==='filler'?'flag':'chest','secondary-art')}</div>`:''}
-    ${['path','stats'].includes(tab)?`<div class="metrics">
+    ${tab==='path'?(isAtlas()?atlasLanding(next):heroPanel(next)):sectionBanner(tab)}
+    ${['path','stats'].includes(tab)?`${voyageLine()}<div class="metrics">
       <div class="metric">${art('complete','metric-art')}<div class="metric-content"><div class="metric-head">Episodi visti</div><div class="metric-value">${c.done}<span> / ${c.total}</span></div><div class="metric-foot">Solo percorso canonico</div></div></div>
       <div class="metric">${art('route','metric-art')}<div class="metric-content"><div class="metric-head">Da guardare</div><div class="metric-value">${c.remaining}</div><div class="metric-foot">La rotta continua</div></div></div>
       <div class="metric">${art('filler','metric-art')}<div class="metric-content"><div class="metric-head">Filler esclusi</div><div class="metric-value">${c.filler}</div><div class="metric-foot">Fuori dalla rotta</div></div></div>
@@ -261,7 +272,7 @@ document.addEventListener('keydown',e=>{
 applyTheme();render();loadCatalog();loadWeeklyEpisodes();checkReminder();
 if('serviceWorker' in navigator){
  navigator.serviceWorker.addEventListener('message',event=>{if(event.data?.type==='ROTTA_SW_UPDATED')toast('Rotta aggiornata: catalogo e nuove uscite pronti per l’uso offline.')});
- window.addEventListener('load',()=>navigator.serviceWorker.register('/service-worker.js?v=25mobile',{updateViaCache:'none'}).then(reg=>reg.update().catch(()=>{})).catch(()=>{}));
+ window.addEventListener('load',()=>navigator.serviceWorker.register('/service-worker.js?v=27premium',{updateViaCache:'none'}).then(reg=>reg.update().catch(()=>{})).catch(()=>{}));
 }
 window.addEventListener('offline',()=>toast('Sei offline: puoi continuare con il catalogo già caricato.'));
 window.addEventListener('online',()=>{toast('Connessione ripristinata.');loadWeeklyEpisodes()});

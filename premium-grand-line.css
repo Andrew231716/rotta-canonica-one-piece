@@ -1,0 +1,476 @@
+/* Rotta Canonica — Grand Line Premium (v27)
+   Additive visual layer. Preserves LocalStorage, antispoiler, PWA, themes and actions.
+   Tokens unify the voyage look without removing legacy sheets. */
+:root{
+  --gl-ocean:#0B3A4F;
+  --gl-night:#071E2B;
+  --gl-azure:#3FA9C9;
+  --gl-foam:#B8E4EF;
+  --gl-gold:#C9A227;
+  --gl-sand:#E8D9B5;
+  --gl-parchment:#F3EADB;
+  --gl-parchment-2:#FBF6EC;
+  --gl-coral:var(--anime-accent,#C44536);
+  --gl-ink:#1F3340;
+  --gl-ink-soft:#4A5F6B;
+  --gl-wood:#5C3A24;
+  --gl-brass:#D4B05A;
+  --gl-radius:18px;
+  --gl-shadow:0 4px 0 #3a241880,0 14px 28px #05253633;
+  --gl-focus:#1A7FA3;
+  --gl-ease:cubic-bezier(.22,.7,.28,1);
+  --rc-ink:var(--gl-ink);
+  --rc-ocean:var(--gl-ocean);
+  --rc-accent:var(--gl-coral);
+  --rc-gold:var(--gl-gold);
+  --rc-paper:var(--gl-parchment);
+  --rc-focus:var(--gl-focus);
+  --rc-shadow:var(--gl-shadow);
+  --rc-radius:var(--gl-radius);
+}
+
+/* —— Atmosphere: open sea under the voyage —— */
+html[data-visual-style="anime"] body,
+html[data-visual-style="ocean"] body{
+  background:
+    linear-gradient(180deg,rgba(11,58,79,.42) 0%,rgba(63,169,201,.18) 18%,rgba(184,228,239,.12) 36%,rgba(243,234,219,.88) 72%,#F3EADB 100%),
+    url('/assets/anime-v22-archipelago.webp') center -60px / min(1280px,140vw) auto no-repeat,
+    linear-gradient(180deg,#7ec8e0,#d9efe8 55%,#F3EADB)!important;
+  background-color:var(--gl-foam)!important;
+}
+html[data-visual-style="night"] body{
+  background:
+    linear-gradient(180deg,rgba(7,30,43,.92),rgba(11,58,79,.78) 40%,rgba(15,50,70,.9)),
+    url('/assets/anime-v22-sunset.webp') center top / cover no-repeat!important;
+  background-color:var(--gl-night)!important;
+}
+html[data-visual-style="classic"] body{
+  background:linear-gradient(180deg,#9fd6e8,#eef3e6 45%,var(--gl-parchment))!important;
+}
+
+.shell{position:relative;isolation:isolate}
+.shell::before{
+  content:"";position:fixed;inset:auto 0 0 0;height:min(28vh,220px);z-index:0;pointer-events:none;
+  background:
+    radial-gradient(120% 80% at 20% 100%,rgba(63,169,201,.22),transparent 55%),
+    radial-gradient(100% 70% at 80% 110%,rgba(11,58,79,.18),transparent 50%);
+  opacity:.9;
+}
+.main,.sidebar,.mobile-nav{position:relative;z-index:1}
+
+/* Sea foam strip under content */
+.footer-sea{
+  position:relative;margin:28px 0 8px;height:56px;overflow:hidden;opacity:.55;
+}
+.footer-sea img{display:none}
+.footer-sea::before,.footer-sea::after{
+  content:"";position:absolute;left:-10%;right:-10%;height:40px;border-radius:50%;
+  background:radial-gradient(ellipse at center,rgba(63,169,201,.35),transparent 70%);
+}
+.footer-sea::before{bottom:8px;animation:glWaveA 9s ease-in-out infinite}
+.footer-sea::after{bottom:0;opacity:.7;animation:glWaveB 11s ease-in-out infinite}
+
+/* —— Shell / navigation: ship railing —— */
+.sidebar{
+  background:
+    linear-gradient(180deg,rgba(7,30,43,.94),rgba(11,58,79,.96)),
+    url('/assets/scroll-texture.webp') center/cover!important;
+  border-right:3px solid var(--gl-brass)!important;
+  box-shadow:inset -1px 0 0 #ffffff22,6px 0 24px #04182055!important;
+}
+.brand{
+  display:flex!important;align-items:center;gap:12px;padding:18px 16px 14px!important;
+  color:var(--gl-parchment)!important;text-decoration:none;
+}
+.brand-icon,.mobile-brand-mark{
+  width:48px!important;height:48px!important;object-fit:contain;
+  filter:drop-shadow(0 3px 2px #0008)!important;
+}
+.brand strong,.mobile-brand-title{
+  display:block;font-family:Georgia,"Palatino Linotype",Palatino,serif!important;
+  font-size:clamp(17px,1.4vw,20px)!important;letter-spacing:.04em;color:#FFF6E0!important;
+  text-shadow:0 2px 0 #0006;
+}
+.brand small,.mobile-brand-sub{color:var(--gl-foam)!important;opacity:.9;letter-spacing:.12em;font-size:9px!important}
+.nav-label{
+  color:var(--gl-gold)!important;letter-spacing:.18em;font-size:10px!important;opacity:.95;
+}
+.nav-button{
+  border:1px solid transparent!important;border-radius:14px!important;
+  color:#E8F4F8!important;background:transparent!important;
+  transition:background .2s var(--gl-ease),border-color .2s var(--gl-ease),transform .2s var(--gl-ease);
+}
+.nav-button:hover{background:rgba(184,228,239,.1)!important;border-color:rgba(201,162,39,.35)!important}
+.nav-button.active{
+  background:linear-gradient(135deg,rgba(196,69,54,.92),rgba(156,48,38,.95))!important;
+  border-color:var(--gl-gold)!important;
+  box-shadow:0 0 0 1px #f3e0a455,inset 0 1px 0 #fff3!important;
+  color:#FFF8E8!important;
+}
+.sidebar-treasure,.sidebar-info{
+  border:1px solid rgba(201,162,39,.45)!important;
+  background:linear-gradient(145deg,rgba(243,234,219,.12),rgba(11,58,79,.35))!important;
+  border-radius:14px!important;color:var(--gl-foam)!important;
+}
+.sidebar-info strong{color:var(--gl-gold)!important}
+.side-disclaimer{color:#9BB8C4!important}
+
+.mobile-chrome{
+  background:linear-gradient(180deg,rgba(7,30,43,.97),rgba(11,58,79,.94))!important;
+  border-bottom:3px solid var(--gl-brass)!important;
+  box-shadow:0 8px 20px #04182040!important;
+}
+.mobile-brand{color:#FFF6E0!important}
+.mobile-brand-stamp{
+  border:1px solid var(--gl-gold)!important;color:var(--gl-gold)!important;
+  background:rgba(201,162,39,.12)!important;border-radius:999px;padding:4px 8px;font-size:10px;font-weight:800;
+}
+.breadcrumb{color:var(--gl-foam)!important}
+.breadcrumb b{color:var(--gl-gold)!important}
+.tiny-tag{
+  background:rgba(243,234,219,.14)!important;border:1px solid rgba(201,162,39,.4)!important;
+  color:#FFF4D8!important;border-radius:999px!important;
+}
+.mobile-nav{
+  background:linear-gradient(180deg,#0F4A63,#071E2B)!important;
+  border-top:3px solid var(--gl-brass)!important;
+  box-shadow:0 -8px 24px #04182066,inset 0 1px 0 #ffffff18!important;
+}
+.mobile-nav button{color:#D7EEF4!important;text-shadow:0 1px 2px #0008!important}
+.mobile-nav button.active{
+  background:linear-gradient(180deg,rgba(196,69,54,.95),#7a2c22)!important;
+  box-shadow:inset 0 0 0 2px var(--gl-gold),0 0 12px #c9a22744!important;
+  border-radius:14px!important;color:#FFF8E0!important;
+}
+
+/* —— Hero: brand-first, full-bleed sea, no overlays on media —— */
+html[data-active-section="path"] .hero.gl-hero,
+.hero.gl-hero{
+  display:grid!important;grid-template-columns:1.05fr .95fr;gap:0!important;
+  border:3px solid var(--gl-wood)!important;border-radius:22px!important;overflow:hidden!important;
+  box-shadow:var(--gl-shadow),inset 0 0 0 1px #fff6!important;
+  background:var(--gl-night)!important;min-height:min(72vh,560px);
+}
+html[data-active-section="path"] .gl-hero .hero-visual,
+.gl-hero .hero-visual{
+  position:relative!important;min-height:100%!important;margin:0!important;padding:0!important;
+  background:
+    linear-gradient(100deg,rgba(7,30,43,.15),rgba(11,58,79,.05) 40%,transparent 70%),
+    url('/assets/anime-v22-archipelago.webp') center 48% / cover no-repeat!important;
+  overflow:hidden!important;
+}
+.gl-hero .hero-visual::before,
+.gl-hero .hero-visual::after,
+.gl-hero .hero-top-stamp,
+.gl-hero .hero-banner,
+.gl-hero .hero-lightflare{display:none!important}
+.gl-hero .hero-visual-img{
+  position:relative!important;z-index:1;width:100%!important;height:100%!important;
+  object-fit:contain!important;object-position:center bottom!important;
+  filter:drop-shadow(0 10px 16px #021a3080)!important;
+}
+.gl-hero .hero-sea{
+  position:absolute;left:0;right:0;bottom:0;height:28%;z-index:0;pointer-events:none;
+  background:
+    linear-gradient(0deg,rgba(11,58,79,.55),transparent),
+    radial-gradient(120% 80% at 50% 100%,rgba(63,169,201,.45),transparent 60%);
+}
+.gl-hero .hero-copy{
+  display:flex;flex-direction:column;justify-content:center;gap:14px;
+  padding:clamp(22px,4vw,42px)!important;
+  background:
+    linear-gradient(155deg,rgba(251,246,236,.97),rgba(232,217,181,.94)),
+    url('/assets/scroll-texture.webp') center/cover!important;
+  border-left:1px solid rgba(92,58,36,.25)!important;
+}
+.gl-hero .gl-brand-mark{
+  display:flex;align-items:center;gap:12px;margin:0;
+  font-family:Georgia,"Palatino Linotype",Palatino,serif;
+  color:var(--gl-ocean);line-height:1.05;text-wrap:balance;
+}
+.gl-hero .gl-brand-mark img{width:42px;height:42px;object-fit:contain;flex:none}
+.gl-hero .gl-brand-text{display:flex;flex-direction:column;gap:4px;min-width:0}
+.gl-hero .gl-brand-kicker{display:block;font-size:11px;letter-spacing:.22em;color:var(--gl-coral);font-weight:800}
+.gl-hero .gl-brand-text strong{
+  display:block;font-size:clamp(28px,4.2vw,44px);font-weight:900;letter-spacing:.02em;
+  color:var(--gl-ocean);font-family:inherit;
+}
+.gl-hero .eyebrow{display:none!important}
+.gl-hero .hero-copy h1{
+  margin:0!important;font-family:Georgia,serif!important;
+  font-size:clamp(22px,2.8vw,32px)!important;line-height:1.15!important;
+  color:var(--gl-ink)!important;font-weight:800!important;text-shadow:none!important;
+}
+.gl-hero .hero-copy h1 em{color:var(--gl-coral)!important;font-style:normal;text-shadow:none!important}
+.gl-hero .hero-copy p{
+  margin:0!important;max-width:38ch;color:var(--gl-ink-soft)!important;
+  font-size:clamp(14px,1.3vw,16px)!important;line-height:1.55!important;
+}
+.gl-hero .hero-buttons{display:flex;flex-wrap:wrap;gap:10px;margin-top:4px}
+.gl-log-pose{
+  display:inline-flex;align-items:center;gap:10px;margin-top:6px;
+  padding:8px 12px;border-radius:999px;
+  background:rgba(11,58,79,.08);border:1px solid rgba(201,162,39,.45);
+  color:var(--gl-ink);font-size:12px;font-weight:700;
+}
+.gl-log-pose-dial{
+  width:28px;height:28px;border-radius:50%;
+  border:2px solid var(--gl-wood);
+  background:
+    conic-gradient(from -90deg,var(--gl-coral) var(--gl-pose,0%),transparent 0),
+    radial-gradient(circle at center,#fff8e8 55%,#e8d9b5 56%);
+  box-shadow:inset 0 0 0 3px #fff8,0 2px 0 #5c3a2440;
+}
+
+/* Metrics as voyage stamps — not hero clutter */
+.metrics{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:18px 0;
+}
+.metric{
+  border:2px solid var(--gl-wood)!important;border-radius:16px!important;
+  background:linear-gradient(145deg,var(--gl-parchment-2),var(--gl-sand))!important;
+  box-shadow:var(--gl-shadow)!important;overflow:hidden;
+}
+.metric-art{filter:drop-shadow(0 3px 1px #50301c40)!important}
+.metric-head{color:var(--gl-coral)!important;letter-spacing:.08em;font-size:11px!important}
+.metric-value{color:var(--gl-ink)!important}
+.metric-foot{color:var(--gl-ink-soft)!important}
+
+/* Voyage timeline stamps (Home / Progressi) */
+.gl-voyage-line{
+  display:flex;gap:10px;overflow-x:auto;padding:4px 2px 12px;margin:4px 0 18px;
+  scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;
+}
+.gl-voyage-line img{
+  flex:0 0 auto;width:88px;height:56px;object-fit:cover;border-radius:12px;
+  border:2px solid var(--gl-wood);box-shadow:0 3px 0 #5c3a2444;
+  scroll-snap-align:start;filter:saturate(1.05);
+}
+
+/* —— Sections: parchment journal language —— */
+.section-shell>.section-header h2,
+.section-header h2{
+  color:var(--gl-ink)!important;
+  font-family:Georgia,"Palatino Linotype",Palatino,serif!important;
+  text-shadow:1px 1px 0 rgba(201,162,39,.35)!important;
+}
+.section-header:after{
+  background:linear-gradient(90deg,var(--gl-coral),var(--gl-gold),transparent)!important;
+  height:5px!important;border-radius:4px;
+}
+.section-header p{color:var(--gl-ink-soft)!important}
+:where(.paper-panel,.map-board,.episode-filters,.ep-list-item,.map-stop,.achievement-card,.recover-card,.filler-card,.stat-panel,.arc-card,.tool-tile,.more-menu,.appearance-lab,.journal-entry,.home-jump,.captains-deck){
+  border-color:var(--gl-wood)!important;
+  box-shadow:var(--gl-shadow)!important;
+}
+:where(.paper-panel,.episode-filters,.ep-list-item,.achievement-card,.recover-card,.filler-card,.stat-panel,.tool-tile,.home-jump){
+  background:linear-gradient(145deg,var(--gl-parchment-2),var(--gl-sand))!important;
+}
+.button.primary,
+.open-arc,
+.mini-detail,
+.char-cta{
+  background:linear-gradient(180deg,var(--gl-coral),color-mix(in srgb,var(--gl-coral) 70%,#5a1e16))!important;
+  color:var(--anime-accent-ink,#fff8e3)!important;
+  border-color:var(--gl-wood)!important;
+  box-shadow:0 3px 0 #3a1a14!important;
+  border-radius:12px!important;
+}
+.button.secondary{
+  background:linear-gradient(180deg,#FFF8E8,var(--gl-sand))!important;
+  border:2px solid var(--gl-wood)!important;color:var(--gl-ink)!important;
+}
+.home-jump{
+  display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;
+  padding:16px 18px!important;border-radius:16px!important;border:2px solid var(--gl-wood)!important;
+  background:
+    linear-gradient(120deg,rgba(251,246,236,.96),rgba(232,217,181,.92)),
+    url('/assets/scroll-texture.webp') center/cover!important;
+}
+.home-jump-kicker{color:var(--gl-coral)!important;letter-spacing:.14em;font-size:11px;font-weight:800}
+.captains-deck{
+  border:2px solid var(--gl-wood)!important;border-radius:18px!important;padding:16px!important;
+  background:linear-gradient(140deg,rgba(251,246,236,.95),rgba(184,228,239,.25))!important;
+  margin-bottom:16px;
+}
+.deck-label{display:flex;align-items:center;gap:12px;margin-bottom:12px;color:var(--gl-ink)}
+.deck-label span{display:block;font-size:10px;letter-spacing:.16em;color:var(--gl-coral);font-weight:800}
+.deck-label b{font-family:Georgia,serif;font-size:clamp(18px,2.2vw,24px)}
+.tool-tile{
+  border-radius:16px!important;transition:transform .22s var(--gl-ease),box-shadow .22s var(--gl-ease);
+}
+.tool-tile:hover{transform:translateY(-3px)}
+.tool-tile-copy b{color:var(--gl-ink)!important}
+.tool-tile-chevron{color:var(--gl-coral)!important}
+
+/* Secondary section banners (recover / filler / stats / journal / achievements / settings) */
+.secondary-topline{
+  position:relative!important;isolation:isolate!important;
+  min-height:148px!important;padding:18px!important;margin-bottom:16px;
+  border:3px solid var(--gl-wood)!important;border-radius:18px!important;overflow:hidden!important;
+  background-color:var(--gl-ocean)!important;background-size:cover!important;background-position:center 45%!important;
+  box-shadow:var(--gl-shadow)!important;
+}
+.secondary-topline::before{
+  content:"";position:absolute;inset:0;z-index:0;
+  background:linear-gradient(100deg,rgba(7,30,43,.78),rgba(11,58,79,.42) 55%,rgba(11,58,79,.18))!important;
+}
+.secondary-copy,.secondary-art{position:relative;z-index:1}
+.secondary-copy{
+  max-width:min(78%,680px)!important;padding:14px 16px!important;
+  border:1px solid rgba(243,234,219,.55)!important;border-radius:14px!important;
+  background:rgba(251,246,236,.95)!important;box-shadow:0 4px 14px #04182040!important;
+  color:var(--gl-ink)!important;
+}
+.secondary-copy .eyebrow{color:var(--gl-coral)!important;letter-spacing:.14em;font-size:10px;font-weight:800}
+.secondary-copy strong{
+  display:block;margin:.2em 0;font-family:Georgia,serif;
+  font-size:clamp(22px,5vw,34px)!important;line-height:1.05;color:var(--gl-ink)!important;
+}
+.secondary-desc{color:var(--gl-ink-soft)!important;font-size:13px;line-height:1.45}
+
+/* Map: nautical board + Log Pose current stop */
+.map-board{
+  border:3px solid var(--gl-wood)!important;border-radius:20px!important;
+  background:
+    linear-gradient(125deg,rgba(251,246,236,.9),rgba(232,217,181,.82)),
+    url('/assets/anime-v22-sunset.webp') 60% 40%/cover no-repeat!important;
+}
+.map-stop{
+  border-radius:16px!important;transition:transform .2s var(--gl-ease),box-shadow .2s var(--gl-ease);
+}
+.map-stop.is-here,.map-stop.current,.arc-card.is-current{
+  outline:2px solid var(--gl-gold);outline-offset:2px;
+  box-shadow:0 0 0 3px rgba(196,69,54,.25),var(--gl-shadow)!important;
+}
+.map-stop.fogged,.arc-card.is-spoiler .arc-image img{filter:grayscale(.75) brightness(.75) opacity(.55)}
+.arc-card{
+  border-radius:18px!important;overflow:hidden;border:2px solid var(--gl-wood)!important;
+  transition:transform .22s var(--gl-ease);
+}
+.arc-card.is-complete{box-shadow:0 0 0 2px var(--gl-gold),var(--gl-shadow)!important}
+.arc-number{
+  background:linear-gradient(160deg,#FFF8E8,var(--gl-gold))!important;
+  color:var(--gl-ink)!important;border-color:var(--gl-wood)!important;
+}
+
+/* Episodes as logbook rows */
+.ep-list-item{
+  border-radius:14px!important;border-width:2px!important;
+  transition:transform .18s var(--gl-ease),box-shadow .18s var(--gl-ease);
+}
+.ep-list-item:hover{transform:translateY(-2px)}
+.ep-list-item.is-done{background:linear-gradient(135deg,#e7f4ea,#f3ead0)!important}
+.ep-list-item.is-filler{background:linear-gradient(135deg,#f8e8df,#eddcc8)!important}
+
+/* Characters: bounty-poster framing without replacing art */
+html[data-active-section="characters"] .char-card{
+  border:3px solid var(--gl-wood)!important;border-radius:18px!important;
+  background:linear-gradient(160deg,#FFF8E8,var(--gl-sand))!important;
+  box-shadow:var(--gl-shadow)!important;
+}
+html[data-active-section="characters"] .char-kicker{
+  letter-spacing:.16em!important;color:var(--gl-coral)!important;
+}
+html[data-active-section="characters"] .char-title{color:var(--gl-ink)!important}
+html[data-active-section="characters"] .characters-hero{
+  border:3px solid var(--gl-wood)!important;border-radius:20px!important;
+  background:
+    linear-gradient(180deg,rgba(11,58,79,.35),rgba(243,234,219,.75)),
+    url('/assets/anime-v22-archipelago.webp') center 50%/cover no-repeat!important;
+}
+
+/* Achievements / journal / settings */
+.achievement-card.earned{
+  border-color:var(--gl-coral)!important;
+  box-shadow:0 0 0 2px var(--gl-gold),var(--gl-shadow)!important;
+}
+.reward-celebration .reward-open-art{filter:drop-shadow(0 6px 8px #04182044)}
+.appearance-lab{
+  border:3px solid var(--gl-wood)!important;
+  background:linear-gradient(145deg,var(--gl-parchment-2),var(--gl-sand))!important;
+}
+.gl-empty{
+  display:grid;place-items:center;gap:10px;text-align:center;
+  padding:28px 18px;border:2px dashed rgba(92,58,36,.35);border-radius:16px;
+  background:rgba(251,246,236,.7);color:var(--gl-ink-soft);
+}
+.gl-empty img{width:72px;height:72px;object-fit:contain;filter:drop-shadow(0 4px 2px #50301c40)}
+
+/* Focus & a11y */
+:where(button,input,select,textarea,a):focus-visible{
+  outline:3px solid var(--gl-focus)!important;outline-offset:3px!important;
+}
+
+/* —— Motion vocabulary (gated) —— */
+@keyframes glWaveA{0%,100%{transform:translateX(-2%) translateY(0)}50%{transform:translateX(2%) translateY(-4px)}}
+@keyframes glWaveB{0%,100%{transform:translateX(2%) translateY(0)}50%{transform:translateX(-3%) translateY(3px)}}
+@keyframes glShip{0%,100%{translate:0 0;rotate:-1.2deg}50%{translate:0 -7px;rotate:1.1deg}}
+@keyframes glPose{0%,100%{filter:drop-shadow(0 0 0 transparent)}50%{filter:drop-shadow(0 0 6px #c9a22788)}}
+@keyframes glReveal{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes glFlag{0%,100%{rotate:-4deg}50%{rotate:5deg}}
+@keyframes glDiscover{0%{transform:scale(.92);opacity:0}60%{transform:scale(1.04)}100%{transform:scale(1);opacity:1}}
+
+html[data-animation-level="full"] .gl-hero .hero-visual-img{animation:glShip 7.2s ease-in-out infinite alternate!important}
+html[data-animation-level="full"] .gl-log-pose-dial{animation:glPose 3.6s ease-in-out infinite}
+html[data-animation-level="full"] .arc-seal{animation:glFlag 5.5s ease-in-out infinite}
+html[data-animation-level="full"] :where(.arc-card,.map-stop,.ep-list-item,.tool-tile,.achievement-card,.char-card){
+  animation:glReveal .48s var(--gl-ease) both;
+}
+html[data-animation-level="full"] :where(.arc-card,.map-stop,.char-card):nth-child(2n){animation-delay:.06s}
+html[data-animation-level="full"] :where(.arc-card,.map-stop,.char-card):nth-child(3n){animation-delay:.11s}
+html[data-animation-level="full"] .achievement-card.earned .achievement-badge img{animation:glDiscover .7s var(--gl-ease) both}
+html[data-animation-level="full"] .footer-sea::before{animation:glWaveA 9s ease-in-out infinite}
+html[data-animation-level="full"] .footer-sea::after{animation:glWaveB 11s ease-in-out infinite}
+html[data-animation-level="soft"] .gl-hero .hero-visual-img{animation:glShip 14s ease-in-out infinite alternate!important}
+html[data-animation-level="soft"] .footer-sea::before,
+html[data-animation-level="soft"] .footer-sea::after{animation-duration:18s}
+html[data-animation-level="off"] .footer-sea::before,
+html[data-animation-level="off"] .footer-sea::after,
+html[data-animation-level="off"] .gl-hero .hero-visual-img,
+html[data-animation-level="off"] .gl-log-pose-dial,
+html[data-animation-level="off"] .arc-seal{animation:none!important}
+
+@media (prefers-reduced-motion:reduce){
+  .footer-sea::before,.footer-sea::after,
+  .gl-hero .hero-visual-img,.gl-log-pose-dial,.arc-seal,
+  :where(.arc-card,.map-stop,.ep-list-item,.tool-tile,.achievement-card,.char-card){
+    animation:none!important;transition:none!important;translate:none!important;rotate:none!important;
+  }
+}
+
+/* —— Responsive —— */
+@media (max-width:920px){
+  html[data-active-section="path"] .hero.gl-hero,
+  .hero.gl-hero{grid-template-columns:1fr!important;min-height:0}
+  .gl-hero .hero-visual{min-height:280px!important}
+  .metrics{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:650px){
+  .gl-hero .hero-visual{min-height:250px!important}
+  .gl-hero .gl-brand-mark{font-size:clamp(24px,7vw,32px)}
+  .gl-hero .hero-copy{padding:18px 16px 22px!important}
+  .secondary-art{display:none!important}
+  .secondary-copy{max-width:100%!important;width:100%!important}
+  .metrics{grid-template-columns:1fr 1fr}
+  .gl-voyage-line img{width:76px;height:48px}
+}
+@media (max-width:390px){
+  .metrics{grid-template-columns:1fr}
+  .gl-hero .hero-buttons .button{width:100%}
+}
+
+/* Night theme readability */
+html[data-visual-style="night"] .section-header h2{color:#FFF4D4!important;text-shadow:0 2px 0 #0008!important}
+html[data-visual-style="night"] .section-header p{color:#D7EEF4!important}
+html[data-visual-style="night"] .gl-hero .hero-copy{
+  background:linear-gradient(155deg,#1a3344,#0f2433)!important;border-left-color:#3FA9C955!important;
+}
+html[data-visual-style="night"] .gl-hero .gl-brand-mark,
+html[data-visual-style="night"] .gl-hero .gl-brand-text strong,
+html[data-visual-style="night"] .gl-hero .hero-copy h1,
+html[data-visual-style="night"] .gl-hero .hero-copy p{color:#F3EADB!important}
+html[data-visual-style="night"] .gl-hero .gl-brand-kicker{color:var(--gl-gold)}
+html[data-visual-style="night"] :where(.paper-panel,.ep-list-item,.tool-tile,.stat-panel,.home-jump,.captains-deck){
+  background:linear-gradient(145deg,#f6e7c8,#e2c48c)!important;
+}
