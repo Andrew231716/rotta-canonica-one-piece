@@ -35,3 +35,10 @@ Le preferenze visive sono salvate **solo nel browser locale** insieme alle altre
 Una verifica semantica ha individuato titoli errati ("Navigazione", "Curiosità" e intestazioni di pagina) precedentemente introdotti dall'importatore wiki. L'importatore ora legge solo campi titolo espliciti, il catalogo viene sanificato prima di ogni aggiornamento e il validatore respinge i titoli editoriali generici.
 I titoli mancanti vengono visualizzati onestamente come "Episodio N", non come titoli inventati. Le schede mantengono sinossi, capitoli e attribuzioni delle fonti.
 La Quality Gate controlla anche una soglia minima di copertura reale: almeno 900 titoli sui 1155 episodi dell'archivio base.
+
+### Verifica applicativa 25 novembre 2026
+- Browser Chromium isolato: 11 sezioni x 4 viewport (320, 390, 768 e 1280 px), nessun errore JS o overflow orizzontale.
+- Impostazioni: cambio e ripristino di tema/simboli/palette/movimento controllati; persistenza locale verificata.
+- Scheda episodio: fonti e pagine manga rese visibili, dialogo chiudibile con Escape.
+- Catalogo: titoli errati come «Navigazione» sanificati; 951 titoli italiani con fonte e 204 episodi con etichetta numerica di fallback. Non attribuire titoli inesistenti.
+- Verifiche non ancora eseguibili nell'ambiente di test: login/recovery Supabase con casella email reale, web push su iPhone fisico e Safari iOS.
