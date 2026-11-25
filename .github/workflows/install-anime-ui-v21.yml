@@ -1,0 +1,32 @@
+name: Install anime adventure UI v21
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'assets/anime-visual-ui-v21.zip'
+      - '.github/workflows/install-anime-ui-v21.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install design and preferences
+        run: |
+          unzip -o assets/anime-visual-ui-v21.zip
+          node --check app.js
+          node --check features.js
+          node --check service-worker.js
+          node scripts/check-ui-assets.mjs
+          node tests/test_security_offline.cjs
+      - name: Commit complete tested anime visual update
+        run: |
+          git config user.name "Rotta Canonica Bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add app.js features.js index.html service-worker.js anime-art-direction-v21.css tests/test_security_offline.cjs scripts/check-ui-assets.mjs
+          git rm -- assets/anime-visual-ui-v21.zip .github/workflows/install-anime-ui-v21.yml
+          git commit -m "feat(ui): anime illustration redesign and in-app theme/icon/color/motion customizer"
+          git push
