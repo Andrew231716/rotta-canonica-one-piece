@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" role="img" aria-hidden="true"><defs>
+<linearGradient id="gold" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#fff1a1"/><stop offset=".38" stop-color="#f2be54"/><stop offset=".72" stop-color="#c67d27"/><stop offset="1" stop-color="#ffe19a"/></linearGradient>
+<linearGradient id="sea" x1="0" x2=".8" y1="0" y2="1"><stop stop-color="#66dfe7"/><stop offset=".42" stop-color="#168db9"/><stop offset="1" stop-color="#143e75"/></linearGradient>
+<linearGradient id="wood" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#b76d36"/><stop offset=".5" stop-color="#874626"/><stop offset="1" stop-color="#533128"/></linearGradient>
+<linearGradient id="paper" x1="0" x2=".9" y1="0" y2="1"><stop stop-color="#fff7dc"/><stop offset=".9" stop-color="#e4bd80"/></linearGradient></defs>
+<g stroke="#463025" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"><circle cx="64" cy="57" r="43" fill="url(#gold)"/><circle cx="64" cy="57" r="33" fill="url(#sea)"/><path d="m64 28 8 18 20 2-15 14 4 20-17-9-18 9 4-20-15-14 20-2Z" fill="url(#gold)"/><rect x="20" y="96" width="88" height="16" rx="8" fill="url(#wood)"/><rect x="27" y="99" width="53" height="10" rx="5" fill="#48dac5" stroke="none"/><circle cx="93" cy="104" r="4" fill="#ffe3a4" stroke="none"/></g>
+</svg>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" role="img" aria-hidden="true"><defs>
+<linearGradient id="gold" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#fff1a1"/><stop offset=".38" stop-color="#f2be54"/><stop offset=".72" stop-color="#c67d27"/><stop offset="1" stop-color="#ffe19a"/></linearGradient>
+<linearGradient id="sea" x1="0" x2=".8" y1="0" y2="1"><stop stop-color="#66dfe7"/><stop offset=".42" stop-color="#168db9"/><stop offset="1" stop-color="#143e75"/></linearGradient>
+<linearGradient id="wood" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#b76d36"/><stop offset=".5" stop-color="#874626"/><stop offset="1" stop-color="#533128"/></linearGradient>
+<linearGradient id="paper" x1="0" x2=".9" y1="0" y2="1"><stop stop-color="#fff7dc"/><stop offset=".9" stop-color="#e4bd80"/></linearGradient></defs>
+<g stroke="#463025" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"><g transform="rotate(-22 64 62)"><path d="M26 46h73q11 0 11 12v14q0 12-11 12H26Z" fill="url(#sea)"/><rect x="16" y="36" width="23" height="58" rx="9" fill="url(#gold)"/><ellipse cx="21" cy="65" rx="12" ry="29" fill="url(#sea)"/><rect x="69" y="44" width="14" height="42" rx="3" fill="url(#gold)"/><rect x="97" y="49" width="16" height="33" rx="4" fill="url(#gold)"/><path d="M49 47h12" stroke="#a8f2e7" stroke-width="4"/></g><path d="M44 93q-7 11-2 24 10-6 15-16Z" fill="#cc4b3b" stroke-width="3"/></g>
+</svg>

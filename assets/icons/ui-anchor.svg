@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" role="img" aria-hidden="true"><defs>
+<linearGradient id="gold" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#fff1a1"/><stop offset=".38" stop-color="#f2be54"/><stop offset=".72" stop-color="#c67d27"/><stop offset="1" stop-color="#ffe19a"/></linearGradient>
+<linearGradient id="sea" x1="0" x2=".8" y1="0" y2="1"><stop stop-color="#66dfe7"/><stop offset=".42" stop-color="#168db9"/><stop offset="1" stop-color="#143e75"/></linearGradient>
+<linearGradient id="wood" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#b76d36"/><stop offset=".5" stop-color="#874626"/><stop offset="1" stop-color="#533128"/></linearGradient>
+<linearGradient id="paper" x1="0" x2=".9" y1="0" y2="1"><stop stop-color="#fff7dc"/><stop offset=".9" stop-color="#e4bd80"/></linearGradient></defs>
+<g stroke="#463025" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"><circle cx="64" cy="20" r="12" fill="url(#gold)"/><path d="M64 32v66m-24-49h48" stroke="url(#gold)" stroke-width="12"/><path d="M20 83q-3 29 31 29h26q33 0 31-29l-15 9-4-14m-54 0-4 14-14-9" fill="url(#sea)" stroke-width="5"/><path d="M50 12 42 23" stroke="#f0cd83" stroke-width="3"/></g>
+</svg>

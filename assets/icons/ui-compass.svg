@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" role="img" aria-hidden="true"><defs>
+<linearGradient id="gold" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#fff1a1"/><stop offset=".38" stop-color="#f2be54"/><stop offset=".72" stop-color="#c67d27"/><stop offset="1" stop-color="#ffe19a"/></linearGradient>
+<linearGradient id="sea" x1="0" x2=".8" y1="0" y2="1"><stop stop-color="#66dfe7"/><stop offset=".42" stop-color="#168db9"/><stop offset="1" stop-color="#143e75"/></linearGradient>
+<linearGradient id="wood" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#b76d36"/><stop offset=".5" stop-color="#874626"/><stop offset="1" stop-color="#533128"/></linearGradient>
+<linearGradient id="paper" x1="0" x2=".9" y1="0" y2="1"><stop stop-color="#fff7dc"/><stop offset=".9" stop-color="#e4bd80"/></linearGradient></defs>
+<g stroke="#463025" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"><circle cx="64" cy="12" r="7" fill="url(#gold)" /><circle cx="64" cy="66" r="47" fill="url(#gold)"/><circle cx="64" cy="66" r="37" fill="url(#sea)"/><path d="M64 12v8M64 112v-7M10 66h8M110 66h8" stroke="#9b5d24" stroke-width="4"/><circle cx="64" cy="66" r="36" stroke="#ffe8a0" stroke-width="3" fill="none"/><path d="M64 31 73 58 100 66 73 75 64 100 55 75 28 66 55 58Z" fill="url(#paper)"/><path d="M64 31 73 58 64 66 55 58Z" fill="#cd4436"/><path d="M64 101 55 75 64 66 73 75Z" fill="#f1ba4e"/><circle cx="64" cy="66" r="6" fill="url(#wood)" stroke-width="3"/></g>
+</svg>

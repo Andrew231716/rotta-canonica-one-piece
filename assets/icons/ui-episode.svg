@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" role="img" aria-hidden="true"><defs>
+<linearGradient id="gold" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#fff1a1"/><stop offset=".38" stop-color="#f2be54"/><stop offset=".72" stop-color="#c67d27"/><stop offset="1" stop-color="#ffe19a"/></linearGradient>
+<linearGradient id="sea" x1="0" x2=".8" y1="0" y2="1"><stop stop-color="#66dfe7"/><stop offset=".42" stop-color="#168db9"/><stop offset="1" stop-color="#143e75"/></linearGradient>
+<linearGradient id="wood" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#b76d36"/><stop offset=".5" stop-color="#874626"/><stop offset="1" stop-color="#533128"/></linearGradient>
+<linearGradient id="paper" x1="0" x2=".9" y1="0" y2="1"><stop stop-color="#fff7dc"/><stop offset=".9" stop-color="#e4bd80"/></linearGradient></defs>
+<g stroke="#463025" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"><rect x="17" y="43" width="96" height="69" rx="10" fill="url(#wood)"/><rect x="23" y="53" width="84" height="52" rx="5" fill="url(#sea)"/><path d="M17 45 110 30l4 20-93 16Z" fill="url(#gold)"/><path d="m30 44 14 14m13-19 15 15m13-19 14 16" stroke="#6a3e2a" stroke-width="8"/><path d="m53 65 28 14-28 15Z" fill="url(#paper)" stroke-width="3"/><circle cx="29" cy="94" r="3" fill="#ffdd72" stroke="none"/><circle cx="101" cy="94" r="3" fill="#ffdd72" stroke="none"/></g>
+</svg>
