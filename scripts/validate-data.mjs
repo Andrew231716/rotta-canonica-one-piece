@@ -11,9 +11,10 @@ for(let i=0;i<BASE;i++){const ep=base.episodes[i];if(ep?.n!==i+1)throw Error('Mi
  if(ep.chapter){chapters++;if(!url(ep.chapterSource)&&!url(ep.editorialSource))throw Error('Chapter mapping missing source: '+ep.n);if(ep.chapter.length>150)throw Error('Chapter field too long: '+ep.n)}
  if(ep.chapterDetails!==undefined&&!Array.isArray(ep.chapterDetails))throw Error('Invalid chapter details: '+ep.n);
  if(Array.isArray(ep.chapterDetails)&&ep.chapterDetails.length>20)throw Error('Too many chapter references: '+ep.n)}
-if(titles<1050)throw Error('Title coverage too low: '+titles+'/1155');
-if(summaries<900)throw Error('Summary coverage too low: '+summaries+'/1155');
-if(chapters<900)throw Error('Chapter coverage too low: '+chapters+'/1155');
+const allowEmpty=process.argv.includes('--allow-empty');
+if(!allowEmpty&&titles<1050)throw Error('Title coverage too low: '+titles+'/1155');
+if(!allowEmpty&&summaries<900)throw Error('Summary coverage too low: '+summaries+'/1155');
+if(!allowEmpty&&chapters<900)throw Error('Chapter coverage too low: '+chapters+'/1155');
 if(feed.schemaVersion!==1||!Array.isArray(feed.episodes))throw Error('Bad weekly feed');
 const seen=new Set();let latest=BASE;
 for(const e of feed.episodes){if(!Number.isInteger(e.number)||e.number<=BASE||e.number>3000||seen.has(e.number))throw Error('Bad episode number '+e.number);seen.add(e.number);latest=Math.max(latest,e.number);

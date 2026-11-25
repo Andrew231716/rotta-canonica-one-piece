@@ -15,7 +15,7 @@ async function getJson(url,label){
  }throw Error(label+' non disponibile');
 }
 function apiUrl(base,params){const u=new URL(base);for(const [k,v] of Object.entries(params))u.searchParams.set(k,String(v));return u.toString()}
-async function queryPages(api,numbers){const titles=numbers.map(n=>'Episodio_'+n).join('|');const url=apiUrl(api,{action:'query',prop:'info|revisions',inprop:'displaytitle',titles,rvprop:'ids|timestamp|content',rvslots:'main',format:'json',formatversion:2,origin:'*'});const json=await getJson(url,'One Piece Wiki Italia');const pages=json?.query?.pages;return Array.isArray(pages)?pages:Object.values(pages||{})}
+async function queryPages(api,numbers){const titles=numbers.map(n=>'Episodio_'+n).join('|');const url=apiUrl(api,{action:'query',prop:'revisions',titles,rvprop:'ids|timestamp|content',rvslots:'main',format:'json',formatversion:2,origin:'*'});const json=await getJson(url,'One Piece Wiki Italia');const pages=json?.query?.pages;return Array.isArray(pages)?pages:Object.values(pages||{})}
 function pageText(page){return String(page?.revisions?.[0]?.slots?.main?.content||'')}
 function episodeNumber(page){const m=String(page?.title||page?.displaytitle||'').match(/Episodio[_\s]+(\d+)/i);return m?Number(m[1]):null}
 function headingInfo(line){const m=String(line).match(/^(={2,6})\s*(.*?)\s*\1\s*$/);return m?{level:m[1].length,name:m[2].replace(/\[\]$/,'').trim()}:null}

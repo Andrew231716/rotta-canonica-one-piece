@@ -27,10 +27,6 @@ jobs:
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: '22'
-      - name: Refresh weekly episode feed
-        run: node scripts/update-episodes.mjs
-      - name: Acquire fallback source-derived titles
-        run: node scripts/enrich-episodes.mjs
       - name: Import Italian titles, summaries and manga chapters
         run: node scripts/enrich-italian-wiki.mjs
       - name: Merge reviewed chapter/summary sources
