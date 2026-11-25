@@ -3,5 +3,17 @@
   "source": "Jikan API (MyAnimeList, fonte terza non ufficiale)",
   "checkedAt": null,
   "latest": 1155,
-  "episodes": []
+  "episodes": [],
+  "metadataSource": {
+    "name": "One Piece Wiki Italia / Fandom + Template:WC",
+    "url": "https://onepiece.fandom.com/it/wiki/Episodi_e_film",
+    "license": "CC BY-SA 3.0 salvo diversa indicazione",
+    "lastChecked": "2026-11-25T08:55:12.442Z"
+  },
+  "metadataCoverage": {
+    "titles": 0,
+    "summaries": 0,
+    "chapterMappings": 0,
+    "episodes": 0
+  }
 }
