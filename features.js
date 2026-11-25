@@ -1,9 +1,16 @@
 /* Rotta Canonica • Grand Voyage • funzionalità locali estese. Nessun servizio di terze parti. */
 'use strict';
 const EXTRA_KEY='rotta-canonica-extra-v1';
+function validDrafts(value){
+ const drafts={};
+ for(const [key,text] of Object.entries(value && typeof value==='object'?value:{})){
+  if(/^[1-9]\d{0,3}$/.test(key)&&Number(key)<=3000&&typeof text==='string')drafts[key]=text.slice(0,2500);
+ }
+ return drafts;
+}
 function loadExtra(){let x={};try{x=JSON.parse(localStorage.getItem(EXTRA_KEY)||'{}')}catch{}
 if(!x || typeof x!=='object' || Array.isArray(x))x={};
-return {favorites:Array.isArray(x.favorites)?x.favorites.filter(n=>Number.isInteger(n)&&n>=1&&n<=3000):[],
+return {noteDrafts:validDrafts(x.noteDrafts),favorites:Array.isArray(x.favorites)?x.favorites.filter(n=>Number.isInteger(n)&&n>=1&&n<=3000):[],
  characterFavorites:Array.isArray(x.characterFavorites)?x.characterFavorites.filter(id=>typeof id==='string'&&/^[a-z]{2,16}$/.test(id)):[],
  characterFavoriteEdits:x.characterFavoriteEdits&&typeof x.characterFavoriteEdits==='object'?x.characterFavoriteEdits:{},
  notes:x.notes&&typeof x.notes==='object'?x.notes:{},ratings:x.ratings&&typeof x.ratings==='object'?x.ratings:{},watchedAt:x.watchedAt&&typeof x.watchedAt==='object'?x.watchedAt:{},
@@ -115,7 +122,7 @@ function episodeView(){let items=availableEpisodeNumbers(),query=episodeQuery.to
 function episodeListItem(n){const x=epInfo(n),lock=blocked(n),fave=extra.favorites.includes(n),done=watched.has(n),status=x.status;
  const titleLabel=lock?`Episodio ${n}`:(x.title&&x.title!==`Episodio ${n}`?cleanText(x.title):`Episodio ${n}`);
  return `<article class="ep-list-item ${done?'is-done':''} ${status==='filler'?'is-filler':''}"><div class="ep-list-num">${n}</div><div class="ep-list-copy"><b>${titleLabel}</b><span>${lock?'Contenuti protetti':cleanText(x.arc)} · <span class="ep-tag ${status}">${epStatusLabel(status)}</span>${!lock&&x.chapter?` · Cap. ${cleanText(x.chapter)}`:''}${(!x.title||x.title===`Episodio ${n}`)?` · <em class="ep-missing">titolo da catalogare</em>`:''}</span></div><div class="ep-list-actions"><button class="icon-action ${fave?'selected':''}" aria-label="${fave?'Rimuovi dai':'Aggiungi ai'} preferiti episodio ${n}" data-action="favorite" data-ep="${n}">★</button><button class="icon-action ${done?'selected':''}" aria-label="${done?'Segna da vedere':'Segna visto'} episodio ${n}" data-action="episode" data-ep="${n}" ${status==='filler'||status==='unverified'?'disabled title="Non inserito nel percorso verificato"':''}>${done?'✓':'○'}</button><button class="mini-detail" data-action="detail" data-ep="${n}" aria-label="Apri scheda episodio ${n}">Scheda ›</button></div></article>`}
-function episodeDetail(n){const x=epInfo(n),lock=blocked(n),fav=extra.favorites.includes(n),rate=Number(extra.ratings[n]||0),text=String(extra.notes[n]||''),done=watched.has(n);
+function episodeDetail(n){const x=epInfo(n),lock=blocked(n),fav=extra.favorites.includes(n),rate=Number(extra.ratings[n]||0),text=extra.noteDrafts[n]??String(extra.notes[n]||''),done=watched.has(n);
  const defaultP=lock?'Questa informazione è nascosta dalla modalità antispoiler.':x.summary||(x.summaryStatus==='missing-source-section'?'La scheda italiana non riporta una sinossi disponibile.':'Sinossi non ancora verificata nel catalogo. Puoi registrare qui le tue note personali.');
  const chapterLabel=lock?'Nascosto':x.chapter?cleanText(x.chapter):x.chapterStatus==='no-manga-mapping'?'Nessun capitolo manga mappato':'Da verificare';
  const safeSourceUrl=url=>/^https:\/\/(?:onepiece\.fandom\.com|myanimelist\.net|www\.crunchyroll\.com)\/[^\s]+$/i.test(String(url||''));
@@ -127,7 +134,7 @@ function episodeDetail(n){const x=epInfo(n),lock=blocked(n),fav=extra.favorites.
  ${chapterItems?`<div class="chapter-details"><b>Pagine adattate nel manga</b><div>${chapterItems}</div></div>`:''}${sourceMarkup}
  <div class="detail-actions"><button class="button small ${done?'secondary':'primary'}" data-action="detail-watch" data-ep="${n}" ${x.status==='filler'||x.status==='unverified'?'disabled':''}>${done?'✓ Già visto · annulla':'✓ Segna come visto'}</button><button class="button secondary small" data-action="favorite" data-ep="${n}">${fav?'★ Nei preferiti':'☆ Preferito'}</button></div>
  <div class="rating-group" role="group" aria-label="La tua valutazione">Valutazione personale ${[1,2,3,4,5].map(k=>`<button class="rate-star ${rate>=k?'selected':''}" data-action="rate" data-ep="${n}" data-score="${k}" aria-label="${k} stelle">★</button>`).join('')}</div>
- <label class="note-label">Note private <textarea id="detail-notes" maxlength="2500" rows="4" placeholder="Scrivi una nota personale. Viene salvata su questo dispositivo.">${cleanText(text)}</textarea></label><div class="modal-buttons"><button class="button secondary" data-action="modal-cancel">Chiudi</button><button class="button primary" data-action="note-save" data-ep="${n}">Salva note</button></div></div>`)}
+ <label class="note-label">Note private <textarea id="detail-notes" data-ep="${n}" maxlength="2500" rows="4" placeholder="Scrivi una nota personale. Viene salvata su questo dispositivo.">${cleanText(text)}</textarea></label><small id="draft-status" role="status">${Object.hasOwn(extra.noteDrafts,n)?"Bozza ripristinata":"Le modifiche vengono salvate in bozza."}</small><div class="modal-buttons"><button class="button secondary" data-action="modal-cancel">Chiudi</button><button class="button primary" data-action="note-save" data-ep="${n}">Salva note</button></div></div>`)}
 function newMapStop(){
  const recent=weeklyEpisodes.filter(confirmedForRoute);if(!recent.length)return '';
  const remaining=recent.filter(e=>!watched.has(e.number)).length;
@@ -211,6 +218,7 @@ function characterDetail(i){
 function notesSummary(){const rows=Object.entries(extra.notes).filter(([n,t])=>String(t).trim()&&Number(n)>=1&&Number(n)<=CATALOG_LIMIT).sort((a,b)=>Number(b[0])-Number(a[0]));return rows}
 function journalView(){const dates=Object.values(extra.watchedAt).filter(s=>typeof s==='string').map(s=>s.slice(0,10)).sort().reverse();const unique=[...new Set(dates)].sort().reverse();const latest=unique[0];const rows=notesSummary();const favorites=extra.favorites.slice().sort((a,b)=>a-b);
  return `<div class="section-shell">${sectionHeader('Diario di bordo','Annota gli episodi, tieni i preferiti e conserva i ricordi del tuo viaggio.')}
+ ${Object.keys(extra.noteDrafts).length?`<section class="paper-panel"><h3>Bozze da completare</h3><div class="favorite-chips">${Object.keys(extra.noteDrafts).reverse().map(n=>`<button data-action="detail" data-ep="${n}">Riprendi · Ep. ${n}</button>`).join('')}</div></section>`:''}
  <div class="journal-metrics"><div><b>${Object.keys(extra.watchedAt).length}</b><span>Visioni registrate da questa versione</span></div><div><b>${unique.length}</b><span>Giorni di attività</span></div><div><b>${favorites.length}</b><span>Episodi preferiti</span></div><div><b>${rows.length}</b><span>Note personali</span></div></div>
  <div class="journal-columns"><section class="paper-panel"><h3>${art('map')} Appunti di viaggio</h3>${rows.length?rows.slice(0,12).map(([n,t])=>`<button class="journal-entry" data-action="detail" data-ep="${n}"><b>Ep. ${n}</b><span>${cleanText(String(t).slice(0,180))}</span></button>`).join(''):'<p>Ancora nessun appunto. Apri la scheda di un episodio e scrivi la tua prima nota.</p>'}<button class="button small secondary" data-tab="episodes">Apri guida episodi</button></section>
  <section class="paper-panel"><h3>${art('loot')} I miei tesori</h3>${favorites.length?`<div class="favorite-chips">${favorites.slice(0,50).map(n=>`<button data-action="detail" data-ep="${n}">★ Ep. ${n}</button>`).join('')}</div>`:'<p>Nessun episodio nei preferiti. Premi ★ accanto a una puntata per aggiungerla.</p>'}<div class="journal-date">${latest?'Ultima attività registrata: '+cleanText(latest):'Le date vengono registrate quando segni un nuovo episodio visto.'}</div><button class="button small secondary" data-tab="achievements">Visualizza ricompense</button></section></div>
@@ -294,12 +302,15 @@ async function handleExtraAction(action,t){const n=Number(t.dataset.ep);
  switch(action){
  case 'character-detail':{const i=Number(t.dataset.character);if(Number.isInteger(i)&&i>=0&&i<CHARACTERS.length)characterDetail(i);return true;}
  case 'character-star':{const id=t.dataset.characterId;if(!id)return true;const selected=toggleCharacterFavorite(id);t.classList.toggle('is-favorite',selected);t.setAttribute('aria-pressed',String(selected));const c=CHARACTERS.find(x=>x.id===id);t.setAttribute('aria-label',`${selected?'Rimuovi':'Aggiungi'} ${c?.name||'personaggio'} ${selected?'dai':'ai'} preferiti`);const opt=document.querySelector('#character-filter option[value=\"favorites\"]');if(opt)opt.textContent=`Preferiti ★ (${extra.characterFavorites.length})`;if(characterFilter==='favorites')applyCharacterFilters();toast(selected?'Personaggio aggiunto ai preferiti':'Personaggio rimosso dai preferiti');return true;}
+ case 'route-search':modal('<h3>Cerca nella rotta</h3><label class="note-label">Episodi, saghe e diario<input type="search" id="route-query" autocomplete="off" placeholder="Numero, titolo, saga o nota"></label><p role="status" id="route-count"></p><div id="route-results"></div>');document.getElementById('route-query').focus();return true;
+ case 'search-more':showRouteResults(Number(t.dataset.limit));return true;
+ case 'search-map':{const first=Number(t.dataset.first);if(blocked(first))return true;closeModal(false);setTab('map');const stop=document.querySelector('.map-stop[data-first="'+first+'"]');stop?.focus({preventScroll:true});stop?.scrollIntoView({block:'center',behavior:motionScrollBehavior()});return true}
  case 'go-next':openEpisode(getNext()||start);return true;
  case 'detail':if(Number.isInteger(n)&&n>=1&&(n<=BASE_MAX||!!releaseByNumber(n)))episodeDetail(n);return true;
  case 'detail-watch':if(allCanon.includes(n)){watched.has(n)?watched.delete(n):watched.add(n);trackWatched(n,watched.has(n));saveAll();refreshEpisodeDetail(n);toast('Episodio aggiornato')}return true;
  case 'favorite':{const f=toggleFavorite(n);if(document.querySelector('.modal-layer'))refreshEpisodeDetail(n);else render();toast(f?'Aggiunto ai preferiti':'Rimosso dai preferiti');return true}
  case 'rate':extra.ratings[n]=Number(t.dataset.score);extra.ratingEdits[n]=Date.now();saveExtra();refreshEpisodeDetail(n);return true;
- case 'note-save':{const val=String(document.getElementById('detail-notes')?.value||'').slice(0,2500);if(val.trim())extra.notes[n]=val;else delete extra.notes[n];extra.noteEdits[n]=Date.now();saveExtra();closeModal();render();toast('Nota salvata');return true}
+ case 'note-save':{const val=String(document.getElementById('detail-notes')?.value||'').slice(0,2500);if(val.trim())extra.notes[n]=val;else delete extra.notes[n];extra.noteEdits[n]=Date.now();delete extra.noteDrafts[n];const saved=saveExtra();closeModal();render();toast(saved?'Nota salvata':'Nota in memoria: esporta i progressi');return true}
  case 'clear-episode-filters':episodeFilter='all';episodeSaga='all';episodeQuery='';episodePage=1;render();return true;
  case 'episodes-more':episodePage++;render();return true;
  case 'open-latest':{if(extra.spoiler&&weeklyEpisodes.filter(confirmedForRoute)[0]?.number>spoilerHorizon()){toast('Rotta protetta dagli spoiler');return true}episodeFilter='all';episodeSaga='Saga finale';episodeQuery='';episodePage=1;setTab('episodes');return true}
@@ -344,3 +355,48 @@ function rewardModal(){modal(`<div class="reward-celebration"><span class="eyebr
 /* v8 · Ricerca istantanea senza ricostruire le card e perdere il focus. */
 document.addEventListener('input',e=>{if(e.target?.id==='character-search'){characterQuery=e.target.value;applyCharacterFilters()}});
 document.addEventListener('change',e=>{if(e.target?.id==='character-filter'){characterFilter=e.target.value;applyCharacterFilters()}});
+
+function searchKey(value){
+ return String(value??'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim().toLocaleLowerCase('it');
+}
+function routeResults(query){
+ const term=searchKey(query);
+ if(!term)return [];
+ const horizon=extra.spoiler?spoilerHorizon():Infinity;
+ const groups=[];
+ const sagas=SAGA_GROUPS.filter(g=>g.first<=horizon&&searchKey(g.name).includes(term));
+ groups.push(['Saghe sulla mappa',sagas.map(g=>({label:g.name,action:'search-map',id:g.first}))]);
+ const episodes=[],notes=[];
+ for(const n of availableEpisodeNumbers()){
+  const exact=String(n)===term;
+  if(n>horizon){
+   if(exact)episodes.push({label:'Episodio '+n+' · Contenuti protetti',action:'detail',id:n});
+   continue;
+  }
+  const ep=epInfo(n);
+  if(exact||[ep.title,ep.arc,ep.saga].some(t=>searchKey(t).includes(term))){
+   const label='Episodio '+n;
+   episodes.push({label:ep.title===label?label:label+' · '+ep.title,action:'detail',id:n});
+  }
+  for(const [kind,value] of [['Nota',extra.notes[n]],['Bozza',extra.noteDrafts[n]]]){
+   if(value && (exact||searchKey(value).includes(term)))notes.push({label:kind+' · Ep. '+n+' · '+String(value).slice(0,90),action:'detail',id:n});
+  }
+ }
+ return [...groups,['Diario',notes],['Episodi',episodes]];
+}
+function showRouteResults(limit=12){
+ const input=document.getElementById('route-query'),target=document.getElementById('route-results');
+ if(!input||!target)return;
+ const groups=routeResults(input.value),total=groups.reduce((sum,[,items])=>sum+items.length,0);
+ target.innerHTML=groups.filter(([,items])=>items.length).map(([name,items])=>`<section><h4>${name} (${items.length})</h4>${items.slice(0,limit).map(item=>`<button class="button small secondary" data-action="${item.action}" data-first="${item.id}" data-ep="${item.id}">${cleanText(item.label)}</button>`).join(' ')}</section>`).join('')+(groups.some(([,items])=>items.length>limit)?`<button class="button small" data-action="search-more" data-limit="${limit+24}">Mostra altri risultati</button>`:'');
+ document.getElementById('route-count').textContent=input.value.trim()?(total?total+' risultati':'Nessun risultato'):'';
+}
+document.addEventListener('input',e=>{
+ if(e.target.id==='route-query')showRouteResults();
+ if(e.target.id!=='detail-notes')return;
+ const n=e.target.dataset.ep,text=e.target.value;
+ if(text===String(extra.notes[n]||''))delete extra.noteDrafts[n];
+ else extra.noteDrafts[n]=text;
+ const ok=saveExtra();
+ document.getElementById('draft-status').textContent=ok?(Object.hasOwn(extra.noteDrafts,n)?'Bozza salvata sul dispositivo':'Nessuna modifica in bozza'):'Memoria non disponibile: esporta i progressi.';
+});
