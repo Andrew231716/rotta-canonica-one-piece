@@ -84,7 +84,7 @@ function heroPanel(next){return `<section class="hero" aria-label="Benvenuto in 
     <img class="hero-visual-img" src="/assets/crew-hero.webp" alt="Ciurma di avventurieri in stile anime a bordo di una nave, diretta verso isole fantastiche" fetchpriority="high">
     <div class="hero-top-stamp">${art('compass','stamp-art')} <span>LA GRANDE AVVENTURA COMINCIA QUI</span></div>
     <div class="hero-banner" aria-hidden="true"><img src="/assets/ornate-banner.webp" alt=""><b>ROTTA CANONICA</b><small>LA GUIDA DEGLI EPISODI</small></div>
-    <div class="hero-wave" aria-hidden="true"></div>
+    
   </div>
   <div class="hero-copy">
     <div class="eyebrow">IL TUO DIARIO DI BORDO</div>
