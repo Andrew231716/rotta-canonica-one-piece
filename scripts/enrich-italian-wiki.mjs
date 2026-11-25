@@ -25,14 +25,19 @@ function decodeEntities(value){return String(value).replace(/&nbsp;/gi,' ').repl
 function plainWiki(value){let text=String(value||'').replace(/<!--[\s\S]*?-->/g,' ').replace(/<ref\b[^>]*>[\s\S]*?<\/ref>/gi,' ').replace(/<ref\b[^>]*\/>/gi,' ').replace(/<gallery[\s\S]*?<\/gallery>/gi,' ').replace(/<br\s*\/?\s*>/gi,' ');for(let i=0;i<12;i++){const next=text.replace(/\{\{[^{}]*\}\}/g,' ');if(next===text)break;text=next}text=text.replace(/\{\{[\s\S]*?\}\}/g,' ').replace(/\[\[(?:File|Image|Categoria|Category):[^\]]+\]\]/gi,' ').replace(/\[\[([^\]|]+)\|([^\]]+)\]\]/g,'$2').replace(/\[\[([^\]]+)\]\]/g,'$1').replace(/\[(?:https?:\/\/\S+)\s+([^\]]+)\]/g,'$1').replace(/https?:\/\/\S+/g,' ').replace(/<[^>]*>/g,' ').replace(/'''|''/g,'').replace(/^\s*[*#;:]+\s*/gm,' ').replace(/^\s*[|!].*$/gm,' ').replace(/^={2,6}.*={2,6}$/gm,' ').replace(/\[\d+\]/g,' ');return decodeEntities(text).replace(/[\t\r\n]+/g,' ').replace(/\s{2,}/g,' ').trim()}
 function concise(value,max=650){const text=plainWiki(value);if(text.length<=max)return text;const head=text.slice(0,max-1),cut=Math.max(head.lastIndexOf('. '),head.lastIndexOf('! '),head.lastIndexOf('? '));return (cut>Math.floor(max*.55)?head.slice(0,cut+1):head.replace(/\s+\S*$/,'')).trimEnd()+'…'}
 function titleFromPage(page,wikitext,n,language='it'){
- const raw=page?.title||page?.displaytitle||((wikitext.match(/\{\{DISPLAYTITLE\s*:\s*([^}]+)\}\}/i)||[])[1])||'';
- const generic=/^(navigazione|navigation|informazioni episodio|english information|japanese information|crediti|episode credits|statistiche|statistics|riassunto|short summary|long summary|personaggi|characters|differenze tra manga e anime|anime notes|collegamenti esterni|site navigation|curiosità|notes)$/i;
- const clean=value=>plainWiki(value).replace(new RegExp('^(?:Episodio|Episode)\\s+'+n+'\\s*[:–—-]?\\s*','i'),'').trim();
- const title=clean(raw);if(title&&!generic.test(title)&&title.toLowerCase()!=='episodio '+n&&title.toLowerCase()!=='episode '+n)return title.slice(0,150);
- for(const line of String(wikitext).split(/\r?\n/)){const h=headingInfo(line);if(!h||h.level!==2||generic.test(h.name))continue;const candidate=clean(h.name);if(candidate&&!generic.test(candidate))return candidate.slice(0,150)}
- const info=section(wikitext,language==='it'?['Informazioni episodio']:['English Information']);
- const match=info.match(/(?:^|\n)\s*(?:Titolo|Traduzione|Title)\s*:?\s*([^\n]+)/i);
- return match?clean(match[1]).slice(0,150):'';
+ // Never use generic page sections ("Navigazione", "Curiosità", etc.) as episode titles.
+ // Trust an explicit title field only; otherwise keep the Jikan episode title.
+ const raw=String(wikitext||'');
+ const candidates=[];
+ const display=raw.match(/\{\{DISPLAYTITLE\s*:\s*([^}]+)\}\}/i);
+ if(display)candidates.push(display[1]);
+ for(const m of raw.matchAll(/^\s*\|\s*(?:titolo(?:[_\s-]*(?:italiano|inglese|italian|english))?|title(?:[_\s-]*(?:italian|english|en|it))?|nome)\s*=\s*([^\n|]+)/gim))candidates.push(m[1]);
+ const invalid=/^(?:navigazione|navigation|curiosit[aà]|note|notes|statistiche|statistics|riassunto|summary|informazioni\s+episodio|crediti|personaggi|differenze\s+(?:fra|tra)\s+manga\s+e\s+anime\s*=?|collegamenti\s+esterni|site\s+navigation)$/i;
+ for(const candidate of candidates){
+  const title=plainWiki(candidate).replace(new RegExp('^(?:Episodio|Episode)\\s+'+n+'\\s*[:–—-]?\\s*','i'),'').trim();
+  if(title.length>=5&&title.length<=160&&!invalid.test(title)&&!/^[-\d\s:–—]+$/.test(title))return title;
+ }
+ return '';
 }
 function chapterListFromTemplate(wikitext){const map=new Map();let rows=0,mappings=0,match;const regex=/\{\{WC\/f\|\{\{\{1\}\}\}\|([^}]*)\}\}/g;while((match=regex.exec(wikitext))){rows++;const args=match[1].split('|');if(args.length<3||((args.length-1)%2)!==0)continue;const cm=args[0].trim().match(/^Chapter\s+(\d+)$/i);if(!cm)continue;const chapter=Number(cm[1]);for(let i=1;i+1<args.length;i+=2){const ep=args[i].trim().match(/^Episode\s+(\d+)$/i);if(!ep)continue;const n=Number(ep[1]);if(!map.has(n))map.set(n,[]);const pages=args[i+1].trim(),url='https://onepiece.fandom.com/wiki/Chapter_'+chapter;if(!map.get(n).some(x=>x.chapter===chapter&&x.pages===pages))map.get(n).push({chapter,pages,url});mappings++}}for(const list of map.values())list.sort((a,b)=>a.chapter-b.chapter);return {map,rows,mappings}}
 function chaptersFromItalianPage(wikitext){const stats=section(wikitext,['Statistiche']),text=stats||wikitext,found=[],regex=/Capitolo\s+(\d+)(?:\s*(?:pag\.?|pagine?)\s*([0-9,\s–-]+))?/gi;let m;while((m=regex.exec(text))){const chapter=Number(m[1]),pages=String(m[2]||'').trim();if(!found.some(x=>x.chapter===chapter&&x.pages===pages))found.push({chapter,pages,url:'https://onepiece.fandom.com/it/wiki/Capitolo_'+chapter})}return found.sort((a,b)=>a.chapter-b.chapter)}
@@ -69,7 +74,7 @@ for(let n=1;n<=max;n++){
  if(page){
   if(italianPage)italianPages++;
   const title=titleFromPage(page,wikitext,n,language);
-  if([1,1155,1156,1180].includes(n))console.log('TITLE_DEBUG',n,JSON.stringify({pageTitle:page?.title,displayTitle:page?.displaytitle,headings:wikitext.split(/\\r?\\n/).filter(line=>headingInfo(line)).slice(0,14),candidate:title}));
+  
   if(title&&!manualTitle){row.title=title;row.titleLanguage=language;row.source={...pageSource,fields:['title']};row.titleSource={...pageSource,fields:['title']};row.verifiedAt=pageDate;titles++}
   const summary=concise(section(wikitext,language==='it'?['Riassunto','Trama','Sinossi']:['Short Summary','Summary']),650);
   if(summary&&!manualSummary){row.summary=summary;row.summaryLanguage=language;row.summarySource={...pageSource,fields:['summary']};row.summaryStatus=language==='it'?'verified':'source-english';summaries++}

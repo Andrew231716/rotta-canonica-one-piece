@@ -16,16 +16,20 @@ for(let n=1;n<=last;n++){
  titles.set(ep.mal_id,{title:ep.title.trim(),aired:typeof ep.aired==='string'?ep.aired.slice(0,10):null});}}
  if(n<last)await wait(1100);
 }
-// Never overwrite reviewed editorial metadata or user-written content.
+// Never overwrite legitimate reviewed editorial metadata or user-written content.
+function invalidTitle(title){
+ const text=String(title||'').trim();
+ return !text||/^(?:navigazione|navigation|curiosit[aà]|note|notes|differenze\s+(?:tra|fra)\s+manga\s+e\s+anime\s*=?|site\s+navigation|informazioni\s+episodio|statistics|statistiche|summary|riassunto)$/i.test(text);
+}
 let changed=0;const now=new Date().toISOString();
 for(const ep of doc.episodes){const found=titles.get(ep.n);if(!found)continue;
- if(ep.title===null||ep.title===undefined||ep.title===''){
- ep.title=found.title;ep.source={provider:'Jikan API (MyAnimeList, fallback)',url:'https://myanimelist.net/anime/21/One_Piece/episode/'+ep.n,checkedAt:now,fields:['title']};ep.titleSource=ep.source;ep.verifiedAt=now;changed++;
+ if(invalidTitle(ep.title)){
+ ep.title=found.title;ep.titleLanguage='en';ep.source={provider:'Jikan API (MyAnimeList, fallback)',url:'https://myanimelist.net/anime/21/One_Piece/episode/'+ep.n,checkedAt:now,fields:['title']};ep.titleSource=ep.source;ep.verifiedAt=now;changed++;
  }
 }
-doc.catalogDisclaimer='Titoli tratti da Jikan/MyAnimeList (fonte terza); sinossi, capitoli e classificazione manga devono essere verificati separatamente.';
+// Keep the Italian Wiki summary and manga-chapter attribution already in the catalog.
 if(changed>0){
  doc.lastTitleImport=now;
  await writeFile(DEST,JSON.stringify(doc,null,2)+'\n','utf8');
 }
-console.log('Titoli aggiunti:',changed,'· Episodi catalogati:',doc.episodes.length,'· Episodi disponibili nella fonte:',titles.size);
+console.log('Titoli mancanti o corrotti riparati:',changed,'· Episodi catalogati:',doc.episodes.length,'· Episodi disponibili nella fonte:',titles.size);
