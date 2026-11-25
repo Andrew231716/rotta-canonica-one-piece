@@ -13,8 +13,8 @@ const features=await read('features.js');
 const app=await read('app.js');
 for(const file of ['nautical-finish-v18.css','catalog-pwa-v19.css','anime-art-direction-v21.css','design-system-v16.css'])if(!html.includes('/'+file))throw Error('Stylesheet not linked: '+file);
 for(const [file,value] of [['v16',css],['v18',newCss],['v19',pwaCss],['v21',animeCss],['v22',scenicCss],['v24-mobile',mobileFixes]])if((value.match(/\{/g)||[]).length!==(value.match(/\}/g)||[]).length)throw Error('Unbalanced CSS braces in '+file);
-if(!sw.includes('rotta-canonica-v24-mobile-audit'))throw Error('PWA version not bumped to v24');
-if(!html.includes('/mobile-quality-fixes.css?v=24a1')||!sw.includes("'/mobile-quality-fixes.css'"))throw Error('Mobile quality stylesheet missing online/offline');
+if(!sw.includes('rotta-canonica-v25-spoiler-mobile'))throw Error('PWA version not bumped to v24');
+if(!html.includes('/mobile-quality-fixes.css?v=25a2')||!sw.includes("'/mobile-quality-fixes.css'"))throw Error('Mobile quality stylesheet missing online/offline');
 if(!sw.includes("'/data/episodes-latest.json'"))throw Error('Missing offline episode feed');
 if(!features.includes('[2,5,4,6,2,5][i%6]'))throw Error('Map illustrations missing');
 if(!features.includes('appearanceStyle')||!features.includes('symbolStyle')||!features.includes('colorPalette')||!features.includes('animationLevel'))throw Error('Visual customization not persisted');
@@ -37,6 +37,7 @@ if(!html.includes('/anime-scenic-v22.css?v=22a3'))throw Error('Scenic anime v22 
 if(!scenicCss.includes('html[data-visual-style="anime"]')||scenicCss.includes('html:not([data-visual-style="classic"])'))throw Error('Illustrated scene override leaks into alternative themes');
 if(!features.includes('v22FeaturedCharacters')||!features.includes('char-role-icon'))throw Error('Full-body manga cards not installed');
 if(!features.includes('CHARACTERS.map(c=>{'))throw Error('Character list order is not canonical');
+if(!features.includes('Math.min(start,BASE_MAX)'))throw Error('Starting episode must remain visible under spoiler protection');
 if(!app.includes('class=\"section-shell route-sagas\"')||!app.includes('ARCHIVIO 1–${MAX}'))throw Error('Mobile route shell/archive label missing');
 for(const selector of ['.secondary-topline','.section-shell>.section-header','.char-favorite:not(.is-favorite)','.char-card[data-id=\"nami\"]'])if(!mobileFixes.includes(selector))throw Error('Mobile visual fix missing: '+selector);
 for(const asset of ['/anime-scenic-v22.css','/assets/anime-v22-archipelago.webp','/assets/anime-v22-sunset.webp'])if(!assets.includes(asset))throw Error('Missing offline scenery: '+asset);

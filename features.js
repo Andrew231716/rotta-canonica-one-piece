@@ -80,7 +80,7 @@ const ACHIEVEMENTS=[
  {id:'fivefavorites',title:'Collezionista',detail:'Aggiungi cinque episodi ai preferiti.',icon:'loot',test:()=>extra.favorites.length>=5},
  {id:'threenotes',title:'Diario di bordo',detail:'Scrivi tre note personali.',icon:'map',test:()=>Object.values(extra.notes).filter(x=>String(x).trim()).length>=3}
 ];
-function spoilerHorizon(){return Math.max(Math.min(start-1,BASE_MAX),...watched,0)}
+function spoilerHorizon(){return Math.max(Math.min(start,BASE_MAX),...watched,0)}
 function blocked(n){return extra.spoiler&&n>spoilerHorizon()}
 function spoilerName(n,s){return blocked(n)?'Isola inesplorata':s}
 function episodeArc(n){return arcData.find(a=>n>=a[1]&&n<=a[2])||['Nuove uscite · saga finale',n,n,'Saga finale']}
