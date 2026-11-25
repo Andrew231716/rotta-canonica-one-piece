@@ -18,7 +18,7 @@ assert.doesNotMatch(config,/oauthGoogleEnabled|oauthAppleEnabled|vapidPublicKey|
 assert.match(sw,/OFFLINE_CORE/);
 assert.match(sw,/Promise\.allSettled/);
 assert.match(sw,/ignoreSearch\s*:\s*true/);
-assert.match(sw,/rotta-canonica-v21-anime-customizer/);
+assert.match(sw,/rotta-canonica-v22-scenic-anime/);
 assert.match(sw,/data\/episodes-latest\.json/);
 assert.match(app,/service-worker\.js\?v=21anime/);
 const animeCSS=read('anime-art-direction-v21.css');
@@ -33,4 +33,13 @@ assert.match(animeCSS,/html\[data-animation-level="off"\] #toast\{animation:none
 assert.match(app,/function motionScrollBehavior\(\)/);
 assert.doesNotMatch(app,/behavior:'smooth'/);
 assert.doesNotMatch(features,/behavior:'smooth'/);
-console.log('Email-only auth security/offline and anime motion checks passed');
+const scenic=read('anime-scenic-v22.css');
+assert.match(scenic,/v22SeaDrift/);
+assert.match(scenic,/prefers-reduced-motion:reduce/);
+assert.match(scenic,/data-visual-style="classic"/);
+assert.match(scenic,/char-role-icon/);
+assert.match(read('index.html'),/anime-scenic-v22\.css\?v=22a1/);
+assert.match(features,/v22FeaturedCharacters/);
+assert.match(features,/v22RoleIcons/);
+assert.match(sw,/anime-v22-portraits\/nami\.webp/);
+console.log('Email-only auth, offline, animation and concept fidelity checks passed');

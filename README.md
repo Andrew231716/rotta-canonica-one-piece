@@ -42,3 +42,6 @@ La Quality Gate controlla anche una soglia minima di copertura reale: almeno 900
 - Scheda episodio: fonti e pagine manga rese visibili, dialogo chiudibile con Escape.
 - Catalogo: titoli errati come «Navigazione» sanificati; 951 titoli italiani con fonte e 204 episodi con etichetta numerica di fallback. Non attribuire titoli inesistenti.
 - Verifiche non ancora eseguibili nell'ambiente di test: login/recovery Supabase con casella email reale, web push su iPhone fisico e Safari iOS.
+
+## Anime scenografico v22
+Nuova composizione fedele al concept: Nami, Usopp, Sanji e Chopper in primo piano in pannelli illustrati con pergamene, conservando tutti gli altri personaggi. Il progetto integra 10 ritratti full-body, 2 scenari marini e il foglio di stile anime-scenic-v22.css. Le altre sezioni usano la stessa palette. Temi vintage/vettoriale, colorazioni personalizzabili, antispoiler, salvataggi e login email sono preservati. Movimento del mare, bandiera e scintille sono discreti e disattivabili. La preferenza di sistema prefers-reduced-motion è rispettata. Cache PWA: rotta-canonica-v22-scenic-anime.

@@ -131,7 +131,14 @@ function mapView(){const horizon=spoilerHorizon(),next=getNext();return `<div cl
  <div class="map-board"><div class="map-top"><span>LA ROTTA DEL NAVIGATORE</span><span>${counts().percent}% del viaggio</span></div><div class="map-compass">${art('compass')}</div><div class="map-trail">${SAGA_GROUPS.map((g,i)=>{const ns=allCanon.filter(n=>n>=g.first&&n<=g.last),done=ns.filter(n=>watched.has(n)).length,pct=ns.length?Math.round(done/ns.length*100):0,lock=extra.spoiler&&g.first>horizon,here=!!next&&next>=g.first&&next<=g.last;
  return `<button class="map-stop ${pct===100?'conquered':''} ${lock?'fogged':''} ${here?'you-are-here':''}" data-action="map-saga" data-first="${g.first}" ${lock?'disabled aria-disabled="true" title="Tappa protetta dagli spoiler"':''} aria-label="${lock?'Isola inesplorata':g.name}, episodi ${g.first}-${g.last}"><span class="map-stop-number">${here?'◎':String(i+1).padStart(2,'0')}</span><img src="/assets/route-${[2,5,4,6,2,5][i%6]}.webp" alt="" loading="lazy"><span class="map-stop-body"><b>${lock?'Isola inesplorata':cleanText(g.name)}</b><small>${lock?'Protetta dagli spoiler':`Ep. ${g.first}–${g.last} · ${done}/${ns.length} · ${pct}%`}${here?' · sei qui':''}</small><span class="mini-track"><i style="width:${pct}%"></i></span></span>${pct===100?'<span class="map-checked">✓</span>':here?'<span class="map-here">Qui</span>':''}</button>`}).join('')}${newMapStop()}</div><div class="map-bottom">${art('spyglass')} <span>La mappa è una rappresentazione tematica, non una cartografia ufficiale del mondo di One Piece.</span></div></div>
  </div>`}
-function characterPortrait(c,locked=false,large=false){return `<img class="character-portrait${large?' portrait-large':''}" src="/assets/character-scenes/${c.id}.webp?v=15-illustrations" alt="${locked?'':cleanText('Ritratto illustrato di '+c.name)}" loading="eager" decoding="async">`}
+const v22FeaturedCharacters=['nami','usopp','sanji','chopper'];
+const v22PortraitIds=new Set(['luffy','zoro','nami','usopp','sanji','chopper','robin','franky','brook','jinbe']);
+const v22RoleIcons={luffy:'flag',zoro:'anchor',nami:'compass',usopp:'spyglass',sanji:'treasure',chopper:'complete',robin:'map',franky:'wheel',brook:'flag',jinbe:'wheel',ace:'flag',law:'complete'};
+function characterPortrait(c,locked=false,large=false){
+ const scene=v22PortraitIds.has(c.id)?'/assets/anime-v22-portraits/'+c.id+'.webp':'/assets/character-scenes/'+c.id+'.webp';
+ const loading=v22FeaturedCharacters.includes(c.id)?'eager':'lazy';
+ return `<img class="character-portrait${large?' portrait-large':''}" src="${scene}?v=22-anime" alt="${locked?'':cleanText('Ritratto illustrato di '+c.name)}" loading="${loading}" decoding="async">`;
+}
 let characterQuery='',characterFilter='all';
 function toggleCharacterFavorite(id){
  const c=CHARACTERS.find(p=>p.id===id);
@@ -169,13 +176,16 @@ function characterView(){
  <div class="character-toolbar"><label class="character-search" for="character-search"><span aria-hidden="true">⌕</span><input id="character-search" type="search" autocomplete="off" placeholder="Cerca un personaggio…" value="${cleanText(characterQuery)}" aria-label="Cerca per nome, ruolo o descrizione"></label>
  <label class="character-filter-label"><span>Filtra</span><select id="character-filter" aria-label="Filtra personaggi"><option value="all" ${characterFilter==='all'?'selected':''}>Tutti</option><option value="crew" ${characterFilter==='crew'?'selected':''}>Ciurma</option><option value="encounters" ${characterFilter==='encounters'?'selected':''}>Altri incontri</option><option value="discovered" ${characterFilter==='discovered'?'selected':''}>Scoperti</option><option value="locked" ${characterFilter==='locked'?'selected':''}>Da scoprire</option><option value="favorites" ${characterFilter==='favorites'?'selected':''}>Preferiti ★ (${favoriteCount})</option></select></label></div>
  <div class="character-utility"><span id="character-match-count">${CHARACTERS.length} schede trovate</span><div class="character-spoiler"><span>${icon('shield')} Antispoiler <b>${extra.spoiler?'attivo':'disattivato'}</b></span><button type="button" data-action="spoiler-toggle">${extra.spoiler?'Mostra tutti':'Proteggi'}</button></div></div>
- <div class="character-grid">${CHARACTERS.map((c,i)=>{
+ <div class="character-grid">${[...CHARACTERS].sort((a,b)=>{
+  const ia=v22FeaturedCharacters.indexOf(a.id),ib=v22FeaturedCharacters.indexOf(b.id);
+  return (ia<0?100+CHARACTERS.indexOf(a):ia)-(ib<0?100+CHARACTERS.indexOf(b):ib);
+ }).map(c=>{const i=CHARACTERS.indexOf(c);
   const locked=blocked(c.unlock),favorite=!locked&&(extra.characterFavorites||[]).includes(c.id);
   const searchable=locked?`personaggio da scoprire episodio ${c.unlock}`:`${c.name} ${c.role} ${c.profile} ${c.tags}`.toLocaleLowerCase('it');
   return `<article class="char-card ${locked?'is-locked':''}" data-id="${c.id}" data-group="${c.group?'encounters':'crew'}" data-locked="${locked}" data-search="${cleanText(searchable)}">
    <button type="button" class="char-open" data-action="character-detail" data-character="${i}" aria-label="${locked?`Personaggio non ancora sbloccato, episodio ${c.unlock}`:`Apri la scheda di ${cleanText(c.name)}`}" ${locked?'aria-disabled="true"':''}>
     <span class="char-art"><span class="char-photo-frame">${characterPortrait(c,locked)}${locked?'<span class="char-hidden-mark" aria-hidden="true">?</span>':''}</span></span>
-    <span class="char-copy"><span class="char-kicker">${locked?'IDENTITÀ NASCOSTA':cleanText(c.role)}</span><strong class="char-title">${locked?'Da scoprire':cleanText(c.name)}</strong><span class="char-description">${locked?`Scheda disponibile dall’episodio ${c.unlock}.`:cleanText(c.profile)}</span><span class="char-cta"><span>${locked?`Da ep. ${c.unlock}`:'Scopri la scheda'}${!locked?` <small>· Ep. ${c.unlock}</small>`:''}</span><span aria-hidden="true">›</span></span></span>
+    <span class="char-copy"><span class="char-kicker">${art(v22RoleIcons[c.id]||'compass','char-role-icon')} ${locked?'IDENTITÀ NASCOSTA':cleanText(c.role)}</span><strong class="char-title">${locked?'Da scoprire':cleanText(c.name)}</strong><span class="char-description">${locked?`Scheda disponibile dall’episodio ${c.unlock}.`:cleanText(c.profile)}</span><span class="char-cta"><span>${locked?`Da ep. ${c.unlock}`:'Scopri la scheda'}${!locked?` <small>· Ep. ${c.unlock}</small>`:''}</span><span aria-hidden="true">›</span></span></span>
    </button>
    ${locked?'<span class="char-favorite locked" title="Non ancora sbloccato" aria-label="Personaggio ancora bloccato">⌑</span>':`<button type="button" class="char-favorite ${favorite?'is-favorite':''}" data-action="character-star" data-character-id="${c.id}" aria-pressed="${favorite}" aria-label="${favorite?'Rimuovi':'Aggiungi'} ${cleanText(c.name)} ${favorite?'dai':'ai'} preferiti">★</button>`}
   </article>`}).join('')}</div>
