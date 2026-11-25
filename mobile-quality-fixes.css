@@ -1,0 +1,108 @@
+/* Rotta Canonica v24 · mobile and character presentation audit.
+   These fixes load after the legacy theme layers and preserve each selected theme. */
+
+html[data-active-section="characters"] .char-favorite:not(.is-favorite):not(.locked){
+  background:linear-gradient(145deg,#fff8e7,#e8d2a7)!important;
+  color:#765a36!important;
+  border:2px solid #c7a36b!important;
+  box-shadow:0 2px 5px #1b29384d,inset 0 1px 0 #fffdf2!important;
+  filter:saturate(.55)!important;
+}
+html[data-active-section="characters"] .char-favorite.is-favorite{
+  background:radial-gradient(circle at 30% 20%,#ffe69a,#b96a25 74%)!important;
+  color:#fff5c9!important;
+  border:3px solid #fff0b0!important;
+  box-shadow:0 4px 8px #182b3e88,0 0 0 2px #d59a45!important;
+  filter:none!important;
+}
+
+/* The source Nami portrait contains a stray heading at the upper edge. */
+html[data-visual-style="anime"][data-active-section="characters"] .char-card[data-id="nami"] .char-photo-frame img.character-portrait{
+  transform:scale(1.08)!important;
+  transform-origin:50% 52%!important;
+}
+
+/* Mobile section headings and their controls use one readable column. */
+@media(max-width:650px){
+  .section-shell>.section-header{
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:stretch!important;
+    gap:10px!important;
+  }
+  .section-shell>.section-header>div:first-child{min-width:0!important}
+  .section-shell>.section-header h2{
+    font-size:clamp(26px,7.2vw,34px)!important;
+    line-height:1.04!important;
+    overflow-wrap:anywhere!important;
+  }
+  .section-shell>.section-header p{
+    max-width:none!important;
+    line-height:1.5!important;
+  }
+  .section-shell>.section-header .section-extra{
+    display:flex!important;
+    flex-wrap:wrap!important;
+    align-items:stretch!important;
+    width:100%!important;
+    gap:8px!important;
+    margin:0!important;
+    min-width:0!important;
+  }
+  .section-shell>.section-header .section-extra .search-box{
+    flex:1 1 100%!important;
+    width:100%!important;
+    min-width:0!important;
+  }
+  .section-shell>.section-header .section-extra .switch-holder{
+    flex:1 1 calc(50% - 8px)!important;
+    min-width:0!important;
+    justify-content:space-between!important;
+  }
+  .section-shell>.section-header .section-extra .tiny-tag{
+    max-width:100%!important;
+    white-space:normal!important;
+  }
+
+  .secondary-topline{
+    min-height:184px!important;
+    align-items:center!important;
+    gap:8px!important;
+    padding:18px 13px 25px!important;
+    background-position:58% center!important;
+  }
+  .secondary-copy{
+    flex:1 1 0!important;
+    width:auto!important;
+    max-width:calc(100% - 66px)!important;
+    min-width:0!important;
+    align-self:center!important;
+  }
+  .secondary-copy strong{
+    max-width:100%!important;
+    font-size:clamp(27px,7.1vw,37px)!important;
+    line-height:1.02!important;
+    letter-spacing:.6px!important;
+    overflow-wrap:normal!important;
+    hyphens:auto!important;
+  }
+  .secondary-desc{
+    max-width:100%!important;
+    font-size:11px!important;
+    line-height:1.45!important;
+    margin-top:9px!important;
+  }
+  .secondary-art{
+    flex:0 0 62px!important;
+    width:62px!important;
+    height:62px!important;
+    align-self:flex-end!important;
+    margin-bottom:6px!important;
+  }
+}
+@media(max-width:380px){
+  .secondary-topline{min-height:174px!important;padding-inline:10px!important}
+  .secondary-copy{max-width:calc(100% - 56px)!important}
+  .secondary-art{flex-basis:52px!important;width:52px!important;height:52px!important}
+  .secondary-copy strong{font-size:clamp(25px,7.2vw,31px)!important}
+}

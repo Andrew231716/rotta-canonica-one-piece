@@ -193,10 +193,7 @@ function characterView(){
  <div class="character-toolbar"><label class="character-search" for="character-search"><span aria-hidden="true">⌕</span><input id="character-search" type="search" autocomplete="off" placeholder="Cerca un personaggio…" value="${cleanText(characterQuery)}" aria-label="Cerca per nome, ruolo o descrizione"></label>
  <label class="character-filter-label"><span>Filtra</span><select id="character-filter" aria-label="Filtra personaggi"><option value="all" ${characterFilter==='all'?'selected':''}>Tutti</option><option value="crew" ${characterFilter==='crew'?'selected':''}>Ciurma</option><option value="encounters" ${characterFilter==='encounters'?'selected':''}>Altri incontri</option><option value="discovered" ${characterFilter==='discovered'?'selected':''}>Scoperti</option><option value="locked" ${characterFilter==='locked'?'selected':''}>Da scoprire</option><option value="favorites" ${characterFilter==='favorites'?'selected':''}>Preferiti ★ (${favoriteCount})</option></select></label></div>
  <div class="character-utility"><span id="character-match-count">${CHARACTERS.length} schede trovate</span><div class="character-spoiler"><span>${icon('shield')} Antispoiler <b>${extra.spoiler?'attivo':'disattivato'}</b></span><button type="button" data-action="spoiler-toggle">${extra.spoiler?'Mostra tutti':'Proteggi'}</button></div></div>
- <div class="character-grid">${[...CHARACTERS].sort((a,b)=>{
-  const ia=v22FeaturedCharacters.indexOf(a.id),ib=v22FeaturedCharacters.indexOf(b.id);
-  return (ia<0?100+CHARACTERS.indexOf(a):ia)-(ib<0?100+CHARACTERS.indexOf(b):ib);
- }).map(c=>{const i=CHARACTERS.indexOf(c);
+ <div class="character-grid">${CHARACTERS.map(c=>{const i=CHARACTERS.indexOf(c);
   const locked=blocked(c.unlock),favorite=!locked&&(extra.characterFavorites||[]).includes(c.id);
   const searchable=locked?`personaggio da scoprire episodio ${c.unlock}`:`${c.name} ${c.role} ${c.profile} ${c.tags}`.toLocaleLowerCase('it');
   return `<article class="char-card ${locked?'is-locked':''}" data-id="${c.id}" data-group="${c.group?'encounters':'crew'}" data-locked="${locked}" data-search="${cleanText(searchable)}">
