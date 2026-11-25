@@ -31,7 +31,7 @@
   display:grid;grid-template-columns:minmax(0,1.35fr) minmax(260px,.85fr);gap:14px;align-items:stretch;
 }
 .gl-atlas-stage{
-  position:relative;isolation:isolate;min-height:clamp(320px,52vw,460px);
+  position:relative;isolation:isolate;min-height:clamp(340px,52vw,480px);
   border-radius:18px;overflow:hidden;
   border:2px solid rgba(92,58,36,.55);
   background:
@@ -47,7 +47,11 @@
     radial-gradient(ellipse at 30% 80%,rgba(184,228,239,.35),transparent 50%),
     radial-gradient(ellipse at 70% 100%,rgba(63,169,201,.3),transparent 45%);
 }
-.gl-atlas-routes{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
+/* Shared inset keeps route SVG and island anchors aligned inside a safe frame. */
+.gl-atlas-routes,.gl-atlas-islands{
+  position:absolute;inset:7% 5% 16% 5%;width:auto;height:auto;z-index:1;pointer-events:none
+}
+.gl-atlas-islands{z-index:2;pointer-events:auto}
 .gl-atlas-route-line{
   fill:none;stroke:rgba(201,162,39,.28);stroke-width:1.2;stroke-linecap:round;
 }
@@ -56,11 +60,13 @@
   stroke-dasharray:2.2 2.4;
 }
 
-.gl-atlas-islands{position:absolute;inset:0;z-index:2}
+/* Anchor near the media center so labels hang below the pin without clipping the top edge. */
 .gl-island{
-  position:absolute;left:var(--ix);top:var(--iy);transform:translate(-50%,-50%);
-  width:min(132px,28vw);padding:0;border:0;background:transparent;cursor:pointer;
-  display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;
+  --gl-ix-shift:-50%;
+  --gl-iy-shift:-38%;
+  position:absolute;left:var(--ix);top:var(--iy);transform:translate(var(--gl-ix-shift),var(--gl-iy-shift));
+  width:min(124px,26vw);padding:0;border:0;background:transparent;cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;gap:3px;text-align:center;
   touch-action:manipulation;z-index:2;
 }
 .gl-island-pin{
@@ -69,25 +75,25 @@
   border:1px solid #f0d27a;box-shadow:0 2px 0 #3a1a14aa;
 }
 .gl-island-media{
-  position:relative;width:92px;height:70px;border-radius:16px;overflow:hidden;
+  position:relative;width:88px;height:66px;border-radius:16px;overflow:hidden;
   border:2px solid var(--gl-wood,#5C3A24);background:#0b3a4f;
   box-shadow:0 4px 0 #3a241866,0 8px 16px #04182044;
   transition:transform .22s cubic-bezier(.22,.7,.28,1),box-shadow .22s ease;
 }
 .gl-island-media>img:first-child{width:100%;height:100%;object-fit:cover;display:block}
 .gl-island-badge{
-  position:absolute;right:4px;bottom:4px;width:28px;height:28px;object-fit:contain;
+  position:absolute;right:4px;bottom:4px;width:26px;height:26px;object-fit:contain;
   filter:drop-shadow(0 2px 1px #0008);
 }
 .gl-island-label{
-  max-width:118px;padding:4px 7px;border-radius:10px;
+  max-width:112px;padding:4px 7px;border-radius:10px;
   background:rgba(251,246,236,.94);border:1px solid rgba(92,58,36,.35);
   box-shadow:0 2px 0 #5c3a2422;color:#1F3340;
 }
 .gl-island-label b{display:block;font-size:11px;line-height:1.2;font-family:Georgia,serif}
 .gl-island-label small{display:block;font-size:10px;color:#4A5F6B;margin-top:2px}
 .gl-island:hover .gl-island-media,.gl-island:focus-visible .gl-island-media{transform:translateY(-3px) scale(1.04)}
-.gl-island.is-selected{z-index:4}
+.gl-island.is-selected{z-index:5}
 .gl-island.is-selected .gl-island-media{
   outline:2px solid var(--gl-gold,#C9A227);outline-offset:2px;
   box-shadow:0 0 0 3px rgba(196,69,54,.28),0 6px 0 #3a241866;
@@ -154,7 +160,10 @@
 @keyframes glAtlasPanel{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 @keyframes glAtlasWave{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
 @keyframes glAtlasDash{to{stroke-dashoffset:-18}}
-@keyframes glAtlasBob{0%,100%{transform:translate(-50%,-50%)}50%{transform:translate(-50%,calc(-50% - 4px))}}
+@keyframes glAtlasBob{
+  0%,100%{transform:translate(var(--gl-ix-shift),var(--gl-iy-shift))}
+  50%{transform:translate(var(--gl-ix-shift),calc(var(--gl-iy-shift) - 4px))}
+}
 
 html[data-animation-level="full"] .gl-atlas-sea{animation:glAtlasWave 8s ease-in-out infinite}
 html[data-animation-level="full"] .gl-atlas-route-dash{animation:glAtlasDash 18s linear infinite}
@@ -175,30 +184,52 @@ html[data-animation-level="off"] .gl-atlas-dial{animation:none!important}
 @media (max-width:920px){
   .gl-atlas-layout{grid-template-columns:1fr}
   .gl-atlas-stage{min-height:300px}
-  .gl-island{width:min(118px,30vw)}
-  .gl-island-media{width:78px;height:60px}
-  .gl-island-label{max-width:100px}
+  .gl-island{width:min(110px,28vw)}
+  .gl-island-media{width:74px;height:56px}
+  .gl-island-label{max-width:96px}
   .gl-island-label b{font-size:10px}
 }
 @media (max-width:650px){
   .gl-atlas.map-board{padding:12px!important;border-radius:18px!important}
   .gl-atlas-top strong{color:#FFF6E0}
-  .gl-atlas-stage{min-height:280px}
-  .gl-island-media{width:68px;height:52px;border-radius:12px}
-  .gl-island-badge{width:22px;height:22px}
+  .gl-atlas-stage{min-height:260px}
+  .gl-island-media{width:62px;height:48px;border-radius:12px}
+  .gl-island-badge{width:20px;height:20px}
   .gl-atlas-compass{display:none}
   .gl-atlas-panel-actions .button{flex:1 1 140px}
-  /* Hide absolute islands on very small screens — rail remains the primary touch UI */
 }
-@media (max-width:390px){
-  .gl-atlas-islands{display:none}
-  .gl-atlas-routes{opacity:.35}
-  .gl-atlas-stage{min-height:120px}
-  .gl-atlas-stage::after{
-    content:"Scorri le tappe sotto · tocca per aprire il diario";
-    position:absolute;inset:auto 12px 12px;z-index:2;padding:10px 12px;border-radius:12px;
-    background:rgba(251,246,236,.94);color:#1F3340;font:700 12px/1.35 Georgia,serif;text-align:center;
+
+/* Compact atlas: keep the route visible with pin markers; rail remains the primary selector. */
+@media (max-width:430px){
+  .gl-atlas-stage{min-height:210px}
+  .gl-atlas-routes,.gl-atlas-islands{inset:10% 12% 14% 12%}
+  .gl-atlas-routes{opacity:.9}
+  .gl-island{width:auto;gap:2px;--gl-iy-shift:-42%}
+  .gl-island-media{
+    width:36px;height:28px;border-radius:10px;border-width:1.5px;
+    box-shadow:0 2px 0 #3a241866,0 4px 10px #04182055;
   }
+  .gl-island-badge{display:none}
+  .gl-island-label{display:none}
+  .gl-island-pin{min-width:22px;padding:2px 5px;font-size:10px}
+  .gl-island.is-selected .gl-island-media{outline-width:2px;outline-offset:1px}
+  .gl-atlas-panel-art-wrap{min-height:96px}
+  .gl-atlas-panel-scene{height:96px}
+  .gl-atlas-panel-copy{padding:12px}
+  .gl-atlas-panel-copy h3{font-size:20px}
+  .gl-atlas-panel-copy p{font-size:12px}
+}
+@media (max-width:360px){
+  .gl-atlas-stage{min-height:190px}
+  .gl-atlas-routes,.gl-atlas-islands{inset:11% 14% 15% 14%}
+  .gl-island-media{width:30px;height:24px}
+  .gl-island-pin{min-width:20px;font-size:9px;padding:1px 4px}
+}
+@media (max-width:320px){
+  .gl-atlas-stage{min-height:176px}
+  .gl-atlas-routes,.gl-atlas-islands{inset:12% 16% 16% 16%}
+  .gl-island-media{width:26px;height:20px}
+  .gl-atlas-voyage span:last-child{font-size:11px}
 }
 
 /* Night theme readability */

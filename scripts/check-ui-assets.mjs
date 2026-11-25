@@ -16,10 +16,14 @@ for(const [file,value] of [['v16',css],['v18',newCss],['v19',pwaCss],['v21',anim
 if(!sw.includes('rotta-canonica-v28-interactive-atlas'))throw Error('PWA version not bumped to v28 interactive atlas');
 if(!html.includes('/mobile-quality-fixes.css?v=25a2')||!sw.includes("'/mobile-quality-fixes.css'"))throw Error('Mobile quality stylesheet missing online/offline');
 if(!html.includes('/premium-grand-line.css?v=27a1')||!sw.includes("'/premium-grand-line.css'"))throw Error('Premium Grand Line stylesheet missing online/offline');
-if(!html.includes('/interactive-atlas-v28.css?v=28a1')||!sw.includes("'/interactive-atlas-v28.css'"))throw Error('Interactive atlas stylesheet missing online/offline');
+if(!html.includes('/interactive-atlas-v28.css?v=28a2')||!sw.includes("'/interactive-atlas-v28.css'"))throw Error('Interactive atlas stylesheet missing online/offline');
 if(!sw.includes("'/mobile-visual-repair-v26.css'"))throw Error('Mobile visual repair missing from offline cache');
 if(!sw.includes("'/data/episodes-latest.json'"))throw Error('Missing offline episode feed');
-if(!features.includes('ATLAS_ROUTE_ART')||!features.includes('map-select')||!features.includes('gl-atlas'))throw Error('Interactive atlas map missing');
+if(!features.includes('ATLAS_ROUTE_ART')||!features.includes('ATLAS_ROUTE_PATH')||!features.includes('map-select')||!features.includes('gl-atlas'))throw Error('Interactive atlas map missing');
+const atlasCss=await read('interactive-atlas-v28.css');
+if((atlasCss.match(/\{/g)||[]).length!==(atlasCss.match(/\}/g)||[]).length)throw Error('Unbalanced CSS braces in interactive-atlas-v28.css');
+if(/\.gl-atlas-islands\s*\{\s*display:\s*none/i.test(atlasCss))throw Error('Mobile atlas must keep islands visible');
+if(!atlasCss.includes('Compact atlas'))throw Error('Compact mobile atlas mode missing');
 if(!features.includes('appearanceStyle')||!features.includes('symbolStyle')||!features.includes('colorPalette')||!features.includes('animationLevel'))throw Error('Visual customization not persisted');
 if(!app.includes('visual-style')||!app.includes('visual-symbols')||!app.includes('visual-palette')||!app.includes('visual-motion'))throw Error('Visual customization not actionable');
 const precache=sw.match(/const ASSETS=(\[[\s\S]*?\]);/);

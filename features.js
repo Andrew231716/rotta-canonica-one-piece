@@ -137,10 +137,12 @@ function episodeDetail(n){const x=epInfo(n),lock=blocked(n),fav=extra.favorites.
  <label class="note-label">Note private <textarea id="detail-notes" data-ep="${n}" maxlength="2500" rows="4" placeholder="Scrivi una nota personale. Viene salvata su questo dispositivo.">${cleanText(text)}</textarea></label><small id="draft-status" role="status">${Object.hasOwn(extra.noteDrafts,n)?"Bozza ripristinata":"Le modifiche vengono salvate in bozza."}</small><div class="modal-buttons"><button class="button secondary" data-action="modal-cancel">Chiudi</button><button class="button primary" data-action="note-save" data-ep="${n}">Salva note</button></div></div>`)}
 /* Interactive Grand Line Atlas — in-memory selection only (no LocalStorage). */
 let selectedMapFirst=null;
+/* Positions are % of the stage; keep inset so media+label never clip the frame. */
 const ATLAS_ISLAND_POS=[
- {x:7,y:74},{x:16,y:56},{x:26,y:38},{x:36,y:58},{x:46,y:34},
- {x:55,y:52},{x:64,y:70},{x:73,y:44},{x:81,y:28},{x:88,y:48},{x:94,y:22}
+ {x:8,y:62},{x:18,y:48},{x:28,y:24},{x:38,y:58},{x:48,y:26},
+ {x:56,y:50},{x:64,y:62},{x:70,y:40},{x:76,y:22},{x:80,y:46},{x:84,y:20}
 ];
+const ATLAS_ROUTE_PATH='M8 62 C13 54, 15 50, 18 48 S24 32, 28 24 S34 50, 38 58 S44 32, 48 26 S52 44, 56 50 S60 58, 64 62 S67 46, 70 40 S74 26, 76 22 S78 38, 80 46 S82 28, 84 20';
 const ATLAS_ROUTE_ART=[2,5,4,6,2,5,3,1,4,6,2];
 function sagaProgress(g){
  const ns=allCanon.filter(n=>n>=g.first&&n<=g.last);
@@ -227,8 +229,8 @@ function mapView(){
    <div class="gl-atlas-stage">
     <div class="gl-atlas-sea" aria-hidden="true"></div>
     <svg class="gl-atlas-routes" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-     <path class="gl-atlas-route-line" d="M7 74 C12 64, 14 58, 16 56 S22 44, 26 38 S32 50, 36 58 S42 40, 46 34 S52 48, 55 52 S60 66, 64 70 S70 50, 73 44 S78 32, 81 28 S85 42, 88 48 S92 30, 94 22"/>
-     <path class="gl-atlas-route-dash" d="M7 74 C12 64, 14 58, 16 56 S22 44, 26 38 S32 50, 36 58 S42 40, 46 34 S52 48, 55 52 S60 66, 64 70 S70 50, 73 44 S78 32, 81 28 S85 42, 88 48 S92 30, 94 22"/>
+     <path class="gl-atlas-route-line" d="${ATLAS_ROUTE_PATH}"/>
+     <path class="gl-atlas-route-dash" d="${ATLAS_ROUTE_PATH}"/>
     </svg>
     <div class="gl-atlas-islands">${islands}</div>
     <div class="gl-atlas-compass map-compass" aria-hidden="true">${art('compass')}</div>
