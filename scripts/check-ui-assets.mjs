@@ -13,7 +13,7 @@ if((pwaCss.match(/\{/g)||[]).length!==(pwaCss.match(/\}/g)||[]).length)throw Err
 if((newCss.match(/\{/g)||[]).length!==(newCss.match(/\}/g)||[]).length)throw Error('CSS v18 non valido');
 const feature=await read('features.js');
 if(!html.includes('/design-system-v16.css'))throw Error('Foglio grafico v16 non collegato');
-if(!/rotta-canonica-v19-catalog-offline/.test(sw))throw Error('Cache PWA non aggiornata alla v19');
+if(!/rotta-canonica-v20-email-auth/.test(sw))throw Error('Cache PWA non aggiornata alla v20');
 if(!sw.includes("'/data/episodes-latest.json'"))throw Error('Feed delle nuove uscite non incluso nella cache offline');
 if(!feature.includes('[2,5,4,6,2,5][i%6]'))throw Error('Mappa priva delle miniature illustrate per le saghe');
 if((css.match(/\{/g)||[]).length!==(css.match(/\}/g)||[]).length)throw Error('Parentesi CSS non bilanciate');

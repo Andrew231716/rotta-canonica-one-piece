@@ -4,3 +4,12 @@
 .new-episode-panel{margin:0 0 20px;border:2px solid #bb9b55!important}.new-episode-panel h2{font-family:Georgia,serif;color:#6b4420;margin:0 0 10px}.new-episode-panel p,.new-episode-panel small{font-size:12px;color:#785f3d}.new-episode-item{display:flex;align-items:center;justify-content:space-between;gap:12px;border-top:1px solid #decaaa;padding:10px 0}.new-episode-item b{font-size:13px}.new-episode-item span{font-size:11px;white-space:normal}@media(max-width:600px){.new-episode-item{flex-direction:column;align-items:flex-start}}
 
 .account-switch-warning{border:2px solid #c2703a;background:#fff0d4;color:#55341b;padding:13px;border-radius:12px;margin:12px 0}.account-switch-warning p{font-size:12px;color:#633f28;line-height:1.5}.account-switch-warning button{margin:4px 5px 4px 0}
+
+/* Email-only account: no cloud sync. */
+.cloud-account-card{border:1px solid #bb9359;background:#fff6dd;border-radius:12px;padding:12px;margin:12px 0}
+.cloud-account-card p{overflow-wrap:anywhere;margin:0 0 10px}
+.cloud-auth-help{display:flex;flex-wrap:wrap;gap:8px;margin-top:3px}
+.cloud-auth-help .button{font-size:12px!important;min-height:42px}
+.cloud-panel .cloud-email-form button{min-height:44px!important}
+.cloud-panel .cloud-email-row button{flex:1 1 130px}
+.cloud-panel .cloud-status{overflow-wrap:anywhere}

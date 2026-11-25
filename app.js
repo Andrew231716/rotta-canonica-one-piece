@@ -72,7 +72,7 @@ const STORAGE='rotta-canonica-v1';
 function safeLoad(){try{const x=JSON.parse(localStorage.getItem(STORAGE)||'{}');return{watched:new Set(Array.isArray(x.watched)?x.watched.filter(n=>Number.isInteger(n)&&n>=1&&n<=CATALOG_LIMIT):[]),start:Number.isInteger(x.start)&&x.start>=1&&x.start<=CATALOG_LIMIT?x.start:92,showFiller:!!x.showFiller}}catch{return{watched:new Set(),start:92,showFiller:false}}}
 const saved=safeLoad();
 let watched=saved.watched,start=saved.start,showFiller=saved.showFiller,tab='path',search='',openArc=null,toastTimer=null;
-function save(){localStorage.setItem(STORAGE,JSON.stringify({watched:[...watched].sort((a,b)=>a-b),start,showFiller}));window.RottaCloud?.queueSync()}
+function save(){localStorage.setItem(STORAGE,JSON.stringify({watched:[...watched].sort((a,b)=>a-b),start,showFiller}))}
 function icon(name){const paths={compass:'<circle cx="12" cy="12" r="10"/><path d="m16.2 7.8-2.9 5.5-5.5 2.9 2.9-5.5z"/>',route:'<circle cx="6" cy="19" r="2"/><path d="M9 19h7a4 4 0 0 0 0-8H8a4 4 0 0 1 0-8h7"/><path d="m12 1 3 2-3 2"/>',check:'<path d="M20 6 9 17l-5-5"/>',skip:'<path d="m5 4 14 16M19 4 5 20"/><circle cx="12" cy="12" r="10"/>',chart:'<path d="M3 3v18h18"/><path d="m7 16 4-5 3 2 5-7"/>',search:'<circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>',chevron:'<path d="m6 9 6 6 6-6"/>',play:'<path d="m8 5 12 7-12 7z"/>',award:'<circle cx="12" cy="8" r="6"/><path d="m8.21 13.89-1 9.11L12 20l4.79 3-1-9.12"/>',eye:'<path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/>',download:'<path d="M12 3v12m-4-4 4 4 4-4M4 17v4h16v-4"/>',upload:'<path d="M12 17V5m-4 4 4-4 4 4M4 19v2h16v-2"/>',rotate:'<path d="M3 11a9 9 0 1 1 2.4 6.1M3 3v8h8"/>',settings:'<path d="M12 3v3m0 12v3M3 12h3m12 0h3M5.6 5.6l2.1 2.1m8.6 8.6 2.1 2.1M18.4 5.6l-2.1 2.1m-8.6 8.6-2.1 2.1"/><circle cx="12" cy="12" r="4"/>',bookmark:'<path d="M6 3h12v18l-6-4-6 4z"/>',shield:'<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',info:'<circle cx="12" cy="12" r="10"/><path d="M12 11v6m0-10v.1"/>',arrow:'<path d="M5 12h14m-6-6 6 6-6 6"/>'};return `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths[name]||paths.compass}</svg>`}
 
 const UI_ASSET={path:'compass',episodes:'episode',map:'map',characters:'spyglass',journal:'loot',achievements:'chest',settings:'wheel',more:'loot',recover:'locator',filler:'flag',stats:'progress',watch:'complete',next:'route',loot:'loot',saga:'wheel'};
@@ -233,7 +233,7 @@ document.addEventListener('keydown',e=>{
 applyTheme();render();loadCatalog();loadWeeklyEpisodes();checkReminder();
 if('serviceWorker' in navigator){
  navigator.serviceWorker.addEventListener('message',event=>{if(event.data?.type==='ROTTA_SW_UPDATED')toast('Rotta aggiornata: catalogo e nuove uscite pronti per l’uso offline.')});
- window.addEventListener('load',()=>navigator.serviceWorker.register('/service-worker.js?v=19offline',{updateViaCache:'none'}).then(reg=>reg.update().catch(()=>{})).catch(()=>{}));
+ window.addEventListener('load',()=>navigator.serviceWorker.register('/service-worker.js?v=20email',{updateViaCache:'none'}).then(reg=>reg.update().catch(()=>{})).catch(()=>{}));
 }
 window.addEventListener('offline',()=>toast('Sei offline: puoi continuare con il catalogo già caricato.'));
 window.addEventListener('online',()=>{toast('Connessione ripristinata.');loadWeeklyEpisodes()});
