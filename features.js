@@ -2,6 +2,7 @@
 'use strict';
 const EXTRA_KEY='rotta-canonica-extra-v1';
 function loadExtra(){let x={};try{x=JSON.parse(localStorage.getItem(EXTRA_KEY)||'{}')}catch{}
+if(!x || typeof x!=='object' || Array.isArray(x))x={};
 return {favorites:Array.isArray(x.favorites)?x.favorites.filter(n=>Number.isInteger(n)&&n>=1&&n<=3000):[],
  characterFavorites:Array.isArray(x.characterFavorites)?x.characterFavorites.filter(id=>typeof id==='string'&&/^[a-z]{2,16}$/.test(id)):[],
  characterFavoriteEdits:x.characterFavoriteEdits&&typeof x.characterFavoriteEdits==='object'?x.characterFavoriteEdits:{},
@@ -15,7 +16,15 @@ return {favorites:Array.isArray(x.favorites)?x.favorites.filter(n=>Number.isInte
  animationLevel:['full','soft','off'].includes(x.animationLevel)?x.animationLevel:'full',
  hideCompleted:!!x.hideCompleted,watchEdits:x.watchEdits&&typeof x.watchEdits==='object'?x.watchEdits:{},favoriteEdits:x.favoriteEdits&&typeof x.favoriteEdits==='object'?x.favoriteEdits:{},noteEdits:x.noteEdits&&typeof x.noteEdits==='object'?x.noteEdits:{},ratingEdits:x.ratingEdits&&typeof x.ratingEdits==='object'?x.ratingEdits:{},settingsUpdatedAt:Number(x.settingsUpdatedAt)||0,catalogOverride:x.catalogOverride&&typeof x.catalogOverride==='object'?x.catalogOverride:{}}}
 let extra=loadExtra();
-function saveExtra(){try{localStorage.setItem(EXTRA_KEY,JSON.stringify(extra))}catch(e){console.warn('Spazio locale esaurito',e);toast('Memoria locale piena: esporta un backup')}}
+function writeLocal(key,value){
+ try{localStorage.setItem(key,JSON.stringify(value));failedWrites.delete(key)}
+ catch{failedWrites.add(key)}
+ const warning=document.getElementById('storage-warning');
+ if(warning)warning.hidden=failedWrites.size===0;
+ return !failedWrites.has(key)
+}
+const failedWrites=new Set();
+function saveExtra(){return writeLocal(EXTRA_KEY,extra)}
 function saveAll(){save();saveExtra()}
 let episodeQuery='',episodeFilter='canon',episodeSaga='all',episodePage=1,catalog={};
 let pageMode='default';
@@ -100,7 +109,7 @@ function episodeView(){let items=availableEpisodeNumbers(),query=episodeQuery.to
  <label>Tipo<select id="episode-filter"><option value="canon" ${episodeFilter==='canon'?'selected':''}>Percorso senza filler</option><option value="all" ${episodeFilter==='all'?'selected':''}>Tutti</option><option value="filler" ${episodeFilter==='filler'?'selected':''}>Filler</option><option value="mixed" ${episodeFilter==='mixed'?'selected':''}>Misti</option><option value="unverified" ${episodeFilter==='unverified'?'selected':''}>Uscite da verificare</option><option value="unwatched" ${episodeFilter==='unwatched'?'selected':''}>Da vedere</option><option value="watched" ${episodeFilter==='watched'?'selected':''}>Già visti</option><option value="favorites" ${episodeFilter==='favorites'?'selected':''}>Preferiti</option></select></label>
  <label>Saga<select id="episode-saga"><option value="all">Tutte le saghe</option>${SAGA_GROUPS.map(g=>`<option value="${cleanText(g.name)}" ${episodeSaga===g.name?'selected':''}>${cleanText(g.name)}</option>`).join('')}</select></label></div>
  <div class="result-hint">${count} risultati · ${Math.min(shown.length,count)} mostrati <button class="inline-link" data-action="go-next">${icon('play')} Prossimo: ${next||'completato'}</button></div>
- <div class="episode-list">${shown.map(n=>episodeListItem(n)).join('')||'<div class="empty">Nessun episodio trovato.</div>'}</div>
+ <div class="episode-list">${shown.map(n=>episodeListItem(n)).join('')||'<div class="empty">Nessun episodio trovato. <button class="button small secondary" data-action="clear-episode-filters">Mostra tutti gli episodi</button></div>'}</div>
  ${shown.length<count?`<button class="button secondary show-more" data-action="episodes-more">Carica altri episodi (${count-shown.length} rimasti)</button>`:''}
  </div>`}
 function episodeListItem(n){const x=epInfo(n),lock=blocked(n),fave=extra.favorites.includes(n),done=watched.has(n),status=x.status;
@@ -118,7 +127,7 @@ function episodeDetail(n){const x=epInfo(n),lock=blocked(n),fav=extra.favorites.
  ${chapterItems?`<div class="chapter-details"><b>Pagine adattate nel manga</b><div>${chapterItems}</div></div>`:''}${sourceMarkup}
  <div class="detail-actions"><button class="button small ${done?'secondary':'primary'}" data-action="detail-watch" data-ep="${n}" ${x.status==='filler'||x.status==='unverified'?'disabled':''}>${done?'✓ Già visto · annulla':'✓ Segna come visto'}</button><button class="button secondary small" data-action="favorite" data-ep="${n}">${fav?'★ Nei preferiti':'☆ Preferito'}</button></div>
  <div class="rating-group" role="group" aria-label="La tua valutazione">Valutazione personale ${[1,2,3,4,5].map(k=>`<button class="rate-star ${rate>=k?'selected':''}" data-action="rate" data-ep="${n}" data-score="${k}" aria-label="${k} stelle">★</button>`).join('')}</div>
- <label class="note-label">Note private <textarea id="detail-notes" maxlength="2500" rows="4" placeholder="Le note rimangono locali, oppure private nel cloud quando effettui il login.">${cleanText(text)}</textarea></label><div class="modal-buttons"><button class="button secondary" data-action="modal-cancel">Chiudi</button><button class="button primary" data-action="note-save" data-ep="${n}">Salva note</button></div></div>`)}
+ <label class="note-label">Note private <textarea id="detail-notes" maxlength="2500" rows="4" placeholder="Scrivi una nota personale. Viene salvata su questo dispositivo.">${cleanText(text)}</textarea></label><div class="modal-buttons"><button class="button secondary" data-action="modal-cancel">Chiudi</button><button class="button primary" data-action="note-save" data-ep="${n}">Salva note</button></div></div>`)}
 function newMapStop(){
  const recent=weeklyEpisodes.filter(confirmedForRoute);if(!recent.length)return '';
  const remaining=recent.filter(e=>!watched.has(e.number)).length;
@@ -272,20 +281,26 @@ function moreView(){if(isAtlas())return atlasLanding(getNext());return `<div cla
  <div class="more-menu">${toolTile('journal','Diario di bordo','Note e preferiti','loot')}${toolTile('characters','Personaggi','Enciclopedia senza spoiler','spyglass')}${toolTile('achievements','Ricompense','Traguardi sbloccabili','chest')}${toolTile('filler','Filler','Episodi fuori rotta','flag')}${toolTile('stats','Progressi','Statistiche del viaggio','progress')}${toolTile('settings','Impostazioni','Backup e protezione dati','wheel')}</div></div>`}
 function moreStats(){return `<div class="paper-panel extras-quick"><div><h3>Il viaggio continua</h3><p>${extra.favorites.length} episodi preferiti · ${notesSummary().length} note · ${ACHIEVEMENTS.filter(a=>a.test()).length} ricompense.</p></div><div class="row-buttons"><button class="button small secondary" data-tab="journal">Diario</button><button class="button small secondary" data-tab="achievements">Ricompense</button><button class="button small secondary" data-tab="settings">Impostazioni</button></div></div>`}
 async function loadCatalog(){try{const r=await fetch('/data/episodes.json',{cache:'no-cache'});if(!r.ok)throw Error('catalog unavailable');const d=await r.json();if(!Array.isArray(d.episodes))throw Error('invalid data');const obj={};for(const e of d.episodes){if(Number.isInteger(e.n)&&e.n>=1&&e.n<=BASE_MAX)obj[e.n]={source:e.source||null,titleSource:e.titleSource||null,summarySource:e.summarySource||null,chapterSource:e.chapterSource||null,editorialSource:e.editorialSource||null,verifiedAt:e.verifiedAt||null,title:typeof e.title==='string'&&e.title.trim()?e.title:null,titleLanguage:e.titleLanguage||null,chapter:typeof e.chapter==='string'?e.chapter:null,chapterDetails:Array.isArray(e.chapterDetails)?e.chapterDetails:[],chapterStatus:e.chapterStatus||null,duration:typeof e.duration==='string'?e.duration:null,summary:typeof e.summary==='string'?e.summary:null,summaryStatus:e.summaryStatus||null,summaryLanguage:e.summaryLanguage||null}}catalog=obj;render()}catch(e){console.warn('Catalog offline: fallback numerico',e)}}
-function trackWatched(n,nowWatched){extra.watchEdits[n]={value:!!nowWatched,at:Date.now()};if(nowWatched)extra.watchedAt[n]=new Date().toISOString();else delete extra.watchedAt[n];saveExtra()}
+function trackWatched(n,nowWatched){extra.watchEdits[n]={value:!!nowWatched,at:Date.now()};if(nowWatched)extra.watchedAt[n]=new Date().toISOString();else delete extra.watchedAt[n]}
 function playAchievement(){const k=ACHIEVEMENTS.filter(a=>a.test()).length;return k}
 function toggleFavorite(n){if(extra.favorites.includes(n))extra.favorites=extra.favorites.filter(v=>v!==n);else extra.favorites.push(n);extra.favoriteEdits[n]={value:extra.favorites.includes(n),at:Date.now()};saveExtra();return extra.favorites.includes(n)}
 function downloadJSON(obj,name){const b=new Blob([JSON.stringify(obj,null,2)],{type:'application/json'});const u=URL.createObjectURL(b);const a=document.createElement('a');a.href=u;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(u),2000)}
+function refreshEpisodeDetail(n){
+ const draft=document.getElementById('detail-notes')?.value;
+ closeModal();render();episodeDetail(n);
+ if(draft!==undefined)document.getElementById('detail-notes').value=draft;
+}
 async function handleExtraAction(action,t){const n=Number(t.dataset.ep);
  switch(action){
  case 'character-detail':{const i=Number(t.dataset.character);if(Number.isInteger(i)&&i>=0&&i<CHARACTERS.length)characterDetail(i);return true;}
  case 'character-star':{const id=t.dataset.characterId;if(!id)return true;const selected=toggleCharacterFavorite(id);t.classList.toggle('is-favorite',selected);t.setAttribute('aria-pressed',String(selected));const c=CHARACTERS.find(x=>x.id===id);t.setAttribute('aria-label',`${selected?'Rimuovi':'Aggiungi'} ${c?.name||'personaggio'} ${selected?'dai':'ai'} preferiti`);const opt=document.querySelector('#character-filter option[value=\"favorites\"]');if(opt)opt.textContent=`Preferiti ★ (${extra.characterFavorites.length})`;if(characterFilter==='favorites')applyCharacterFilters();toast(selected?'Personaggio aggiunto ai preferiti':'Personaggio rimosso dai preferiti');return true;}
  case 'go-next':openEpisode(getNext()||start);return true;
  case 'detail':if(Number.isInteger(n)&&n>=1&&(n<=BASE_MAX||!!releaseByNumber(n)))episodeDetail(n);return true;
- case 'detail-watch':if(allCanon.includes(n)){watched.has(n)?watched.delete(n):watched.add(n);trackWatched(n,watched.has(n));save();closeModal();episodeDetail(n);toast('Episodio aggiornato')}return true;
- case 'favorite':{const f=toggleFavorite(n);if(document.querySelector('.modal-layer')){closeModal();episodeDetail(n)}else render();toast(f?'Aggiunto ai preferiti':'Rimosso dai preferiti');return true}
- case 'rate':extra.ratings[n]=Number(t.dataset.score);extra.ratingEdits[n]=Date.now();saveExtra();closeModal();episodeDetail(n);return true;
+ case 'detail-watch':if(allCanon.includes(n)){watched.has(n)?watched.delete(n):watched.add(n);trackWatched(n,watched.has(n));saveAll();refreshEpisodeDetail(n);toast('Episodio aggiornato')}return true;
+ case 'favorite':{const f=toggleFavorite(n);if(document.querySelector('.modal-layer'))refreshEpisodeDetail(n);else render();toast(f?'Aggiunto ai preferiti':'Rimosso dai preferiti');return true}
+ case 'rate':extra.ratings[n]=Number(t.dataset.score);extra.ratingEdits[n]=Date.now();saveExtra();refreshEpisodeDetail(n);return true;
  case 'note-save':{const val=String(document.getElementById('detail-notes')?.value||'').slice(0,2500);if(val.trim())extra.notes[n]=val;else delete extra.notes[n];extra.noteEdits[n]=Date.now();saveExtra();closeModal();render();toast('Nota salvata');return true}
+ case 'clear-episode-filters':episodeFilter='all';episodeSaga='all';episodeQuery='';episodePage=1;render();return true;
  case 'episodes-more':episodePage++;render();return true;
  case 'open-latest':{if(extra.spoiler&&weeklyEpisodes.filter(confirmedForRoute)[0]?.number>spoilerHorizon()){toast('Rotta protetta dagli spoiler');return true}episodeFilter='all';episodeSaga='Saga finale';episodeQuery='';episodePage=1;setTab('episodes');return true}
  case 'map-saga':{let first=Number(t.dataset.first);if(extra.spoiler&&first>spoilerHorizon()){toast('Isola ancora protetta dagli spoiler');return true}const group=SAGA_GROUPS.find(g=>g.first===first);const firstCanon=allCanon.find(n=>n>=first&&n<=(group?.last||1155))||first;const arc=arcData.findIndex(a=>a[1]<=firstCanon&&a[2]>=firstCanon);tab='path';openArc=arc>=0?arc:null;search='';render();setTimeout(()=>document.getElementById(`arc-${arc}`)?.scrollIntoView({behavior:motionScrollBehavior(),block:'center'}),50);return true}

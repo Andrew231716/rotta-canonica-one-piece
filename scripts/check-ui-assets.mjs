@@ -12,7 +12,7 @@ const features=await read('features.js');
 const app=await read('app.js');
 for(const file of ['nautical-finish-v18.css','catalog-pwa-v19.css','anime-art-direction-v21.css','design-system-v16.css'])if(!html.includes('/'+file))throw Error('Stylesheet not linked: '+file);
 for(const [file,value] of [['v16',css],['v18',newCss],['v19',pwaCss],['v21',animeCss],['v22',scenicCss]])if((value.match(/\{/g)||[]).length!==(value.match(/\}/g)||[]).length)throw Error('Unbalanced CSS braces in '+file);
-if(!sw.includes('rotta-canonica-v23-atlas'))throw Error('PWA version not bumped to v23');
+if(!sw.includes('rotta-canonica-v23-atlas-audit1'))throw Error('PWA version not bumped to v23');
 if(!sw.includes("'/data/episodes-latest.json'"))throw Error('Missing offline episode feed');
 if(!features.includes('[2,5,4,6,2,5][i%6]'))throw Error('Map illustrations missing');
 if(!features.includes('appearanceStyle')||!features.includes('symbolStyle')||!features.includes('colorPalette')||!features.includes('animationLevel'))throw Error('Visual customization not persisted');

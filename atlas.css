@@ -34,3 +34,5 @@ html[data-atlas]:not([data-atlas="off"])[data-active-section="characters"] .char
 .atlas-links>.tool-tile{min-height:44px}
 @media(min-width:380px){.atlas-links.tiles{grid-template-columns:repeat(3,minmax(0,1fr))}}
 html[data-atlas]:not([data-atlas="off"]) .char-photo-frame img.atlas-portrait{object-position:55% top!important}
+
+#storage-warning:not([hidden]){position:sticky;top:0;z-index:500;padding:.7rem;background:#fff2c7;color:#422a14;text-align:center}#storage-warning button{color:inherit;text-decoration:underline;font:inherit}
