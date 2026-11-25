@@ -1,0 +1,30 @@
+name: Import original anime illustrations
+on:
+  push:
+    branches: [main]
+    paths: ['scripts/ingest-anime-artwork.py', '.github/workflows/ingest-anime-artwork.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install --disable-pip-version-check pillow==11.3.0
+      - name: Obtain owner-supplied artwork and optimize
+        run: python scripts/ingest-anime-artwork.py
+      - name: Commit optimized image assets, discard temporary staging links
+        run: |
+          git config user.name "Rotta Canonica Bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/anime-icons/ assets/anime-hero-portrait.webp assets/anime-ocean-bg.webp
+          git rm -- scripts/ingest-anime-artwork.py .github/workflows/ingest-anime-artwork.yml
+          git commit -m "assets: add owner-created anime illustrated UI pack and scenes"
+          git push
