@@ -33,3 +33,4 @@ html[data-atlas]:not([data-atlas="off"])[data-active-section="characters"] .char
 .atlas-links.tiles>button:has(>img){border:0;background:transparent;padding:0;cursor:pointer}
 .atlas-links>.tool-tile{min-height:44px}
 @media(min-width:380px){.atlas-links.tiles{grid-template-columns:repeat(3,minmax(0,1fr))}}
+html[data-atlas]:not([data-atlas="off"]) .char-photo-frame img.atlas-portrait{object-position:55% top!important}
