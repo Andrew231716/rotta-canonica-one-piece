@@ -140,3 +140,18 @@ html[data-animation-level="off"] #toast *{
   animation:none!important;transition:none!important;translate:none!important;rotate:none!important;scroll-behavior:auto!important
  }
 }
+
+/* Off mode must display the final unlocked-treasure state without movement. */
+html[data-animation-level="off"] .modal-layer .reward-open{opacity:1!important;transform:none!important}
+html[data-animation-level="off"] .modal-layer .reward-closed{display:none!important}
+/* Modals sit beside #app in the document, not within its subtree. */
+html[data-animation-level="off"] .modal-layer *,
+html[data-animation-level="off"] .modal-layer *::before,
+html[data-animation-level="off"] .modal-layer *::after{
+ animation:none!important;transition:none!important;translate:none!important;rotate:none!important
+}
+@media(prefers-reduced-motion:reduce){
+ html .modal-layer *,html .modal-layer *::before,html .modal-layer *::after{
+  animation:none!important;transition:none!important;translate:none!important;rotate:none!important
+ }
+}
