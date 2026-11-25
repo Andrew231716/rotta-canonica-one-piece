@@ -28,20 +28,3 @@ for(const rel of referenced){
 }
 if(missing.length)throw Error('Asset mancanti: '+missing.join(', '));
 console.log('UI assets OK:',referenced.size,'file verificati, 12 personaggi, 6 tappe illustrate');
-+'{[2,5,4,6,2,5][i%6]}.webp'))throw Error('Mappa priva di paesaggi anti-spoiler');
-if((css.match(/\{/g)||[]).length!==(css.match(/\}/g)||[]).length)throw Error('Parentesi CSS non bilanciate');
-const precache=sw.match(/const ASSETS=(\[[\s\S]*?\]);/);
-if(!precache)throw Error('Lista precache del service worker assente');
-let assets;
-try{assets=JSON.parse(precache[1])}catch{throw Error('Lista precache del service worker non valida')}
-const referenced=new Set([...assets.filter(v=>v!=='/'),...Array.from(html.matchAll(/(?:src|href)="(\/[^"?]+)(?:\?[^"]*)?"/g),x=>x[1])]);
-const characters=['luffy','zoro','nami','usopp','sanji','chopper','robin','franky','brook','jinbe','ace','law'];
-for(const id of characters)referenced.add('/assets/character-scenes/'+id+'.webp');
-for(let i=1;i<=6;i++)referenced.add('/assets/route-'+i+'.webp');
-const missing=[];
-for(const rel of referenced){
- if(!rel.startsWith('/')||rel.includes('..'))throw Error('Percorso sospetto: '+rel);
- try{await access('.'+rel)}catch{missing.push(rel)}
-}
-if(missing.length)throw Error('Asset mancanti: '+missing.join(', '));
-console.log('UI assets OK:',referenced.size,'file verificati, 12 personaggi, 6 tappe illustrate');
