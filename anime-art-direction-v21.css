@@ -155,3 +155,7 @@ html[data-animation-level="off"] .modal-layer *::after{
   animation:none!important;transition:none!important;translate:none!important;rotate:none!important
  }
 }
+
+/* The toast must not slide when the user or system requests reduced motion. */
+html[data-animation-level="off"] #toast{animation:none!important;transition:none!important}
+@media(prefers-reduced-motion:reduce){html #toast{animation:none!important;transition:none!important}}
