@@ -33,3 +33,21 @@ jobs:
         run: node scripts/check-ui-assets.mjs
       - name: Sicurezza registrazione e cache offline
         run: node tests/test_security_offline.cjs
+
+      - name: Save source for visual QA
+        uses: actions/upload-artifact@v4
+        with:
+          name: rotta-visual-qa-source
+          retention-days: 1
+          if-no-files-found: error
+          path: |
+            index.html
+            *.css
+            *.js
+            assets/
+            data/
+            manifest.webmanifest
+            icon.svg
+            icon-192.png
+            icon-512.png
+            tests/
