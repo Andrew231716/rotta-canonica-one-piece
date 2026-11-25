@@ -1,0 +1,22 @@
+'use strict';
+const assert=require('node:assert/strict');
+const {readFileSync}=require('node:fs');
+const features=readFileSync('features.js','utf8');
+const wantedCss=readFileSync('wanted-dossiers-v28.css','utf8');
+
+assert.match(features,/wantedPosterMarkup/);
+assert.match(features,/wanted-dossier/);
+assert.match(features,/wantedSeen/);
+assert.match(features,/const searchable=locked\?''/);
+assert.match(features,/if\(locked\)return `<span class="character-portrait portrait-sealed/);
+assert.match(features,/wanted-face-sealed/);
+assert.match(features,/TAGLIA NON CATALOGATA/);
+assert.doesNotMatch(features,/bounty:\s*\d/);
+assert.doesNotMatch(features,/Berry\s*[\d.,]/);
+assert.match(features,/wanted-open-episodes/);
+assert.match(features,/wanted-open-saga/);
+assert.match(features,/!locked&&card\.dataset\.search\.includes\(q\)/);
+assert.match(wantedCss,/prefers-reduced-motion:reduce/);
+assert.match(wantedCss,/data-animation-level="off"/);
+assert.match(wantedCss,/\.wanted-poster/);
+console.log('Wanted spoiler and dossier static tests: PASS');

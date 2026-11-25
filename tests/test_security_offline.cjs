@@ -18,11 +18,12 @@ assert.doesNotMatch(config,/oauthGoogleEnabled|oauthAppleEnabled|vapidPublicKey|
 assert.match(sw,/OFFLINE_CORE/);
 assert.match(sw,/Promise\.allSettled/);
 assert.match(sw,/ignoreSearch\s*:\s*true/);
-assert.match(sw,/rotta-canonica-v28-interactive-atlas/);
+assert.match(sw,/rotta-canonica-v28-wanted-dossiers/);
 assert.match(sw,/data\/episodes-latest\.json/);
 assert.match(sw,/premium-grand-line\.css/);
 assert.match(sw,/interactive-atlas-v28\.css/);
-assert.match(app,/service-worker\.js\?v=28atlas/);
+assert.match(sw,/wanted-dossiers-v28\.css/);
+assert.match(app,/service-worker\.js\?v=28wanted/);
 const animeCSS=read('anime-art-direction-v21.css');
 assert.match(animeCSS,/@keyframes animeShip\{0%,100%\{translate:0 0;rotate:-1\.4deg\}/);
 assert.match(animeCSS,/html\[data-animation-level="off"\] #app \*/);

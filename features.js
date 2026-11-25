@@ -51,22 +51,39 @@ const SAGA_GROUPS=[
  {name:'Wano',first:890,last:1085,icon:'saga-wano.webp',emoji:'⛩️',description:'Una terra dalle tradizioni particolari.'},
  {name:'Saga finale',first:1086,last:1155,icon:'saga-egghead.webp',emoji:'✨',description:'Gli episodi più avanzati inclusi nell’archivio locale.'}
 ];
+/* Wanted dossiers: optional alias only when safe at unlock. No invented Berry bounties. */
 const CHARACTERS=[
- {id:'luffy',name:'Monkey D. Luffy',role:'Capitano',unlock:1,profile:'Parte all’avventura con il sogno di diventare il Re dei Pirati. Coraggioso, impulsivo e fedele ai propri amici.',tags:'capitano ciurma sogno'},
- {id:'zoro',name:'Roronoa Zoro',role:'Spadaccino',unlock:2,profile:'Combatte usando tre spade e si allena per diventare il miglior spadaccino del mondo.',tags:'spadaccino spade'},
- {id:'nami',name:'Nami',role:'Navigatrice',unlock:3,profile:'Esperta di rotte, mappe e meteorologia, guida la ciurma attraverso i mari.',tags:'navigatrice cartografia'},
- {id:'usopp',name:'Usopp',role:'Tiratore',unlock:9,profile:'Inventore e narratore instancabile, sogna di diventare un coraggioso guerriero del mare.',tags:'tiratore inventore'},
- {id:'sanji',name:'Sanji',role:'Cuoco',unlock:20,profile:'Cuoco del Baratie, porta nella ciurma la sua passione per la cucina e il combattimento.',tags:'cuoco combattente'},
- {id:'chopper',name:'Tony Tony Chopper',role:'Medico',unlock:81,profile:'Un giovane medico e una renna molto speciale che vuole curare ogni malattia.',tags:'medico renna'},
- {id:'robin',name:'Nico Robin',role:'Archeologa',unlock:130,profile:'Studia le antiche civiltà, i misteri della storia e le tracce del passato.',tags:'archeologa storia'},
- {id:'franky',name:'Franky',role:'Carpentiere',unlock:233,profile:'Un costruttore di navi dall’estro incredibile, appassionato di ingegneria e invenzioni.',tags:'carpentiere invenzioni'},
- {id:'brook',name:'Brook',role:'Musicista',unlock:337,profile:'Musicista e spadaccino dall’umorismo inconfondibile, ama portare musica in ogni viaggio.',tags:'musicista spadaccino'},
- {id:'jinbe',name:'Jinbe',role:'Timoniere',unlock:430,profile:'Esperto uomo-pesce e navigatore con una conoscenza profonda del mare.',tags:'timoniere uomo pesce'},
+ {id:'luffy',name:'Monkey D. Luffy',alias:'Cappello di Paglia',role:'Capitano',org:'Ciurma di Cappello di Paglia',unlock:1,profile:'Parte all’avventura con il sogno di diventare il Re dei Pirati. Coraggioso, impulsivo e fedele ai propri amici.',tags:'capitano ciurma sogno'},
+ {id:'zoro',name:'Roronoa Zoro',alias:'Cacciatore di pirati',role:'Spadaccino',org:'Ciurma di Cappello di Paglia',unlock:2,profile:'Combatte usando tre spade e si allena per diventare il miglior spadaccino del mondo.',tags:'spadaccino spade'},
+ {id:'nami',name:'Nami',alias:'Gatta ladra',role:'Navigatrice',org:'Ciurma di Cappello di Paglia',unlock:3,profile:'Esperta di rotte, mappe e meteorologia, guida la ciurma attraverso i mari.',tags:'navigatrice cartografia'},
+ {id:'usopp',name:'Usopp',alias:'Re dei cecchini',role:'Tiratore',org:'Ciurma di Cappello di Paglia',unlock:9,profile:'Inventore e narratore instancabile, sogna di diventare un coraggioso guerriero del mare.',tags:'tiratore inventore'},
+ {id:'sanji',name:'Sanji',alias:'Gamba Nera',role:'Cuoco',org:'Ciurma di Cappello di Paglia',unlock:20,profile:'Cuoco del Baratie, porta nella ciurma la sua passione per la cucina e il combattimento.',tags:'cuoco combattente'},
+ {id:'chopper',name:'Tony Tony Chopper',alias:'Amorevole',role:'Medico',org:'Ciurma di Cappello di Paglia',unlock:81,profile:'Un giovane medico e una renna molto speciale che vuole curare ogni malattia.',tags:'medico renna'},
+ {id:'robin',name:'Nico Robin',alias:'Bambina demoniaca',role:'Archeologa',org:'Ciurma di Cappello di Paglia',unlock:130,profile:'Studia le antiche civiltà, i misteri della storia e le tracce del passato.',tags:'archeologa storia'},
+ {id:'franky',name:'Franky',alias:'Cyborg',role:'Carpentiere',org:'Ciurma di Cappello di Paglia',unlock:233,profile:'Un costruttore di navi dall’estro incredibile, appassionato di ingegneria e invenzioni.',tags:'carpentiere invenzioni'},
+ {id:'brook',name:'Brook',alias:'Humming',role:'Musicista',org:'Ciurma di Cappello di Paglia',unlock:337,profile:'Musicista e spadaccino dall’umorismo inconfondibile, ama portare musica in ogni viaggio.',tags:'musicista spadaccino'},
+ {id:'jinbe',name:'Jinbe',alias:'Cavaliere del mare',role:'Timoniere',org:'Ciurma di Cappello di Paglia',unlock:430,profile:'Esperto uomo-pesce e navigatore con una conoscenza profonda del mare.',tags:'timoniere uomo pesce'},
  // Due incontri illustrati con ritratti fan-made già disponibili nel progetto.
  // Gli sblocchi sono soglie conservative anti-spoiler, non "prima apparizione".
- {id:'ace',name:'Portgas D. Ace',role:'Pirata',group:'Incontri',unlock:130,profile:'Un pirata determinato dal forte legame con la storia di Luffy. La sua scheda evita sviluppi successivi.',tags:'pirata incontri alleato'},
- {id:'law',name:'Trafalgar D. Water Law',role:'Capitano e medico',group:'Incontri',unlock:405,profile:'Un capitano dalla mente strategica, noto per le sue competenze mediche e il suo equipaggio.',tags:'medico capitano alleato incontri'}
+ {id:'ace',name:'Portgas D. Ace',alias:'Fire Fist',role:'Pirata',org:'Incontri',group:'Incontri',unlock:130,profile:'Un pirata determinato dal forte legame con la storia di Luffy. La sua scheda evita sviluppi successivi.',tags:'pirata incontri alleato'},
+ {id:'law',name:'Trafalgar D. Water Law',alias:'Surgeon of Death',role:'Capitano e medico',org:'Incontri',group:'Incontri',unlock:405,profile:'Un capitano dalla mente strategica, noto per le sue competenze mediche e il suo equipaggio.',tags:'medico capitano alleato incontri'}
 ]
+const wantedSeen=new Set();
+let characterSort='saga';
+function characterSaga(c){
+ const g=SAGA_GROUPS.find(s=>c.unlock>=s.first&&c.unlock<=s.last);
+ return g||SAGA_GROUPS[0];
+}
+function characterOrg(c){return c.org||(c.group?'Incontri':'Ciurma di Cappello di Paglia')}
+function characterCollected(c){return !blocked(c.unlock)&&(extra.characterFavorites||[]).includes(c.id)}
+function characterIsNew(c){return !blocked(c.unlock)&&!wantedSeen.has(c.id)&&!characterCollected(c)}
+function wantedPosterSrc(c){return '/assets/characters/'+c.id+'.webp'}
+function sortedCharacters(){
+ const list=CHARACTERS.slice();
+ if(characterSort==='name')list.sort((a,b)=>a.name.localeCompare(b.name,'it'));
+ else list.sort((a,b)=>a.unlock-b.unlock||a.name.localeCompare(b.name,'it'));
+ return list;
+}
 const ACHIEVEMENTS=[
  {id:'first',title:'Prima vela',detail:'Guarda il tuo primo episodio canonico.',icon:'compass',test:()=>watched.size>=1},
  {id:'ten',title:'Prime dieci miglia',detail:'Completa 10 episodi canonici.',icon:'route',test:()=>counts().done>=10},
@@ -246,9 +263,10 @@ const v22FeaturedCharacters=['nami','usopp','sanji','chopper'];
 const v22PortraitIds=new Set(['luffy','zoro','nami','usopp','sanji','chopper','robin','franky','brook','jinbe']);
 const v22RoleIcons={luffy:'flag',zoro:'anchor',nami:'compass',usopp:'spyglass',sanji:'treasure',chopper:'complete',robin:'map',franky:'wheel',brook:'flag',jinbe:'wheel',ace:'flag',law:'complete'};
 function characterPortrait(c,locked=false,large=false){
+ if(locked)return `<span class="character-portrait portrait-sealed${large?' portrait-large':''}" aria-hidden="true"></span>`;
  const scene=v22PortraitIds.has(c.id)?'/assets/anime-v22-portraits/'+c.id+'.webp':'/assets/character-scenes/'+c.id+'.webp';
  const loading=v22FeaturedCharacters.includes(c.id)?'eager':'lazy';
- return `<img class="character-portrait${large?' portrait-large':''}" src="${scene}?v=22-anime" alt="${locked?'':cleanText('Ritratto illustrato di '+c.name)}" loading="${loading}" decoding="async">`;
+ return `<img class="character-portrait${large?' portrait-large':''}" src="${scene}?v=22-anime" alt="${cleanText('Ritratto illustrato di '+c.name)}" loading="${loading}" decoding="async">`;
 }
 let characterQuery='',characterFilter='all';
 function toggleCharacterFavorite(id){
@@ -261,51 +279,107 @@ function toggleCharacterFavorite(id){
  saveExtra();return old.has(id);
 }
 function applyCharacterFilters(){
- const area=document.querySelector('.character-section');if(!area)return;
+ const area=document.querySelector('.wanted-section, .character-section');if(!area)return;
  const q=characterQuery.toLocaleLowerCase('it').trim();
  let visible=0;
- for(const card of area.querySelectorAll('.char-card')){
+ for(const card of area.querySelectorAll('.wanted-poster, .char-card')){
   const locked=card.dataset.locked==='true';
   const favorite=(extra.characterFavorites||[]).includes(card.dataset.id);
   const group=card.dataset.group;
   const eligible=characterFilter==='all'||characterFilter==='discovered'&&!locked||characterFilter==='locked'&&locked||characterFilter==='favorites'&&favorite||characterFilter==='crew'&&group==='crew'||characterFilter==='encounters'&&group==='encounters';
-  const ok=eligible&&(!q||card.dataset.search.includes(q));
+  const ok=eligible&&(!q||(!locked&&card.dataset.search.includes(q)));
   card.hidden=!ok;if(ok)visible++;
  }
- const count=area.querySelector('#character-match-count');if(count)count.textContent=`${visible} ${visible===1?'scheda trovata':'schede trovate'}`;
+ const count=area.querySelector('#character-match-count');if(count)count.textContent=`${visible} ${visible===1?'manifesto trovato':'manifesti trovati'}`;
  const empty=area.querySelector('.character-no-results');if(empty)empty.hidden=visible>0;
+}
+function wantedPosterMarkup(c,i){
+ const locked=blocked(c.unlock);
+ const collected=characterCollected(c);
+ const isNew=characterIsNew(c);
+ const saga=characterSaga(c);
+ const group=c.group?'encounters':'crew';
+ const searchable=locked?'':`${c.name} ${c.alias||''} ${c.role} ${characterOrg(c)} ${saga.name} ${c.tags}`.toLocaleLowerCase('it');
+ const stamp=locked?'???':collected?'ARCHIVIATO':isNew?'NUOVO':'SCOPERTO';
+ const face=locked
+  ?`<span class="wanted-face wanted-face-sealed" aria-hidden="true"><span class="wanted-seal-mark">?</span></span>`
+  :`<span class="wanted-face"><img src="${wantedPosterSrc(c)}" alt="" loading="lazy" decoding="async"></span>`;
+ return `<article class="wanted-poster ${locked?'is-locked':''} ${collected?'is-collected':''} ${isNew?'is-new':''}" data-id="${c.id}" data-group="${group}" data-locked="${locked}" data-search="${cleanText(searchable)}" data-unlock="${c.unlock}">
+  <button type="button" class="wanted-open" data-action="character-detail" data-character="${i}" aria-label="${locked?`Manifesto ancora sigillato`:`Apri il dossier di ${cleanText(c.name)}`}" ${locked?'aria-disabled="true"':''}>
+   <span class="wanted-frame">
+    <span class="wanted-banner">WANTED</span>
+    ${face}
+    <span class="wanted-name">${locked?'????????':cleanText(c.name)}</span>
+    <span class="wanted-alias">${locked?'Identità nascosta':cleanText(c.alias||c.role)}</span>
+    <span class="wanted-bounty"><em>DEAD OR ALIVE</em><strong>${locked?'—':'TAGLIA NON CATALOGATA'}</strong></span>
+    <span class="wanted-meta">${locked?'Sigillo Marina':`${art(v22RoleIcons[c.id]||'compass','char-role-icon')} ${cleanText(characterOrg(c))} · ${cleanText(saga.name)}`}</span>
+    <span class="wanted-stamp is-${locked?'locked':collected?'collected':isNew?'new':'open'}">${stamp}</span>
+   </span>
+  </button>
+  ${locked?'':`<button type="button" class="wanted-collect ${collected?'is-favorite':''}" data-action="character-star" data-character-id="${c.id}" aria-pressed="${collected}" aria-label="${collected?'Rimuovi':'Archivia'} ${cleanText(c.name)} ${collected?'dalla':'nella'} collezione">★</button>`}
+ </article>`;
 }
 function characterView(){
  const discovered=CHARACTERS.filter(c=>!blocked(c.unlock)).length;
- const favoriteCount=(extra.characterFavorites||[]).length;
- return `<div class="section-shell character-section">
- ${isAtlas()?'<img class="atlas-crew-banner" src="/assets/atlas/crew-banner.webp" alt="Personaggi della Rotta Canonica">':''}
- <section class="characters-hero" aria-label="Enciclopedia dei personaggi">
-   <div class="characters-hero-top"><span>ENCICLOPEDIA DELLA GRAND LINE</span><span class="characters-hero-count">${discovered} / ${CHARACTERS.length} scoperti</span></div>
-   <div class="characters-hero-title"><img src="/assets/ui-compass.webp" width="45" height="45" alt="" loading="lazy"><h1>PERSONAGGI</h1><span class="characters-hero-anchor" aria-hidden="true">⚓</span></div>
-   <p>Conosci la ciurma e gli incontri più importanti. I personaggi futuri restano nascosti finché non li raggiungi.</p>
- </section>
- <div class="character-toolbar"><label class="character-search" for="character-search"><span aria-hidden="true">⌕</span><input id="character-search" type="search" autocomplete="off" placeholder="Cerca un personaggio…" value="${cleanText(characterQuery)}" aria-label="Cerca per nome, ruolo o descrizione"></label>
- <label class="character-filter-label"><span>Filtra</span><select id="character-filter" aria-label="Filtra personaggi"><option value="all" ${characterFilter==='all'?'selected':''}>Tutti</option><option value="crew" ${characterFilter==='crew'?'selected':''}>Ciurma</option><option value="encounters" ${characterFilter==='encounters'?'selected':''}>Altri incontri</option><option value="discovered" ${characterFilter==='discovered'?'selected':''}>Scoperti</option><option value="locked" ${characterFilter==='locked'?'selected':''}>Da scoprire</option><option value="favorites" ${characterFilter==='favorites'?'selected':''}>Preferiti ★ (${favoriteCount})</option></select></label></div>
- <div class="character-utility"><span id="character-match-count">${CHARACTERS.length} schede trovate</span><div class="character-spoiler"><span>${icon('shield')} Antispoiler <b>${extra.spoiler?'attivo':'disattivato'}</b></span><button type="button" data-action="spoiler-toggle">${extra.spoiler?'Mostra tutti':'Proteggi'}</button></div></div>
- <div class="character-grid">${CHARACTERS.map(c=>{const i=CHARACTERS.indexOf(c);
-  const locked=blocked(c.unlock),favorite=!locked&&(extra.characterFavorites||[]).includes(c.id);
-  const searchable=locked?`personaggio da scoprire episodio ${c.unlock}`:`${c.name} ${c.role} ${c.profile} ${c.tags}`.toLocaleLowerCase('it');
-  return `<article class="char-card ${locked?'is-locked':''}" data-id="${c.id}" data-group="${c.group?'encounters':'crew'}" data-locked="${locked}" data-search="${cleanText(searchable)}">
-   <button type="button" class="char-open" data-action="character-detail" data-character="${i}" aria-label="${locked?`Personaggio non ancora sbloccato, episodio ${c.unlock}`:`Apri la scheda di ${cleanText(c.name)}`}" ${locked?'aria-disabled="true"':''}>
-    <span class="char-art"><span class="char-photo-frame">${isAtlas()&&!locked&&v22FeaturedCharacters.includes(c.id)?`<img class="atlas-portrait" src="/assets/atlas/${c.id}.webp" alt="" loading="lazy">`:characterPortrait(c,locked)}${locked?'<span class="char-hidden-mark" aria-hidden="true">?</span>':''}</span></span>
-    <span class="char-copy"><span class="char-kicker">${art(v22RoleIcons[c.id]||'compass','char-role-icon')} ${locked?'IDENTITÀ NASCOSTA':cleanText(c.role)}</span><strong class="char-title">${locked?'Da scoprire':cleanText(c.name)}</strong><span class="char-description">${locked?`Scheda disponibile dall’episodio ${c.unlock}.`:cleanText(c.profile)}</span><span class="char-cta"><span>${locked?`Da ep. ${c.unlock}`:'Scopri la scheda'}${!locked?` <small>· Ep. ${c.unlock}</small>`:''}</span><span aria-hidden="true">›</span></span></span>
-   </button>
-   ${locked?'<span class="char-favorite locked" title="Non ancora sbloccato" aria-label="Personaggio ancora bloccato">⌑</span>':`<button type="button" class="char-favorite ${favorite?'is-favorite':''}" data-action="character-star" data-character-id="${c.id}" aria-pressed="${favorite}" aria-label="${favorite?'Rimuovi':'Aggiungi'} ${cleanText(c.name)} ${favorite?'dai':'ai'} preferiti">★</button>`}
-  </article>`}).join('')}</div>
- <div class="character-no-results" hidden><img src="/assets/ui-spyglass.webp" alt=""><strong>Nessuna scheda trovata</strong><p>Prova un nome diverso o modifica il filtro.</p></div>
- <p class="character-source-note">Ritratti fan-made non ufficiali. L’antispoiler oscura le schede che non hai ancora raggiunto nella storia.</p>
+ const lockedCount=CHARACTERS.length-discovered;
+ const collectedCount=CHARACTERS.filter(characterCollected).length;
+ const pct=CHARACTERS.length?Math.round(discovered/CHARACTERS.length*100):0;
+ const ordered=sortedCharacters();
+ return `<div class="section-shell character-section wanted-section">
+ ${sectionHeader('Wanted Collection','Colleziona i manifesti della Marina e apri i dossier man mano che avanzi sulla Rotta Maggiore.')}
+ <div class="wanted-stats" aria-label="Progresso collezione">
+  <div><b>${discovered}</b><span>Scoperti</span></div>
+  <div><b>${lockedCount}</b><span>Da scoprire</span></div>
+  <div><b>${collectedCount}</b><span>Archiviati ★</span></div>
+  <div><b>${pct}%</b><span>Collezione</span></div>
+ </div>
+ <p class="wanted-bounty-note">Le taglie in Berry non sono catalogate in Rotta Canonica: mostriamo solo informazioni già presenti e sicure.</p>
+ <div class="character-toolbar wanted-toolbar">
+  <label class="character-search" for="character-search"><span aria-hidden="true">⌕</span><input id="character-search" type="search" autocomplete="off" placeholder="Cerca tra i scoperti…" value="${cleanText(characterQuery)}" aria-label="Cerca personaggi già scoperti"></label>
+  <label class="character-filter-label"><span>Filtra</span><select id="character-filter" aria-label="Filtra manifesti"><option value="all" ${characterFilter==='all'?'selected':''}>Tutti</option><option value="crew" ${characterFilter==='crew'?'selected':''}>Ciurma</option><option value="encounters" ${characterFilter==='encounters'?'selected':''}>Incontri</option><option value="discovered" ${characterFilter==='discovered'?'selected':''}>Scoperti</option><option value="locked" ${characterFilter==='locked'?'selected':''}>Da scoprire</option><option value="favorites" ${characterFilter==='favorites'?'selected':''}>Archiviati ★ (${collectedCount})</option></select></label>
+  <label class="character-filter-label"><span>Ordina</span><select id="character-sort" aria-label="Ordina manifesti"><option value="saga" ${characterSort==='saga'?'selected':''}>Saga / sblocco</option><option value="name" ${characterSort==='name'?'selected':''}>Nome</option><option value="unlock" ${characterSort==='unlock'?'selected':''}>Episodio soglia</option></select></label>
+ </div>
+ <div class="character-utility"><span id="character-match-count">${CHARACTERS.length} manifesti trovati</span><div class="character-spoiler"><span>${icon('shield')} Antispoiler <b>${extra.spoiler?'attivo':'disattivato'}</b></span><button type="button" data-action="spoiler-toggle">${extra.spoiler?'Mostra tutti':'Proteggi'}</button></div></div>
+ <div class="wanted-board character-grid">${ordered.map(c=>wantedPosterMarkup(c,CHARACTERS.indexOf(c))).join('')}</div>
+ <div class="character-no-results" hidden><img src="/assets/ui-spyglass.webp" alt=""><strong>Nessun manifesto trovato</strong><p>Prova un nome diverso o modifica il filtro. La ricerca non rivela schede ancora sigillate.</p></div>
+ <p class="character-source-note">Manifesti tematici fan-made. L’antispoiler nasconde nome, alias, ritratto e dettagli finché non raggiungi la soglia di episodio.</p>
  </div>`;
 }
 function characterDetail(i){
  const c=CHARACTERS[i];if(!c)return;
- if(blocked(c.unlock)){toast('Personaggio bloccato: raggiungi l’episodio '+c.unlock+' oppure disattiva la protezione spoiler.');return;}
- modal(`<div class="character-detail"><div class="detail-portrait">${characterPortrait(c,false,true)}</div><div class="detail-profile"><span class="eyebrow">ENCICLOPEDIA DEI PERSONAGGI</span><h3>${cleanText(c.name)}</h3><span class="detail-role">${cleanText(c.role)}</span><p>${cleanText(c.profile)}</p><div class="detail-facts"><span>Ruolo</span><b>${cleanText(c.role)}</b><span>Gruppo</span><b>${c.group?"Altri incontri":"Ciurma di Cappello di Paglia"}</b><span>Disponibile dopo</span><b>Episodio ${c.unlock} (soglia antispoiler)</b></div><p class="smallprint">Scheda senza anticipazioni importanti. Ritratto fan-made non ufficiale.</p><div class="modal-buttons"><button class="button primary" data-action="modal-cancel">Torna alla ciurma</button></div></div></div>`);
+ if(blocked(c.unlock)){toast('Manifesto sigillato: raggiungi l’episodio '+c.unlock+' oppure disattiva la protezione spoiler.');return;}
+ wantedSeen.add(c.id);
+ const saga=characterSaga(c);
+ const collected=characterCollected(c);
+ const firstCanon=allCanon.find(n=>n>=c.unlock)||c.unlock;
+ modal(`<div class="wanted-dossier character-detail">
+  <div class="wanted-dossier-poster" aria-hidden="true">
+   <span class="wanted-banner">WANTED</span>
+   <img src="${wantedPosterSrc(c)}" alt="" loading="eager" decoding="async">
+   <span class="wanted-dossier-dead">DEAD OR ALIVE</span>
+  </div>
+  <div class="wanted-dossier-copy detail-profile">
+   <span class="eyebrow">DOSSIER DELLA MARINA</span>
+   <h3>${cleanText(c.name)}</h3>
+   <span class="detail-role">${cleanText(c.alias||c.role)}</span>
+   <p>${cleanText(c.profile)}</p>
+   <div class="detail-facts wanted-facts">
+    <span>Ruolo</span><b>${cleanText(c.role)}</b>
+    <span>Organizzazione</span><b>${cleanText(characterOrg(c))}</b>
+    <span>Saga di riferimento</span><b>${cleanText(saga.name)}</b>
+    <span>Soglia antispoiler</span><b>Episodio ${c.unlock}</b>
+    <span>Taglia</span><b>Non catalogata</b>
+   </div>
+   <div class="wanted-dossier-actions">
+    <button class="button primary small" data-action="character-star" data-character-id="${c.id}">${collected?'★ In archivio':'☆ Archivia manifesto'}</button>
+    <button class="button secondary small" data-action="wanted-open-episodes" data-first="${saga.first}">${art('episode','button-art')} Episodi · ${cleanText(saga.name)}</button>
+    <button class="button secondary small" data-action="wanted-open-saga" data-first="${saga.first}">${art('map','button-art')} Isola sulla mappa</button>
+    <button class="button secondary small" data-action="detail" data-ep="${firstCanon}">Scheda ep. ${firstCanon}</button>
+   </div>
+   <p class="smallprint">Scheda senza anticipazioni importanti. Ritratto fan-made non ufficiale.</p>
+   <div class="modal-buttons"><button class="button primary" data-action="modal-cancel">Torna alla collezione</button></div>
+  </div>
+ </div>`);
 }
 function notesSummary(){const rows=Object.entries(extra.notes).filter(([n,t])=>String(t).trim()&&Number(n)>=1&&Number(n)<=CATALOG_LIMIT).sort((a,b)=>Number(b[0])-Number(a[0]));return rows}
 function journalView(){const dates=Object.values(extra.watchedAt).filter(s=>typeof s==='string').map(s=>s.slice(0,10)).sort().reverse();const unique=[...new Set(dates)].sort().reverse();const latest=unique[0];const rows=notesSummary();const favorites=extra.favorites.slice().sort((a,b)=>a-b);
@@ -393,7 +467,9 @@ function refreshEpisodeDetail(n){
 async function handleExtraAction(action,t){const n=Number(t.dataset.ep);
  switch(action){
  case 'character-detail':{const i=Number(t.dataset.character);if(Number.isInteger(i)&&i>=0&&i<CHARACTERS.length)characterDetail(i);return true;}
- case 'character-star':{const id=t.dataset.characterId;if(!id)return true;const selected=toggleCharacterFavorite(id);t.classList.toggle('is-favorite',selected);t.setAttribute('aria-pressed',String(selected));const c=CHARACTERS.find(x=>x.id===id);t.setAttribute('aria-label',`${selected?'Rimuovi':'Aggiungi'} ${c?.name||'personaggio'} ${selected?'dai':'ai'} preferiti`);const opt=document.querySelector('#character-filter option[value=\"favorites\"]');if(opt)opt.textContent=`Preferiti ★ (${extra.characterFavorites.length})`;if(characterFilter==='favorites')applyCharacterFilters();toast(selected?'Personaggio aggiunto ai preferiti':'Personaggio rimosso dai preferiti');return true;}
+ case 'character-star':{const id=t.dataset.characterId;if(!id)return true;const selected=toggleCharacterFavorite(id);t.classList.toggle('is-favorite',selected);t.classList.toggle('is-collected',selected);t.setAttribute('aria-pressed',String(selected));const c=CHARACTERS.find(x=>x.id===id);t.setAttribute('aria-label',`${selected?'Rimuovi':'Archivia'} ${c?.name||'personaggio'} ${selected?'dalla':'nella'} collezione`);const opt=document.querySelector('#character-filter option[value=\"favorites\"]');if(opt)opt.textContent=`Archiviati ★ (${extra.characterFavorites.length})`;document.querySelector(`.wanted-poster[data-id="${id}"]`)?.classList.toggle('is-collected',selected);if(characterFilter==='favorites')applyCharacterFilters();if(document.querySelector('.wanted-dossier')&&c){const idx=CHARACTERS.indexOf(c);if(idx>=0)characterDetail(idx)}toast(selected?'Manifesto archiviato':'Manifesto rimosso dall’archivio');return true;}
+ case 'wanted-open-episodes':{const first=Number(t.dataset.first);const group=SAGA_GROUPS.find(g=>g.first===first);if(!group||(extra.spoiler&&first>spoilerHorizon())){toast('Saga ancora protetta dagli spoiler');return true}closeModal(false);episodeSaga=group.name;episodeFilter='canon';episodeQuery='';episodePage=1;setTab('episodes');toast('Episodi di '+group.name);return true}
+ case 'wanted-open-saga':{const first=Number(t.dataset.first);if(extra.spoiler&&first>spoilerHorizon()){toast('Isola ancora protetta dagli spoiler');return true}closeModal(false);selectedMapFirst=first;setTab('map');document.getElementById('atlas-panel')?.scrollIntoView({block:'nearest',behavior:motionScrollBehavior()});return true}
  case 'route-search':modal('<h3>Cerca nella rotta</h3><label class="note-label">Episodi, saghe e diario<input type="search" id="route-query" autocomplete="off" placeholder="Numero, titolo, saga o nota"></label><p role="status" id="route-count"></p><div id="route-results"></div>');document.getElementById('route-query').focus();return true;
  case 'search-more':showRouteResults(Number(t.dataset.limit));return true;
  case 'search-map':{const first=Number(t.dataset.first);if(blocked(first))return true;selectedMapFirst=first;closeModal(false);setTab('map');const stop=document.querySelector('.gl-island[data-first="'+first+'"],.map-stop[data-first="'+first+'"]');stop?.focus({preventScroll:true});stop?.scrollIntoView({block:'center',behavior:motionScrollBehavior()});document.getElementById('atlas-panel')?.scrollIntoView({block:'nearest',behavior:motionScrollBehavior()});return true}
@@ -450,7 +526,10 @@ function rewardModal(){modal(`<div class="reward-celebration"><span class="eyebr
 
 /* v8 · Ricerca istantanea senza ricostruire le card e perdere il focus. */
 document.addEventListener('input',e=>{if(e.target?.id==='character-search'){characterQuery=e.target.value;applyCharacterFilters()}});
-document.addEventListener('change',e=>{if(e.target?.id==='character-filter'){characterFilter=e.target.value;applyCharacterFilters()}});
+document.addEventListener('change',e=>{
+ if(e.target?.id==='character-filter'){characterFilter=e.target.value;applyCharacterFilters()}
+ if(e.target?.id==='character-sort'){characterSort=['name','unlock','saga'].includes(e.target.value)?e.target.value:'saga';render()}
+});
 
 function searchKey(value){
  return String(value??'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim().toLocaleLowerCase('it');
