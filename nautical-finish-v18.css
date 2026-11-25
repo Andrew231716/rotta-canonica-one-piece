@@ -203,3 +203,12 @@ html[data-active-section="characters"] .char-card.is-locked .char-title{color:#7
 @media(prefers-reduced-motion:reduce){
  :where(.button,.char-cta,.tool-tile,.map-stop,.open-arc,.mini-detail){transition:none!important;transform:none!important}
 }
+
+/* v18.1: remove raster ribbons with baked cropped lettering; rely on real HTML saga labels. */
+.arc-saga-ribbon{display:none!important}
+@media(max-width:440px){
+ .episode-filters{display:grid!important;grid-template-columns:minmax(0,1fr)!important;row-gap:11px!important}
+ .episode-filters>*{grid-column:1!important;width:100%!important;min-width:0!important}
+ .episode-filters :is(input,select){width:100%!important;max-width:100%!important;font-size:14px!important}
+ .episode-filters label{max-width:100%!important}
+}
