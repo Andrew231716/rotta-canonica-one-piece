@@ -1,0 +1,37 @@
+/* v26 mobile visual repair */
+html[data-visual-style="anime"] .secondary-topline{position:relative!important;isolation:isolate!important;min-height:150px!important;padding:18px!important;background-position:center 48%!important;background-size:cover!important}
+html[data-visual-style="anime"] .secondary-topline:before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(5,48,73,.72),rgba(7,62,84,.36) 65%,rgba(7,62,84,.16))!important}
+html[data-visual-style="anime"] .secondary-copy{max-width:min(78%,680px)!important;min-width:0!important;padding:13px 15px!important;border:1px solid #f5d99a!important;border-radius:14px!important;background:rgba(255,244,216,.96)!important;box-shadow:0 4px 12px #15394b40!important;color:#49301f!important}
+html[data-visual-style="anime"] .secondary-copy .eyebrow,html[data-visual-style="anime"] .secondary-copy strong,html[data-visual-style="anime"] .secondary-copy .secondary-desc{color:#49301f!important;text-shadow:none!important;opacity:1!important}
+html[data-visual-style="anime"] .secondary-copy strong{font-size:clamp(24px,6vw,38px)!important;line-height:1.04!important}
+html[data-visual-style="anime"] .secondary-copy .secondary-desc{font-size:13px!important;line-height:1.45!important}
+html[data-visual-style="anime"] .stat-panel{color:#3e2b1d!important;background:linear-gradient(145deg,#fff5dc,#f3dba9)!important}
+html[data-visual-style="anime"] .stat-panel h3,html[data-visual-style="anime"] .stat-panel p,html[data-visual-style="anime"] .stat-legend,html[data-visual-style="anime"] .stat-legend span,html[data-visual-style="anime"] .stat-legend b{color:#493321!important}
+html[data-visual-style="anime"] .stat-legend span{line-height:1.35!important}
+html[data-visual-style="anime"] .stat-grid{gap:16px!important}
+html[data-visual-style="anime"] .stat-chart-layout{gap:18px!important;align-items:center!important}
+html[data-visual-style="anime"] .stat-panel .notice{color:#654d35!important;background:#fff8e9!important;border-color:#d9b878!important}
+html[data-visual-style="anime"] .char-card[data-id="luffy"]{order:1!important}
+html[data-visual-style="anime"] .char-card[data-id="zoro"]{order:2!important}
+html[data-visual-style="anime"] .char-card[data-id="nami"]{order:3!important}
+html[data-visual-style="anime"] .char-card[data-id="usopp"]{order:4!important}
+html[data-visual-style="anime"] .char-card[data-id="sanji"]{order:5!important}
+html[data-visual-style="anime"] .char-card[data-id="chopper"]{order:6!important}
+html[data-visual-style="anime"] .character-grid{display:flex!important;flex-direction:column!important;gap:16px!important}
+html[data-visual-style="anime"] .char-card{width:100%!important;min-width:0!important}
+html[data-visual-style="anime"] .char-title,html[data-visual-style="anime"] .char-description{overflow-wrap:anywhere!important}
+html[data-visual-style="anime"] .char-favorite{z-index:4!important;min-width:42px!important;min-height:42px!important}
+html[data-visual-style="anime"] .char-card.is-locked .char-copy{background:linear-gradient(145deg,#fff3d7,#f1d49f)!important}
+html[data-visual-style="anime"] .char-card.is-locked .char-description{color:#60452c!important}
+html[data-visual-style="anime"] .atlas-links{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important;padding:12px!important}
+html[data-visual-style="anime"] .atlas-links>button{position:relative!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:flex-start!important;gap:6px!important;min-width:0!important;min-height:112px!important;padding:10px 8px!important;border:2px solid #9a6a39!important;border-radius:13px!important;background:linear-gradient(145deg,#fff5db,#efd39d)!important;box-shadow:0 3px 0 #78502e!important;color:#452b1a!important}
+html[data-visual-style="anime"] .atlas-links>button>img{display:block!important;width:58px!important;height:58px!important;max-width:100%!important;object-fit:contain!important;margin:0 auto!important}
+html[data-visual-style="anime"] .atlas-links>button:after{display:block!important;color:#452b1a!important;font:900 13px/1.15 Georgia,serif!important;text-align:center!important;white-space:normal!important}
+html[data-visual-style="anime"] .atlas-links>button[data-tab="journal"]:after{content:"Diario di bordo"}
+html[data-visual-style="anime"] .atlas-links>button[data-tab="characters"]:after{content:"Personaggi"}
+html[data-visual-style="anime"] .atlas-links>button[data-tab="achievements"]:after{content:"Ricompense"}
+html[data-visual-style="anime"] .atlas-links>button[data-tab="filler"]:after{content:"Filler"}
+html[data-visual-style="anime"] .atlas-links>button[data-tab="stats"]:after{content:"Progressi"}
+html[data-visual-style="anime"] .atlas-links>button[data-tab="settings"]:after{content:"Impostazioni"}
+@media(max-width:650px){html[data-visual-style="anime"] .secondary-topline{min-height:154px!important;padding:12px!important}html[data-visual-style="anime"] .secondary-copy{max-width:100%!important;width:100%!important;padding:10px 12px!important}html[data-visual-style="anime"] .secondary-art{display:none!important}html[data-visual-style="anime"] .stat-grid{grid-template-columns:minmax(0,1fr)!important}html[data-visual-style="anime"] .stat-chart-layout{display:grid!important;grid-template-columns:minmax(110px,.8fr) minmax(0,1fr)!important}html[data-visual-style="anime"] .stat-legend{min-width:0!important}html[data-visual-style="anime"] .stat-legend b{font-size:23px!important}html[data-visual-style="anime"] .atlas-links{grid-template-columns:repeat(2,minmax(0,1fr))!important}html[data-visual-style="anime"] .atlas-links>button{min-height:104px!important}html[data-visual-style="anime"] .atlas-links>button>img{width:52px!important;height:52px!important}}
+@media(max-width:360px){html[data-visual-style="anime"] .stat-chart-layout{grid-template-columns:1fr!important;justify-items:center!important}html[data-visual-style="anime"] .stat-legend{width:100%!important}}
