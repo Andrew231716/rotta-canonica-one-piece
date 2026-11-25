@@ -45,3 +45,12 @@ La Quality Gate controlla anche una soglia minima di copertura reale: almeno 900
 
 ## Anime scenografico v22
 Nuova composizione fedele al concept: Nami, Usopp, Sanji e Chopper in primo piano in pannelli illustrati con pergamene, conservando tutti gli altri personaggi. Il progetto integra 10 ritratti full-body, 2 scenari marini e il foglio di stile anime-scenic-v22.css. Le altre sezioni usano la stessa palette. Temi vintage/vettoriale, colorazioni personalizzabili, antispoiler, salvataggi e login email sono preservati. Movimento del mare, bandiera e scintille sono discreti e disattivabili. La preferenza di sistema prefers-reduced-motion è rispettata. Cache PWA: rotta-canonica-v22-scenic-anime.
+
+### Verifica visuale dell'aggiornamento v22
+- Materiale grafico: 10 nuovi ritratti anime originali a figura intera e 2 paesaggi marini, con 20 simboli anime già esistenti.
+- Fedeltà al concept: schede panoramiche con Nami, Usopp, Sanji e Chopper in evidenza, pergamene a fianco, cornici nautiche, maggior contrasto e scenari visibili nella Home, Mappa e menu.
+- Interazioni: ricerca dei personaggi, filtri, preferiti, apertura e chiusura delle schede verificati in Chromium, senza modificare i dati degli utenti.
+- Responsive: testati 11 pannelli x 4 dimensioni (320, 390, 768, 1280 px): zero overflow orizzontali e nessun errore JS rilevato nell'ambiente isolato.
+- Accessibilità: animazione ambientale del mare in modalità Completa, disattivata correttamente sia con modalità Off sia con prefers-reduced-motion.
+- Salvaguardia: tema Pergamena classica e personalizzazione di palette, icone e intensità animazioni ancora disponibili; autenticazione email e catalogo immutati.
+- L'esecuzione da GitHub Actions ha verificato il catalogo, l'integrità delle immagini e la PWA prima del rilascio.
