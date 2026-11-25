@@ -3,174 +3,175 @@
    illustrated details, vivid color and non-obstructing ambient motion.
    It leaves all data, antispoiler, account flows and preference controls intact. */
 :root{--v22-wood:#5f351e;--v22-brass:#daaa49;--v22-foam:#e4fcff;--v22-ink:#3c251e;--v22-glow:#fff3c1}
-html:not([data-visual-style="classic"]) body{
-  background:linear-gradient(180deg,rgba(70,182,220,.24),rgba(179,239,234,.08) 33%,rgba(235,239,218,.68) 79%,rgba(250,234,201,.88)),url('/assets/anime-v22-archipelago.webp') center top/ min(1250px,125vw) auto no-repeat!important;
+html[data-visual-style="anime"] body{
+  background:linear-gradient(180deg,rgba(70,182,220,.24),rgba(179,239,234,.08) 33%,rgba(235,239,218,.68) 79%,rgba(250,234,201,.88)),url('/assets/anime-v22-archipelago.webp') center -90px/ min(1250px,125vw) auto no-repeat!important;
   background-attachment:scroll!important;
+  background-color:#96d9ef!important;
 }
 /* Original concepts use a saturated open sea and strong illustrated strokes. */
-html:not([data-visual-style="classic"]) .section-header h2{
+html[data-visual-style="anime"] .section-header h2{
   color:#303a3d!important;font-family:Georgia,'Times New Roman',serif!important;
   font-size:clamp(27px,3.7vw,44px)!important;font-weight:950!important;
   text-shadow:1px 2px 0 #f6d485,0 3px 0 #8d593b48!important;letter-spacing:.2px!important
 }
-html:not([data-visual-style="classic"]) .section-shell{isolation:isolate}
+html[data-visual-style="anime"] .section-shell{isolation:isolate}
 /* Picture-led HOME: horizon + heroic foreground, not a generic gradient card. */
-html:not([data-visual-style="classic"]) [data-active-section="path"] .hero,
-html:not([data-visual-style="classic"])[data-active-section="path"] .hero{
+html[data-visual-style="anime"] [data-active-section="path"] .hero,
+html[data-visual-style="anime"][data-active-section="path"] .hero{
  border:4px solid #754322!important;border-radius:20px!important;
  box-shadow:0 6px 0 #4b2b20,0 18px 33px #03466d42,inset 0 0 0 2px #f8e19a!important;
  overflow:hidden!important
 }
-html:not([data-visual-style="classic"])[data-active-section="path"] .hero-visual{
+html[data-visual-style="anime"][data-active-section="path"] .hero-visual{
  position:relative!important;min-height:355px!important;
  background:linear-gradient(90deg,#07609d24,#0e5aa319),url('/assets/anime-v22-archipelago.webp') center 52%/cover no-repeat!important;
  overflow:hidden!important;isolation:isolate
 }
-html:not([data-visual-style="classic"])[data-active-section="path"] .hero-visual::before{
+html[data-visual-style="anime"][data-active-section="path"] .hero-visual::before{
  content:'';position:absolute;top:12px;right:17px;z-index:0;width:71px;height:71px;
  background:url('/assets/anime-icons/flag.webp') center/contain no-repeat;
  filter:drop-shadow(0 3px 2px #503c28a1);pointer-events:none;opacity:.89
 }
-html:not([data-visual-style="classic"])[data-active-section="path"] .hero-visual-img{
+html[data-visual-style="anime"][data-active-section="path"] .hero-visual-img{
  position:relative!important;z-index:1;width:100%!important;height:100%!important;
  object-fit:contain!important;object-position:50% 100%!important;
  filter:drop-shadow(0 6px 8px #002b56bd)!important
 }
-html:not([data-visual-style="classic"])[data-active-section="path"] .hero-copy{
+html[data-visual-style="anime"][data-active-section="path"] .hero-copy{
  padding:24px clamp(18px,3.3vw,36px) 28px!important;
  background:linear-gradient(140deg,#fff9e5ed,#ffebbcf5),url('/assets/scroll-texture.webp') center/cover!important;
  border-top:5px solid #c88e46!important
 }
-html:not([data-visual-style="classic"])[data-active-section="path"] .hero-copy h1{
+html[data-visual-style="anime"][data-active-section="path"] .hero-copy h1{
  font-family:Georgia,'Times New Roman',serif!important;font-weight:950!important;
  letter-spacing:-.6px!important;text-shadow:1px 2px 0 #ffdf9b!important
 }
-html:not([data-visual-style="classic"])[data-active-section="path"] .hero-top-stamp{
+html[data-visual-style="anime"][data-active-section="path"] .hero-top-stamp{
  border:2px solid #8f592d!important;box-shadow:0 3px 0 #513122a3!important;
  background:#ffebacf0!important;backdrop-filter:blur(2px)
 }
-html:not([data-visual-style="classic"])[data-active-section="path"] .hero-banner{
+html[data-visual-style="anime"][data-active-section="path"] .hero-banner{
  box-shadow:0 4px 0 #693a1ca0,0 6px 13px #0c366474!important;border-radius:13px!important;
  background:linear-gradient(#fff6d3,#efce86)!important
 }
 /* Episode/timeline panels are carved out of warm parchment, outlined like anime scenery. */
-html:not([data-visual-style="classic"]) :where(.ep-list-item,.arc-card,.recover-card,.filler-card,.journal-entry,.achievement-card){
+html[data-visual-style="anime"] :where(.ep-list-item,.arc-card,.recover-card,.filler-card,.journal-entry,.achievement-card){
  border-color:#865331!important;box-shadow:0 3px 0 #6b3b2580,0 9px 14px #123f512a!important
 }
-html:not([data-visual-style="classic"]) .ep-list-item{
+html[data-visual-style="anime"] .ep-list-item{
  background:linear-gradient(112deg,#fff8e7ee,#f7dca9f2),url('/assets/scroll-texture.webp') center/cover!important
 }
-html:not([data-visual-style="classic"]) .arc-card .arc-image{
+html[data-visual-style="anime"] .arc-card .arc-image{
  background:#3f9ad0!important;border-bottom:4px solid #814b2b!important
 }
-html:not([data-visual-style="classic"]) .map-board{
+html[data-visual-style="anime"] .map-board{
  background:linear-gradient(123deg,#fff1d8dd,#f6e3bfe3),url('/assets/anime-v22-sunset.webp') 60% 40%/cover no-repeat!important;
  border:4px ridge #9d6939!important;box-shadow:0 5px 0 #6439238f,0 17px 35px #0c43613a!important
 }
-html:not([data-visual-style="classic"]) .map-board::after{
+html[data-visual-style="anime"] .map-board::after{
  content:'';position:absolute;inset:auto 2px 2px auto;width:100px;height:100px;opacity:.25;
  background:url('/assets/anime-icons/compass.webp') center/contain no-repeat;pointer-events:none
 }
-html:not([data-visual-style="classic"]) .map-stop{
+html[data-visual-style="anime"] .map-stop{
  border:3px solid #9f6c43!important;background:linear-gradient(135deg,#fff8e5f8,#f8e1baf9)!important;
  box-shadow:0 4px 0 #7645258f,0 8px 15px #2943551f!important
 }
-html:not([data-visual-style="classic"]) .more-menu{
+html[data-visual-style="anime"] .more-menu{
  border:4px double #89582b!important;
  background:linear-gradient(#fff4d9e5,#f2d6a8ec),url('/assets/anime-v22-sunset.webp') center 43%/cover no-repeat!important
 }
-html:not([data-visual-style="classic"]) .more-menu .tool-tile{
+html[data-visual-style="anime"] .more-menu .tool-tile{
  min-height:100px!important;border:3px solid #a77943!important;
  background:linear-gradient(110deg,#fff8e9fa,#ffebcafa)!important;
  box-shadow:0 4px 0 #7c4b2978,0 7px 11px #4d381f18!important
 }
-html:not([data-visual-style="classic"]) .tool-tile-icon img{filter:drop-shadow(0 4px 2px #63421b67)!important}
+html[data-visual-style="anime"] .tool-tile-icon img{filter:drop-shadow(0 4px 2px #63421b67)!important}
 /* THE CHARACTER CONCEPT — one scenic manga panel per hero, not miniature app tiles. */
-html:not([data-visual-style="classic"])[data-active-section="characters"] .character-section{
+html[data-visual-style="anime"][data-active-section="characters"] .character-section{
  position:relative!important;padding:0 2px 25px!important;isolation:isolate
 }
-html:not([data-visual-style="classic"])[data-active-section="characters"] .characters-hero{
+html[data-visual-style="anime"][data-active-section="characters"] .characters-hero{
  min-height:184px!important;padding:19px clamp(14px,3vw,26px) 18px!important;
  border:4px solid #754523!important;border-radius:22px!important;
  background:linear-gradient(180deg,#0069a91c,#74d0d012 60%,#e9f6d994),url('/assets/anime-v22-archipelago.webp') center 54%/cover no-repeat!important;
  box-shadow:0 5px 0 #6e3d26,0 13px 23px #063d5d54!important;overflow:hidden!important
 }
-html:not([data-visual-style="classic"])[data-active-section="characters"] .characters-hero:before{
+html[data-visual-style="anime"][data-active-section="characters"] .characters-hero:before{
  content:'';position:absolute;top:0;left:0;right:0;height:9px;
  background:repeating-linear-gradient(117deg,#6d482c 0 7px,#edc981 8px 13px,#774b30 14px 20px);
  pointer-events:none;z-index:0
 }
-html:not([data-visual-style="classic"])[data-active-section="characters"] .characters-hero-top{
+html[data-visual-style="anime"][data-active-section="characters"] .characters-hero-top{
  position:relative;z-index:1;color:#fff7d7!important;font-weight:1000!important;
  text-shadow:0 2px 3px #123e5ed9,1px 1px #173648!important;font-size:10px!important;letter-spacing:1.3px!important
 }
-html:not([data-visual-style="classic"])[data-active-section="characters"] .characters-hero-count{
+html[data-visual-style="anime"][data-active-section="characters"] .characters-hero-count{
  border:2px solid #764624!important;background:linear-gradient(#fff8da,#f2ce85)!important;color:#50341d!important;
  border-radius:25px!important;padding:6px 10px!important;letter-spacing:0!important;text-shadow:none!important
 }
-html:not([data-visual-style="classic"])[data-active-section="characters"] .characters-hero-title{
+html[data-visual-style="anime"][data-active-section="characters"] .characters-hero-title{
  position:relative;z-index:1;max-width:720px!important;min-height:66px!important;
  padding:9px 17px!important;border:4px ridge #9b6230!important;
  border-radius:36% 12px 36% 12px / 12px 32% 12px 32%!important;
  background:linear-gradient(170deg,#fff6d8 0%,#efcf89 55%,#f5e1af 100%)!important;
  box-shadow:inset 0 0 0 2px #fff3c9,0 5px 0 #52311f9f,0 10px 21px #062e415c!important
 }
-html:not([data-visual-style="classic"])[data-active-section="characters"] .characters-hero-title h1{
+html[data-visual-style="anime"][data-active-section="characters"] .characters-hero-title h1{
  font:italic 950 clamp(29px,4.6vw,45px)/1.03 Georgia,'Times New Roman',serif!important;
  letter-spacing:.8px!important;color:#5a3020!important;
  text-shadow:2px 2px 0 #fff3ce!important
 }
-html:not([data-visual-style="classic"])[data-active-section="characters"] .characters-hero-title img{
+html[data-visual-style="anime"][data-active-section="characters"] .characters-hero-title img{
  width:43px!important;height:43px!important;filter:drop-shadow(0 2px 2px #643c2399)!important
 }
-html:not([data-visual-style="classic"])[data-active-section="characters"] .characters-hero>p{
+html[data-visual-style="anime"][data-active-section="characters"] .characters-hero>p{
  position:relative;z-index:1;background:#fff4d2df!important;border:2px solid #c09b60a1!important;
  border-radius:12px!important;padding:8px 13px!important;margin:12px auto 0!important;
  color:#493421!important;font-size:clamp(12px,1.45vw,14px)!important;text-shadow:0 1px #fff9e1!important
 }
-html:not([data-visual-style="classic"])[data-active-section="characters"] .character-toolbar{
+html[data-visual-style="anime"][data-active-section="characters"] .character-toolbar{
  margin:19px 0 10px!important;gap:11px!important
 }
-html:not([data-visual-style="classic"])[data-active-section="characters"] .character-grid{
+html[data-visual-style="anime"][data-active-section="characters"] .character-grid{
  display:grid!important;grid-template-columns:minmax(0,1fr)!important;
  gap:18px!important;max-width:1000px;margin-inline:auto
 }
-html:not([data-visual-style="classic"])[data-active-section="characters"] .char-card{
+html[data-visual-style="anime"][data-active-section="characters"] .char-card{
  min-height:284px!important;border:4px ridge #925b2e!important;border-radius:24px!important;
  background:linear-gradient(115deg,#69bdda,#f9e5bc)!important;
  box-shadow:0 5px 0 #69391db8,0 13px 24px #08426260!important;
  position:relative!important;overflow:hidden!important;isolation:isolate
 }
-html:not([data-visual-style="classic"])[data-active-section="characters"] .char-card[hidden]{display:none!important}
-html:not([data-visual-style="classic"])[data-active-section="characters"] .char-card::before{
+html[data-visual-style="anime"][data-active-section="characters"] .char-card[hidden]{display:none!important}
+html[data-visual-style="anime"][data-active-section="characters"] .char-card::before{
  content:'';position:absolute;z-index:4;top:0;left:0;right:0;height:6px;
  background:linear-gradient(90deg,#ecf9ff83,#ffe8aa 33%,#b16e37 51%,#ffe5a3 82%,#fffce2a6);
  pointer-events:none
 }
-html:not([data-visual-style="classic"])[data-active-section="characters"] .char-open{
+html[data-visual-style="anime"][data-active-section="characters"] .char-open{
  display:grid!important;grid-template-columns:minmax(0,52%) minmax(0,48%)!important;
  grid-template-rows:1fr!important;align-items:stretch!important;
  width:100%!important;min-height:282px!important;padding:0!important;gap:0!important;overflow:hidden!important
 }
-html:not([data-visual-style="classic"])[data-active-section="characters"] .char-art{
+html[data-visual-style="anime"][data-active-section="characters"] .char-art{
  grid-column:1!important;grid-row:1!important;min-height:280px!important;height:100%!important;
  position:relative!important;border:0!important;border-right:0!important;border-radius:18px 0 0 18px!important;
  background:linear-gradient(#2296c7,#b4e7dc)!important;overflow:hidden!important
 }
-html:not([data-visual-style="classic"])[data-active-section="characters"] .char-photo-frame{
+html[data-visual-style="anime"][data-active-section="characters"] .char-photo-frame{
  display:block!important;position:absolute!important;inset:0!important;overflow:hidden!important
 }
-html:not([data-visual-style="classic"])[data-active-section="characters"] .char-art img.character-portrait{
+html[data-visual-style="anime"][data-active-section="characters"] .char-art img.character-portrait{
  width:100%!important;height:100%!important;max-width:none!important;
  object-fit:cover!important;object-position:center 38%!important;
  transform:none!important;scale:1!important;filter:saturate(1.08) contrast(1.03)!important;
  transition:scale .38s ease,filter .38s ease!important
 }
-html:not([data-visual-style="classic"])[data-active-section="characters"] .char-art::after{
+html[data-visual-style="anime"][data-active-section="characters"] .char-art::after{
  content:'';position:absolute;z-index:3;inset:0 0 0 auto!important;width:21%!important;
  background:linear-gradient(90deg,transparent,#f9e6bb65 40%,#f9e7c8fa 98%)!important;pointer-events:none
 }
-html:not([data-visual-style="classic"])[data-active-section="characters"] .char-copy{
+html[data-visual-style="anime"][data-active-section="characters"] .char-copy{
  grid-column:2!important;grid-row:1!important;position:relative!important;
  display:flex!important;flex-direction:column!important;align-items:flex-start!important;
  margin:0!important;min-width:0!important;min-height:0!important;padding:22px clamp(12px,2.2vw,27px) 19px!important;
@@ -178,31 +179,31 @@ html:not([data-visual-style="classic"])[data-active-section="characters"] .char-
  background:linear-gradient(135deg,#fff6dcf7,#f0d6a8fa),url('/assets/scroll-texture.webp') center/cover!important;
  box-shadow:inset 7px 0 14px #d79d5c28!important
 }
-html:not([data-visual-style="classic"])[data-active-section="characters"] .char-copy::after{
+html[data-visual-style="anime"][data-active-section="characters"] .char-copy::after{
  content:'';position:absolute;z-index:0;right:8px;top:9px;width:69px;height:69px;
  background:url('/assets/anime-icons/wheel.webp') center/contain no-repeat;opacity:.13;pointer-events:none
 }
-html:not([data-visual-style="classic"])[data-active-section="characters"] .char-kicker{
+html[data-visual-style="anime"][data-active-section="characters"] .char-kicker{
  display:flex!important;gap:5px!important;align-items:center!important;
  color:#85482e!important;font-size:clamp(11px,1.5vw,14px)!important;
  font-weight:950!important;letter-spacing:.75px!important;margin:0 0 6px!important
 }
-html:not([data-visual-style="classic"])[data-active-section="characters"] .char-role-icon{
+html[data-visual-style="anime"][data-active-section="characters"] .char-role-icon{
  display:inline-block!important;width:29px!important;height:29px!important;flex:none!important;
  filter:drop-shadow(0 2px 1px #5f321b78)!important;object-fit:contain!important
 }
-html:not([data-visual-style="classic"])[data-active-section="characters"] .char-title{
+html[data-visual-style="anime"][data-active-section="characters"] .char-title{
  font:italic 950 clamp(25px,2.5vw,36px)/1.05 Georgia,'Times New Roman',serif!important;
  letter-spacing:-.65px!important;margin:0 0 11px!important;
  color:#543024!important;text-shadow:1px 1px 0 #fff8d5!important;
  overflow-wrap:anywhere!important;hyphens:auto!important
 }
-html:not([data-visual-style="classic"])[data-active-section="characters"] .char-description{
+html[data-visual-style="anime"][data-active-section="characters"] .char-description{
  font-size:clamp(13px,1.2vw,16px)!important;color:#4a3527!important;
  line-height:1.48!important;font-weight:710!important;
  flex:1!important;margin:0 0 9px!important;max-height:none!important
 }
-html:not([data-visual-style="classic"])[data-active-section="characters"] .char-cta{
+html[data-visual-style="anime"][data-active-section="characters"] .char-cta{
  display:flex!important;align-items:center!important;justify-content:space-between!important;
  align-self:stretch!important;min-height:43px!important;margin:8px 0 0!important;padding:10px 13px!important;
  border:2px solid #975a2a!important;border-radius:13px!important;
@@ -211,38 +212,38 @@ html:not([data-visual-style="classic"])[data-active-section="characters"] .char-
  color:#4b2c22!important;font-weight:950!important;font-size:clamp(11px,1.15vw,14px)!important;
  text-shadow:0 1px 0 #fff2c6!important
 }
-html:not([data-visual-style="classic"])[data-active-section="characters"] .char-favorite{
+html[data-visual-style="anime"][data-active-section="characters"] .char-favorite{
  z-index:6!important;top:14px!important;left:14px!important;
  background:radial-gradient(circle at 30% 20%,#f9ce75,#a5542a 72%)!important;
  border:3px solid #fff2b3!important;box-shadow:0 4px 7px #122c3eaa!important
 }
-html:not([data-visual-style="classic"])[data-active-section="characters"] .char-card.is-locked .char-art img.character-portrait{
+html[data-visual-style="anime"][data-active-section="characters"] .char-card.is-locked .char-art img.character-portrait{
  filter:grayscale(1) blur(11px) brightness(.7)!important;scale:1!important
 }
-html:not([data-visual-style="classic"])[data-active-section="characters"] .char-card.is-locked .char-role-icon{filter:grayscale(1)!important}
-html:not([data-visual-style="classic"])[data-active-section="characters"] .char-card:focus-within{outline:3px solid var(--anime-accent)!important;outline-offset:3px!important}
+html[data-visual-style="anime"][data-active-section="characters"] .char-card.is-locked .char-role-icon{filter:grayscale(1)!important}
+html[data-visual-style="anime"][data-active-section="characters"] .char-card:focus-within{outline:3px solid var(--anime-accent)!important;outline-offset:3px!important}
 /* Large, readable illustrated character dossier. */
-html:not([data-visual-style="classic"]) .modal-layer:has(.character-detail) .modal{
+html[data-visual-style="anime"] .modal-layer:has(.character-detail) .modal{
  width:min(94vw,920px)!important;border:4px solid #774528!important;
  background:linear-gradient(#fff9e7,#ecd3a7)!important;box-shadow:0 10px 35px #112e4580!important
 }
-html:not([data-visual-style="classic"]) .character-detail .detail-portrait{
+html[data-visual-style="anime"] .character-detail .detail-portrait{
  background:linear-gradient(#b9e5eb,#85b9bb)!important;border:3px solid #9b6639!important;
  border-radius:17px!important;min-height:290px!important;overflow:hidden
 }
-html:not([data-visual-style="classic"]) .character-detail .detail-portrait img.portrait-large{
+html[data-visual-style="anime"] .character-detail .detail-portrait img.portrait-large{
  width:100%!important;height:100%!important;object-fit:cover!important;object-position:center 36%!important
 }
 /* Treasure / reward cards sparkle without flashing over text. */
-html:not([data-visual-style="classic"]) .achievement-head,
-html:not([data-visual-style="classic"]) .achievement-card{
+html[data-visual-style="anime"] .achievement-head,
+html[data-visual-style="anime"] .achievement-card{
  border-color:#8a532b!important;
  background:linear-gradient(145deg,#fffbe7,#edca86)!important
 }
-html:not([data-visual-style="classic"]) .achievement-card.earned{
+html[data-visual-style="anime"] .achievement-card.earned{
  box-shadow:0 0 0 2px #f4c75a,0 5px 0 #945d31,0 14px 25px #da9e5359!important
 }
-html:not([data-visual-style="classic"]) .achievement-card.earned::after{
+html[data-visual-style="anime"] .achievement-card.earned::after{
  content:'';position:absolute;right:11px;top:8px;width:19px;height:19px;
  background:radial-gradient(circle,#fff7d1 0 14%,#f8d15b 30%,transparent 73%);
  pointer-events:none;opacity:.78
@@ -251,19 +252,19 @@ html:not([data-visual-style="classic"]) .achievement-card.earned::after{
 @keyframes v22SeaDrift{0%,100%{background-position:50% 54%}50%{background-position:53% 51%}}
 @keyframes v22Sparkle{0%,100%{opacity:.35;scale:.7}50%{opacity:.85;scale:1.2}}
 @keyframes v22FlagSway{0%,100%{rotate:-5deg}50%{rotate:4deg}}
-html[data-animation-level="full"]:not([data-visual-style="classic"])[data-active-section="characters"] .characters-hero{
+html[data-animation-level="full"][data-visual-style="anime"][data-active-section="characters"] .characters-hero{
  animation:v22SeaDrift 20s ease-in-out infinite!important
 }
-html[data-animation-level="full"]:not([data-visual-style="classic"])[data-active-section="path"] .hero-visual::before{
+html[data-animation-level="full"][data-visual-style="anime"][data-active-section="path"] .hero-visual::before{
  animation:v22FlagSway 5.4s ease-in-out infinite!important
 }
-html[data-animation-level="full"]:not([data-visual-style="classic"]) .achievement-card.earned::after{
+html[data-animation-level="full"][data-visual-style="anime"] .achievement-card.earned::after{
  animation:v22Sparkle 3.5s ease-in-out infinite!important
 }
-html[data-animation-level="full"]:not([data-visual-style="classic"])[data-active-section="characters"] .char-card:not(.is-locked):hover img.character-portrait{
+html[data-animation-level="full"][data-visual-style="anime"][data-active-section="characters"] .char-card:not(.is-locked):hover img.character-portrait{
  scale:1.04!important;filter:saturate(1.15) contrast(1.04)!important
 }
-html[data-animation-level="soft"]:not([data-visual-style="classic"])[data-active-section="characters"] .characters-hero{
+html[data-animation-level="soft"][data-visual-style="anime"][data-active-section="characters"] .characters-hero{
  animation:v22SeaDrift 30s ease-in-out infinite!important
 }
 html[data-animation-level="off"] .characters-hero,
@@ -276,56 +277,72 @@ html[data-animation-level="off"] .achievement-card.earned::after{
  html .char-art img.character-portrait{animation:none!important;transition:none!important;scale:1!important;rotate:0deg!important}
 }
 @media(max-width:860px){
- html:not([data-visual-style="classic"])[data-active-section="characters"] .character-grid{gap:16px!important}
- html:not([data-visual-style="classic"])[data-active-section="characters"] .char-card{min-height:260px!important}
- html:not([data-visual-style="classic"])[data-active-section="characters"] .char-open{min-height:258px!important}
- html:not([data-visual-style="classic"])[data-active-section="characters"] .char-art{min-height:258px!important}
- html:not([data-visual-style="classic"])[data-active-section="characters"] .char-copy{padding:17px 13px 14px!important}
- html:not([data-visual-style="classic"])[data-active-section="characters"] .char-title{font-size:clamp(23px,4.3vw,31px)!important}
- html:not([data-visual-style="classic"])[data-active-section="characters"] .char-description{font-size:clamp(11px,2.9vw,14px)!important;line-height:1.4!important}
+ html[data-visual-style="anime"][data-active-section="characters"] .character-grid{gap:16px!important}
+ html[data-visual-style="anime"][data-active-section="characters"] .char-card{min-height:260px!important}
+ html[data-visual-style="anime"][data-active-section="characters"] .char-open{min-height:258px!important}
+ html[data-visual-style="anime"][data-active-section="characters"] .char-art{min-height:258px!important}
+ html[data-visual-style="anime"][data-active-section="characters"] .char-copy{padding:17px 13px 14px!important}
+ html[data-visual-style="anime"][data-active-section="characters"] .char-title{font-size:clamp(23px,4.3vw,31px)!important}
+ html[data-visual-style="anime"][data-active-section="characters"] .char-description{font-size:clamp(11px,2.9vw,14px)!important;line-height:1.4!important}
 }
 @media(max-width:480px){
- html:not([data-visual-style="classic"])[data-active-section="path"] .hero-visual{min-height:340px!important}
- html:not([data-visual-style="classic"])[data-active-section="characters"] .characters-hero{min-height:172px!important;padding:16px 9px 12px!important}
- html:not([data-visual-style="classic"])[data-active-section="characters"] .characters-hero-title{min-height:56px!important;padding:7px 9px!important}
- html:not([data-visual-style="classic"])[data-active-section="characters"] .characters-hero-title h1{font-size:clamp(26px,7.4vw,32px)!important}
- html:not([data-visual-style="classic"])[data-active-section="characters"] .characters-hero-title img{width:34px!important;height:34px!important}
- html:not([data-visual-style="classic"])[data-active-section="characters"] .characters-hero>p{margin-top:10px!important;font-size:11px!important;line-height:1.34!important}
- html:not([data-visual-style="classic"])[data-active-section="characters"] .character-grid{gap:13px!important}
- html:not([data-visual-style="classic"])[data-active-section="characters"] .char-card{min-height:268px!important;border-width:3px!important;border-radius:18px!important}
- html:not([data-visual-style="classic"])[data-active-section="characters"] .char-open{grid-template-columns:minmax(0,51%) minmax(0,49%)!important;min-height:266px!important}
- html:not([data-visual-style="classic"])[data-active-section="characters"] .char-art{min-height:266px!important;border-radius:14px 0 0 14px!important}
- html:not([data-visual-style="classic"])[data-active-section="characters"] .char-copy{padding:15px 9px 12px!important;border-left-width:2px!important}
- html:not([data-visual-style="classic"])[data-active-section="characters"] .char-kicker{font-size:10px!important;margin-bottom:5px!important;letter-spacing:.3px!important}
- html:not([data-visual-style="classic"])[data-active-section="characters"] .char-role-icon{width:22px!important;height:22px!important}
- html:not([data-visual-style="classic"])[data-active-section="characters"] .char-title{font-size:clamp(20px,5.4vw,25px)!important;margin-bottom:7px!important}
- html:not([data-visual-style="classic"])[data-active-section="characters"] .char-description{font-size:clamp(10.4px,2.95vw,12px)!important;line-height:1.4!important;margin-bottom:3px!important}
- html:not([data-visual-style="classic"])[data-active-section="characters"] .char-cta{min-height:41px!important;font-size:11px!important;padding:8px 6px!important;margin-top:7px!important;border-radius:10px!important}
- html:not([data-visual-style="classic"])[data-active-section="characters"] .char-favorite{width:36px!important;height:36px!important;min-width:36px!important;min-height:36px!important;left:8px!important;top:9px!important}
- html:not([data-visual-style="classic"])[data-active-section="characters"] .char-copy::after{width:48px;height:48px}
+ html[data-visual-style="anime"][data-active-section="path"] .hero-visual{min-height:340px!important}
+ html[data-visual-style="anime"][data-active-section="characters"] .characters-hero{min-height:172px!important;padding:16px 9px 12px!important}
+ html[data-visual-style="anime"][data-active-section="characters"] .characters-hero-title{min-height:56px!important;padding:7px 9px!important}
+ html[data-visual-style="anime"][data-active-section="characters"] .characters-hero-title h1{font-size:clamp(26px,7.4vw,32px)!important}
+ html[data-visual-style="anime"][data-active-section="characters"] .characters-hero-title img{width:34px!important;height:34px!important}
+ html[data-visual-style="anime"][data-active-section="characters"] .characters-hero>p{margin-top:10px!important;font-size:11px!important;line-height:1.34!important}
+ html[data-visual-style="anime"][data-active-section="characters"] .character-grid{gap:13px!important}
+ html[data-visual-style="anime"][data-active-section="characters"] .char-card{min-height:268px!important;border-width:3px!important;border-radius:18px!important}
+ html[data-visual-style="anime"][data-active-section="characters"] .char-open{grid-template-columns:minmax(0,51%) minmax(0,49%)!important;min-height:266px!important}
+ html[data-visual-style="anime"][data-active-section="characters"] .char-art{min-height:266px!important;border-radius:14px 0 0 14px!important}
+ html[data-visual-style="anime"][data-active-section="characters"] .char-copy{padding:15px 9px 12px!important;border-left-width:2px!important}
+ html[data-visual-style="anime"][data-active-section="characters"] .char-kicker{font-size:10px!important;margin-bottom:5px!important;letter-spacing:.3px!important}
+ html[data-visual-style="anime"][data-active-section="characters"] .char-role-icon{width:22px!important;height:22px!important}
+ html[data-visual-style="anime"][data-active-section="characters"] .char-title{font-size:clamp(20px,5.4vw,25px)!important;margin-bottom:7px!important}
+ html[data-visual-style="anime"][data-active-section="characters"] .char-description{font-size:clamp(10.4px,2.95vw,12px)!important;line-height:1.4!important;margin-bottom:3px!important}
+ html[data-visual-style="anime"][data-active-section="characters"] .char-cta{min-height:41px!important;font-size:11px!important;padding:8px 6px!important;margin-top:7px!important;border-radius:10px!important}
+ html[data-visual-style="anime"][data-active-section="characters"] .char-favorite{width:36px!important;height:36px!important;min-width:36px!important;min-height:36px!important;left:8px!important;top:9px!important}
+ html[data-visual-style="anime"][data-active-section="characters"] .char-copy::after{width:48px;height:48px}
 }
 @media(max-width:348px){
- html:not([data-visual-style="classic"])[data-active-section="characters"] .char-open{grid-template-columns:minmax(0,45%) minmax(0,55%)!important}
- html:not([data-visual-style="classic"])[data-active-section="characters"] .char-card{min-height:292px!important}
- html:not([data-visual-style="classic"])[data-active-section="characters"] .char-open,html:not([data-visual-style="classic"])[data-active-section="characters"] .char-art{min-height:290px!important}
- html:not([data-visual-style="classic"])[data-active-section="characters"] .char-description{font-size:10.6px!important}
+ html[data-visual-style="anime"][data-active-section="characters"] .char-open{grid-template-columns:minmax(0,45%) minmax(0,55%)!important}
+ html[data-visual-style="anime"][data-active-section="characters"] .char-card{min-height:292px!important}
+ html[data-visual-style="anime"][data-active-section="characters"] .char-open,html[data-visual-style="anime"][data-active-section="characters"] .char-art{min-height:290px!important}
+ html[data-visual-style="anime"][data-active-section="characters"] .char-description{font-size:10.6px!important}
 }
 
 /* Text is placed over an illustrated sea: give headings and filters readable parchment backing. */
-html:not([data-visual-style="classic"]) .section-shell>.section-header{
+html[data-visual-style="anime"] .section-shell>.section-header{
  border:2px solid #d1ae76!important;border-bottom:4px solid #bf8c50!important;
  border-radius:15px!important;padding:13px 15px 16px!important;
  background:linear-gradient(125deg,#fff6dfdb,#f3e6c6db)!important;
  box-shadow:0 3px 0 #5a392b50,0 7px 18px #18465430!important;
  backdrop-filter:blur(3px)
 }
-html:not([data-visual-style="classic"]) .section-shell>.section-header p{color:#494339!important;text-shadow:0 1px 0 #fff8e4!important}
-html:not([data-visual-style="classic"])[data-active-section="characters"] .character-utility{
+html[data-visual-style="anime"] .section-shell>.section-header p{color:#494339!important;text-shadow:0 1px 0 #fff8e4!important}
+html[data-visual-style="anime"][data-active-section="characters"] .character-utility{
  background:linear-gradient(100deg,#fff3dcd9,#f4e5c7d9)!important;
  border:1px solid #ad8251!important;border-radius:11px!important;
  padding:9px 12px!important;color:#4c3828!important;font-weight:850!important;
  box-shadow:0 3px 0 #88582b28!important
 }
-html:not([data-visual-style="classic"])[data-active-section="characters"] .character-utility *{color:#4c3828!important}
-html:not([data-visual-style="classic"])[data-active-section="characters"] .character-utility button{color:#412c1d!important}
-@media(max-width:480px){html:not([data-visual-style="classic"]) .section-shell>.section-header{padding:11px 12px 13px!important;margin:6px 0 15px!important}html:not([data-visual-style="classic"])[data-active-section="characters"] .character-utility{padding:7px 8px!important;gap:5px!important}}
+html[data-visual-style="anime"][data-active-section="characters"] .character-utility *{color:#4c3828!important}
+html[data-visual-style="anime"][data-active-section="characters"] .character-utility button{color:#412c1d!important}
+@media(max-width:480px){html[data-visual-style="anime"] .section-shell>.section-header{padding:11px 12px 13px!important;margin:6px 0 15px!important}html[data-visual-style="anime"][data-active-section="characters"] .character-utility{padding:7px 8px!important;gap:5px!important}}
+
+/* v22.1: illustrated paper edges tie characters into the parchment, not rectangular tiles. */
+html[data-visual-style="anime"][data-active-section="characters"] .char-copy{border-left:0!important}
+html[data-visual-style="anime"][data-active-section="characters"] .char-copy::before{
+ content:'';position:absolute;z-index:2;left:-6px;top:0;width:17px;height:100%;pointer-events:none;
+ background:linear-gradient(90deg,#e9cb98ba,#fff2d4 54%,#f5ddb4);
+ clip-path:polygon(58% 0,24% 6%,70% 16%,31% 26%,67% 37%,23% 47%,69% 57%,29% 69%,67% 78%,25% 90%,62% 100%,100% 100%,100% 0);
+ filter:drop-shadow(-2px 0 1px #70452163)
+}
+/* Preserve readable utility controls in the darker alternative style. */
+html[data-visual-style="night"] .character-utility,
+html[data-visual-style="night"] .character-utility #character-match-count,
+html[data-visual-style="night"] .character-utility .character-spoiler span,
+html[data-visual-style="night"] .character-utility .character-spoiler b,
+html[data-visual-style="night"] .character-utility .character-spoiler svg{color:#fff0c9!important}
+html[data-visual-style="night"] .character-utility button{color:#4f311d!important}

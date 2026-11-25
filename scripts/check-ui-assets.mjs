@@ -12,7 +12,7 @@ const features=await read('features.js');
 const app=await read('app.js');
 for(const file of ['nautical-finish-v18.css','catalog-pwa-v19.css','anime-art-direction-v21.css','design-system-v16.css'])if(!html.includes('/'+file))throw Error('Stylesheet not linked: '+file);
 for(const [file,value] of [['v16',css],['v18',newCss],['v19',pwaCss],['v21',animeCss],['v22',scenicCss]])if((value.match(/\{/g)||[]).length!==(value.match(/\}/g)||[]).length)throw Error('Unbalanced CSS braces in '+file);
-if(!sw.includes('rotta-canonica-v22-scenic-anime'))throw Error('PWA version not bumped to v21');
+if(!sw.includes('rotta-canonica-v22-1-scenic-presets'))throw Error('PWA version not bumped to v21');
 if(!sw.includes("'/data/episodes-latest.json'"))throw Error('Missing offline episode feed');
 if(!features.includes('[2,5,4,6,2,5][i%6]'))throw Error('Map illustrations missing');
 if(!features.includes('appearanceStyle')||!features.includes('symbolStyle')||!features.includes('colorPalette')||!features.includes('animationLevel'))throw Error('Visual customization not persisted');
@@ -31,7 +31,8 @@ for(const rel of referenced){if(!rel.startsWith('/')||rel.includes('..'))throw E
 if(missing.length)throw Error('Assets missing: '+missing.join(', '));
 console.log('Anime UI assets OK:',referenced.size,'assets, 20 new icons, 2 illustrated scenes, 4 themes, 3 symbol styles');
 
-if(!html.includes('/anime-scenic-v22.css?v=22a1'))throw Error('Scenic anime v22 CSS missing from HTML');
+if(!html.includes('/anime-scenic-v22.css?v=22a2'))throw Error('Scenic anime v22 CSS missing from HTML');
+if(!scenicCss.includes('html[data-visual-style="anime"]')||scenicCss.includes('html:not([data-visual-style="classic"])'))throw Error('Illustrated scene override leaks into alternative themes');
 if(!features.includes('v22FeaturedCharacters')||!features.includes('char-role-icon'))throw Error('Full-body manga cards not installed');
 for(const asset of ['/anime-scenic-v22.css','/assets/anime-v22-archipelago.webp','/assets/anime-v22-sunset.webp'])if(!assets.includes(asset))throw Error('Missing offline scenery: '+asset);
 for(const char of ['luffy','zoro','nami','usopp','sanji','chopper','robin','franky','brook','jinbe']){
