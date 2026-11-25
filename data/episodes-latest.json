@@ -9,186 +9,1247 @@
       "title": "",
       "aired": "2026-04-05",
       "classification": "unverified",
-      "classificationReview": null
+      "classificationReview": null,
+      "summary": "Durante il banchetto, Oimo e Karsee spiegano che, dopo Water Seven, sono andati a Little Garden perché non potevano aspettare oltre e volevano rivedere i loro capitani. Poiché le loro armi si erano rotte, stavano combattendo a mani nude, cosa alquanto scomoda in un duello mortale, quindi i due sottoposti li hanno convinti a tornare ad Erbaf per prenderne di nuove. Quando i capitani confermano che il duello continuerà, Nami non ne può più e torna a bere, mentre Usop e Rufy insistono nell'appoggiare le tradizioni dei giganti.…",
+      "summaryLanguage": "it",
+      "summarySource": {
+        "provider": "One Piece Wiki Italia / Fandom",
+        "url": "https://onepiece.fandom.com/it/wiki/Episodio_1156",
+        "revisionId": 372327,
+        "checkedAt": "2026-08-30T22:34:27Z",
+        "license": "CC BY-SA 3.0",
+        "fields": [
+          "summary"
+        ]
+      },
+      "summaryStatus": "verified",
+      "chapter": "633, 870–871, 873, 875, 1126",
+      "chapterDetails": [
+        {
+          "chapter": 633,
+          "pages": "1",
+          "url": "https://onepiece.fandom.com/wiki/Chapter_633"
+        },
+        {
+          "chapter": 870,
+          "pages": "1",
+          "url": "https://onepiece.fandom.com/wiki/Chapter_870"
+        },
+        {
+          "chapter": 871,
+          "pages": "1",
+          "url": "https://onepiece.fandom.com/wiki/Chapter_871"
+        },
+        {
+          "chapter": 873,
+          "pages": "1",
+          "url": "https://onepiece.fandom.com/wiki/Chapter_873"
+        },
+        {
+          "chapter": 875,
+          "pages": "1",
+          "url": "https://onepiece.fandom.com/wiki/Chapter_875"
+        },
+        {
+          "chapter": 1126,
+          "pages": "2-3, 5-17",
+          "url": "https://onepiece.fandom.com/wiki/Chapter_1126"
+        }
+      ],
+      "chapterStatus": "mapped",
+      "chapterSource": {
+        "provider": "One Piece Wiki / Template:WC",
+        "url": "https://onepiece.fandom.com/wiki/Template:WC",
+        "revisionId": 2133640,
+        "checkedAt": "2026-09-27T16:36:52Z",
+        "license": "CC BY-SA 3.0",
+        "fields": [
+          "chapter",
+          "pages"
+        ]
+      },
+      "editorialSource": {
+        "url": "https://onepiece.fandom.com/it/wiki/Episodio_1156",
+        "checkedAt": "2026-08-30T22:34:27Z",
+        "fields": [
+          "summary",
+          "chapter"
+        ]
+      }
     },
     {
       "number": 1157,
       "title": "",
       "aired": "2026-04-12",
       "classification": "unverified",
-      "classificationReview": null
+      "classificationReview": null,
+      "summary": "In una città, gli abitanti sono allertati da un incendio nella vicina foresta e devono affrettarsi a spegnerlo prima che raggiunga Yggdrasill e avvertire il grande dio del sole. Notano inoltre delle api a terra e ricevono la notizia secondo cui i tremori provenuti dalla foresta poco prima erano dovuti alla caduta dell'enorme coniglio noto come dio dell'orecchio. Nel castello di Bigstein, Nami fulmina un'ape gigante con Zeus, che chiede dove si trovino e a cui risponde di non averne idea. La navigatrice piange e implora che qualcuno la aiuti, non ricorda nemmeno chi le abbia cambiato i vestiti.…",
+      "summaryLanguage": "it",
+      "summarySource": {
+        "provider": "One Piece Wiki Italia / Fandom",
+        "url": "https://onepiece.fandom.com/it/wiki/Episodio_1157",
+        "revisionId": 372332,
+        "checkedAt": "2026-08-30T22:39:43Z",
+        "license": "CC BY-SA 3.0",
+        "fields": [
+          "summary"
+        ]
+      },
+      "summaryStatus": "verified",
+      "chapter": "1127–1128",
+      "chapterDetails": [
+        {
+          "chapter": 1127,
+          "pages": "2-15",
+          "url": "https://onepiece.fandom.com/wiki/Chapter_1127"
+        },
+        {
+          "chapter": 1128,
+          "pages": "3-5",
+          "url": "https://onepiece.fandom.com/wiki/Chapter_1128"
+        }
+      ],
+      "chapterStatus": "mapped",
+      "chapterSource": {
+        "provider": "One Piece Wiki / Template:WC",
+        "url": "https://onepiece.fandom.com/wiki/Template:WC",
+        "revisionId": 2133640,
+        "checkedAt": "2026-09-27T16:36:52Z",
+        "license": "CC BY-SA 3.0",
+        "fields": [
+          "chapter",
+          "pages"
+        ]
+      },
+      "editorialSource": {
+        "url": "https://onepiece.fandom.com/it/wiki/Episodio_1157",
+        "checkedAt": "2026-08-30T22:39:43Z",
+        "fields": [
+          "summary",
+          "chapter"
+        ]
+      }
     },
     {
       "number": 1158,
       "title": "",
       "aired": "2026-04-19",
       "classification": "unverified",
-      "classificationReview": null
+      "classificationReview": null,
+      "summary": "I Pirati di Cappello di paglia incontrano un uomo che cavalca una cavalletta gigante e gli chiedono spiegazioni, egli però è di fretta e si limita a rivelare che si trovano nella terra del dio del sole, abitata da altre divinità. L'uomo è un servo del gatto Iskat che vive nel castello di Bigstein. Rufy sta per ammettere ciò che hanno fatto a tale gatto, ma Usop glielo impedisce tappandogli la bocca.…",
+      "summaryLanguage": "it",
+      "summarySource": {
+        "provider": "One Piece Wiki Italia / Fandom",
+        "url": "https://onepiece.fandom.com/it/wiki/Episodio_1158",
+        "revisionId": 370929,
+        "checkedAt": "2026-06-23T16:12:34Z",
+        "license": "CC BY-SA 3.0",
+        "fields": [
+          "summary"
+        ]
+      },
+      "summaryStatus": "verified",
+      "chapter": "1128",
+      "chapterDetails": [
+        {
+          "chapter": 1128,
+          "pages": "6-19",
+          "url": "https://onepiece.fandom.com/wiki/Chapter_1128"
+        }
+      ],
+      "chapterStatus": "mapped",
+      "chapterSource": {
+        "provider": "One Piece Wiki / Template:WC",
+        "url": "https://onepiece.fandom.com/wiki/Template:WC",
+        "revisionId": 2133640,
+        "checkedAt": "2026-09-27T16:36:52Z",
+        "license": "CC BY-SA 3.0",
+        "fields": [
+          "chapter",
+          "pages"
+        ]
+      },
+      "editorialSource": {
+        "url": "https://onepiece.fandom.com/it/wiki/Episodio_1158",
+        "checkedAt": "2026-06-23T16:12:34Z",
+        "fields": [
+          "summary",
+          "chapter"
+        ]
+      }
     },
     {
       "number": 1159,
       "title": "",
       "aired": "2026-04-26",
       "classification": "unverified",
-      "classificationReview": null
+      "classificationReview": null,
+      "summary": "Gli abitanti della terra degli dei pregano affinché il dio del sole si plachi e vanno nel panico vedendo delle fiamme oltre le crepe nel cielo. Il gigante però è infuriato coi pirati per avere distrutto la sua stanza e sconfitto i suoi animali domestici. Rufy è colpito dal duro lavoro del gigante che ha costruito quell'enorme diorama e ordina a Iskat di non danneggiarlo, sgridandolo quando invece lo fa. Il gigante chiede al gatto perché stia aiutando gli umani.…",
+      "summaryLanguage": "it",
+      "summarySource": {
+        "provider": "One Piece Wiki Italia / Fandom",
+        "url": "https://onepiece.fandom.com/it/wiki/Episodio_1159",
+        "revisionId": 370039,
+        "checkedAt": "2026-05-04T21:08:04Z",
+        "license": "CC BY-SA 3.0",
+        "fields": [
+          "summary"
+        ]
+      },
+      "summaryStatus": "verified",
+      "chapter": "1129",
+      "chapterDetails": [
+        {
+          "chapter": 1129,
+          "pages": "2-17",
+          "url": "https://onepiece.fandom.com/wiki/Chapter_1129"
+        }
+      ],
+      "chapterStatus": "mapped",
+      "chapterSource": {
+        "provider": "One Piece Wiki / Template:WC",
+        "url": "https://onepiece.fandom.com/wiki/Template:WC",
+        "revisionId": 2133640,
+        "checkedAt": "2026-09-27T16:36:52Z",
+        "license": "CC BY-SA 3.0",
+        "fields": [
+          "chapter",
+          "pages"
+        ]
+      },
+      "editorialSource": {
+        "url": "https://onepiece.fandom.com/it/wiki/Episodio_1159",
+        "checkedAt": "2026-05-04T21:08:04Z",
+        "fields": [
+          "summary",
+          "chapter"
+        ]
+      }
     },
     {
       "number": 1160,
       "title": "",
       "aired": "2026-05-03",
       "classification": "unverified",
-      "classificationReview": null
+      "classificationReview": null,
+      "summary": "Franky, Robin, Jinbe e Brook ringraziano i giganti ma pongono fine alle ricerche poiché non hanno trovato alcuna traccia e, sicuri che i loro compagni sono in grado di cavarsela, propongono di attenderli direttamente ad Erbaf. Il gruppo di Rufy esce all'aperto, Iskat corre via, e il capitano è eccitato alla vista di un albero enorme, mentre Nami sottolinea quanto faccia freddo e la lunghezza del ponte sospeso che hanno di fronte. Usop nota qualcuno arrivare da esso e suggerisce di nascondersi.…",
+      "summaryLanguage": "it",
+      "summarySource": {
+        "provider": "One Piece Wiki Italia / Fandom",
+        "url": "https://onepiece.fandom.com/it/wiki/Episodio_1160",
+        "revisionId": 372329,
+        "checkedAt": "2026-08-30T22:36:16Z",
+        "license": "CC BY-SA 3.0",
+        "fields": [
+          "summary"
+        ]
+      },
+      "summaryStatus": "verified",
+      "chapter": "1130",
+      "chapterDetails": [
+        {
+          "chapter": 1130,
+          "pages": "2-15",
+          "url": "https://onepiece.fandom.com/wiki/Chapter_1130"
+        }
+      ],
+      "chapterStatus": "mapped",
+      "chapterSource": {
+        "provider": "One Piece Wiki / Template:WC",
+        "url": "https://onepiece.fandom.com/wiki/Template:WC",
+        "revisionId": 2133640,
+        "checkedAt": "2026-09-27T16:36:52Z",
+        "license": "CC BY-SA 3.0",
+        "fields": [
+          "chapter",
+          "pages"
+        ]
+      },
+      "editorialSource": {
+        "url": "https://onepiece.fandom.com/it/wiki/Episodio_1160",
+        "checkedAt": "2026-08-30T22:36:16Z",
+        "fields": [
+          "summary",
+          "chapter"
+        ]
+      }
     },
     {
       "number": 1161,
       "title": "",
       "aired": "2026-05-10",
       "classification": "unverified",
-      "classificationReview": null
+      "classificationReview": null,
+      "summary": "Entusiasta di essere finalmente a Erbaf, Rufy è curioso e formula domande a ripetizione ignorando Loki, che allora alza la voce e si presenta nuovamente come il dio del sole di cui si narra nelle leggende di quel regno; poi chiede al visitatore che cosa pensi della sua situazione. Quando Rufy risponde che si trova incatenato, Loki rivela di essere in quello stato da sei anni, legato all'albero Adam da catene di agalmatolite, e gli propone un patto: in cambio della libertà, il gigante annienterà una ciurma a sua scelta.…",
+      "summaryLanguage": "it",
+      "summarySource": {
+        "provider": "One Piece Wiki Italia / Fandom",
+        "url": "https://onepiece.fandom.com/it/wiki/Episodio_1161",
+        "revisionId": 370452,
+        "checkedAt": "2026-05-30T14:39:05Z",
+        "license": "CC BY-SA 3.0",
+        "fields": [
+          "summary"
+        ]
+      },
+      "summaryStatus": "verified",
+      "chapter": "1131",
+      "chapterDetails": [
+        {
+          "chapter": 1131,
+          "pages": "2-17",
+          "url": "https://onepiece.fandom.com/wiki/Chapter_1131"
+        }
+      ],
+      "chapterStatus": "mapped",
+      "chapterSource": {
+        "provider": "One Piece Wiki / Template:WC",
+        "url": "https://onepiece.fandom.com/wiki/Template:WC",
+        "revisionId": 2133640,
+        "checkedAt": "2026-09-27T16:36:52Z",
+        "license": "CC BY-SA 3.0",
+        "fields": [
+          "chapter",
+          "pages"
+        ]
+      },
+      "editorialSource": {
+        "url": "https://onepiece.fandom.com/it/wiki/Episodio_1161",
+        "checkedAt": "2026-05-30T14:39:05Z",
+        "fields": [
+          "summary",
+          "chapter"
+        ]
+      }
     },
     {
       "number": 1162,
       "title": "",
       "aired": "2026-05-17",
       "classification": "unverified",
-      "classificationReview": null
+      "classificationReview": null,
+      "summary": "Quando la Great Erik sta approcciando la terraferma, Collon chiede se l'equipaggio si fermerà alla taverna e, quando Brogi risponde negativamente, lo riferisce alla barista. Quest'ultima gli suggerisce di salire anche lui al regno del Sole, poi gli porge del cibo da portare a suo padre e a Ripley. Il bambino è inoltre eccitato perché gli ospiti di Dori e Brogi sono la ciurma del pirata appena nominato imperatore di cui parlava Shanks, poi se ne va, mentre la barista gli ricorda di dire ai capitani che la consegna avverrà dopo il banchetto.…",
+      "summaryLanguage": "it",
+      "summarySource": {
+        "provider": "One Piece Wiki Italia / Fandom",
+        "url": "https://onepiece.fandom.com/it/wiki/Episodio_1162",
+        "revisionId": 370445,
+        "checkedAt": "2026-05-30T14:17:30Z",
+        "license": "CC BY-SA 3.0",
+        "fields": [
+          "summary"
+        ]
+      },
+      "summaryStatus": "verified",
+      "chapter": "1132",
+      "chapterDetails": [
+        {
+          "chapter": 1132,
+          "pages": "2-17",
+          "url": "https://onepiece.fandom.com/wiki/Chapter_1132"
+        }
+      ],
+      "chapterStatus": "mapped",
+      "chapterSource": {
+        "provider": "One Piece Wiki / Template:WC",
+        "url": "https://onepiece.fandom.com/wiki/Template:WC",
+        "revisionId": 2133640,
+        "checkedAt": "2026-09-27T16:36:52Z",
+        "license": "CC BY-SA 3.0",
+        "fields": [
+          "chapter",
+          "pages"
+        ]
+      },
+      "editorialSource": {
+        "url": "https://onepiece.fandom.com/it/wiki/Episodio_1162",
+        "checkedAt": "2026-05-30T14:17:30Z",
+        "fields": [
+          "summary",
+          "chapter"
+        ]
+      }
     },
     {
       "number": 1163,
       "title": "",
       "aired": "2026-05-24",
       "classification": "unverified",
-      "classificationReview": null
+      "classificationReview": null,
+      "summary": "Ventidue anni fa, Spandine comunicò ai giornalisti che la distruzione di Ohara e di numerose navi della Marina fu opera di Robin, che divenne così ricercata. La bambina fu costretta alla fuga, rimanendo sola e riuscendo ad andare avanti solo grazie alle ultime parole di sua madre e di Sauro. I pirati giungono al porto del villaggio occidentale, dove attendono l'arrivo di una svalr su cui si trovano i restanti loro amici. Lilith spiega che il particolare clima dell'isola permette la coesistenza di varie tecnologie legate a nuvole, bolle e arcobaleni.…",
+      "summaryLanguage": "it",
+      "summarySource": {
+        "provider": "One Piece Wiki Italia / Fandom",
+        "url": "https://onepiece.fandom.com/it/wiki/Episodio_1163",
+        "revisionId": 372299,
+        "checkedAt": "2026-08-25T23:25:51Z",
+        "license": "CC BY-SA 3.0",
+        "fields": [
+          "summary"
+        ]
+      },
+      "summaryStatus": "verified",
+      "chapter": "1133",
+      "chapterDetails": [
+        {
+          "chapter": 1133,
+          "pages": "2-17",
+          "url": "https://onepiece.fandom.com/wiki/Chapter_1133"
+        }
+      ],
+      "chapterStatus": "mapped",
+      "chapterSource": {
+        "provider": "One Piece Wiki / Template:WC",
+        "url": "https://onepiece.fandom.com/wiki/Template:WC",
+        "revisionId": 2133640,
+        "checkedAt": "2026-09-27T16:36:52Z",
+        "license": "CC BY-SA 3.0",
+        "fields": [
+          "chapter",
+          "pages"
+        ]
+      },
+      "editorialSource": {
+        "url": "https://onepiece.fandom.com/it/wiki/Episodio_1163",
+        "checkedAt": "2026-08-25T23:25:51Z",
+        "fields": [
+          "summary",
+          "chapter"
+        ]
+      }
     },
     {
       "number": 1164,
       "title": "",
       "aired": "2026-05-31",
       "classification": "unverified",
-      "classificationReview": null
+      "classificationReview": null,
+      "summary": "Sauro e i Pirati di Cappello di paglia si ringraziano a vicenda per avere protetto Robin. Lilith si avvicina poi al gigante levitando in aria, ma Sauro non la riconosce, così lei dice di essere Vegapunk. Si fa poi dare da Jinbe una capsula e spiega che contiene il clone di Vegapunk che usò quando giunse ad Erbaf la prima volta per non insospettire il Governo Mondiale della sua assenza per mesi. Rivela che dovrà mettere quel corpo in una soluzione di coltura, ma non ha gli strumenti per farlo in ambiente protetto, per questo intende ricreare il laboratorio. Bonney le chiede se può fare tornare normale suo padre e Lilith glielo conferma.…",
+      "summaryLanguage": "it",
+      "summarySource": {
+        "provider": "One Piece Wiki Italia / Fandom",
+        "url": "https://onepiece.fandom.com/it/wiki/Episodio_1164",
+        "revisionId": 371986,
+        "checkedAt": "2026-08-09T14:22:43Z",
+        "license": "CC BY-SA 3.0",
+        "fields": [
+          "summary"
+        ]
+      },
+      "summaryStatus": "verified",
+      "chapter": "1134",
+      "chapterDetails": [
+        {
+          "chapter": 1134,
+          "pages": "3-19",
+          "url": "https://onepiece.fandom.com/wiki/Chapter_1134"
+        }
+      ],
+      "chapterStatus": "mapped",
+      "chapterSource": {
+        "provider": "One Piece Wiki / Template:WC",
+        "url": "https://onepiece.fandom.com/wiki/Template:WC",
+        "revisionId": 2133640,
+        "checkedAt": "2026-09-27T16:36:52Z",
+        "license": "CC BY-SA 3.0",
+        "fields": [
+          "chapter",
+          "pages"
+        ]
+      },
+      "editorialSource": {
+        "url": "https://onepiece.fandom.com/it/wiki/Episodio_1164",
+        "checkedAt": "2026-08-09T14:22:43Z",
+        "fields": [
+          "summary",
+          "chapter"
+        ]
+      }
     },
     {
       "number": 1165,
       "title": "",
       "aired": "2026-06-07",
       "classification": "unverified",
-      "classificationReview": null
+      "classificationReview": null,
+      "summary": "Sauro spiega che Bibelot è a capo della biblioteca da centinaia di anni e che è in grado di ingigantire tutti i libri che giungono sull'isola. Lì i news coo non arrivano in quanto Erbaf non è affiliata al Governo Mondiale, ma ogni tanto i pescatori trovano dei giornali quindi possono leggerli. Lilith commenta che il gufo deve avere mangiato il frutto Iku Iku con cui riesce ad ingigantire tutti gli oggetti inorganici, abilità perfetta per un popolo di giganti. Sauro chiede a Robin se ha nostalgia, cosa che le conferma, mentre Chopper spera che ci siano dei libri di medicina.…",
+      "summaryLanguage": "it",
+      "summarySource": {
+        "provider": "One Piece Wiki Italia / Fandom",
+        "url": "https://onepiece.fandom.com/it/wiki/Episodio_1165",
+        "revisionId": 372301,
+        "checkedAt": "2026-08-25T23:27:24Z",
+        "license": "CC BY-SA 3.0",
+        "fields": [
+          "summary"
+        ]
+      },
+      "summaryStatus": "verified",
+      "chapter": "1135",
+      "chapterDetails": [
+        {
+          "chapter": 1135,
+          "pages": "2-17",
+          "url": "https://onepiece.fandom.com/wiki/Chapter_1135"
+        }
+      ],
+      "chapterStatus": "mapped",
+      "chapterSource": {
+        "provider": "One Piece Wiki / Template:WC",
+        "url": "https://onepiece.fandom.com/wiki/Template:WC",
+        "revisionId": 2133640,
+        "checkedAt": "2026-09-27T16:36:52Z",
+        "license": "CC BY-SA 3.0",
+        "fields": [
+          "chapter",
+          "pages"
+        ]
+      },
+      "editorialSource": {
+        "url": "https://onepiece.fandom.com/it/wiki/Episodio_1165",
+        "checkedAt": "2026-08-25T23:27:24Z",
+        "fields": [
+          "summary",
+          "chapter"
+        ]
+      }
     },
     {
       "number": 1166,
       "title": "",
       "aired": "2026-06-14",
       "classification": "unverified",
-      "classificationReview": null
+      "classificationReview": null,
+      "summary": "Mentre Rufy apprezza la carne di alce, Jarl spiega che vedere degli umani nel regno del Paradiso è inusuale in quanto la maggior parte di loro giunge negli Inferi e se ne va terrorizzata prima di scoprire che c'è un modo per giungere fino a lì. Lord si scusa con i Pirati di Cappello di paglia, spiegando che tutti i giganti sognano di diventare il dio del sole. Subito dopo molti di questi discutono animatamente su che tipo sia quest'ultimo a causa delle molteplici interpretazioni dei testi sacri in quanto scritti in una lingua antica.…",
+      "summaryLanguage": "it",
+      "summarySource": {
+        "provider": "One Piece Wiki Italia / Fandom",
+        "url": "https://onepiece.fandom.com/it/wiki/Episodio_1166",
+        "revisionId": 370854,
+        "checkedAt": "2026-06-18T20:01:06Z",
+        "license": "CC BY-SA 3.0",
+        "fields": [
+          "summary"
+        ]
+      },
+      "summaryStatus": "verified",
+      "chapter": "1136",
+      "chapterDetails": [
+        {
+          "chapter": 1136,
+          "pages": "2-17",
+          "url": "https://onepiece.fandom.com/wiki/Chapter_1136"
+        }
+      ],
+      "chapterStatus": "mapped",
+      "chapterSource": {
+        "provider": "One Piece Wiki / Template:WC",
+        "url": "https://onepiece.fandom.com/wiki/Template:WC",
+        "revisionId": 2133640,
+        "checkedAt": "2026-09-27T16:36:52Z",
+        "license": "CC BY-SA 3.0",
+        "fields": [
+          "chapter",
+          "pages"
+        ]
+      },
+      "editorialSource": {
+        "url": "https://onepiece.fandom.com/it/wiki/Episodio_1166",
+        "checkedAt": "2026-06-18T20:01:06Z",
+        "fields": [
+          "summary",
+          "chapter"
+        ]
+      }
     },
     {
       "number": 1167,
       "title": "",
       "aired": "2026-06-21",
       "classification": "unverified",
-      "classificationReview": null
+      "classificationReview": null,
+      "summary": "Lord rivela che nessuno si è più avvicinato al castello dalla morte del re, avvenuta quattordici anni prima. Nota però che il portone è stato sfondato e non vede le guardie, mentre Zoro capisce che sia stato danneggiato di recente dall'interno. Rufy intende scoprirlo e vi si addentra in cerca delle chiavi, così gli altri lo seguono. Quando gli domandano se a ridurre in quello stato il castello siano stati gli intrusi, Lord nega, rivelando che quelli sono i segni di quando Loki uccise Harald; Zoro sottolinea la forza dei combattenti, così Lord spiega che il principe maledetto è un mostro, mentre il re aveva la fama di essere un grande…",
+      "summaryLanguage": "it",
+      "summarySource": {
+        "provider": "One Piece Wiki Italia / Fandom",
+        "url": "https://onepiece.fandom.com/it/wiki/Episodio_1167",
+        "revisionId": 370903,
+        "checkedAt": "2026-06-22T15:42:44Z",
+        "license": "CC BY-SA 3.0",
+        "fields": [
+          "summary"
+        ]
+      },
+      "summaryStatus": "verified",
+      "chapter": "1137",
+      "chapterDetails": [
+        {
+          "chapter": 1137,
+          "pages": "2-17",
+          "url": "https://onepiece.fandom.com/wiki/Chapter_1137"
+        }
+      ],
+      "chapterStatus": "mapped",
+      "chapterSource": {
+        "provider": "One Piece Wiki / Template:WC",
+        "url": "https://onepiece.fandom.com/wiki/Template:WC",
+        "revisionId": 2133640,
+        "checkedAt": "2026-09-27T16:36:52Z",
+        "license": "CC BY-SA 3.0",
+        "fields": [
+          "chapter",
+          "pages"
+        ]
+      },
+      "editorialSource": {
+        "url": "https://onepiece.fandom.com/it/wiki/Episodio_1167",
+        "checkedAt": "2026-06-22T15:42:44Z",
+        "fields": [
+          "summary",
+          "chapter"
+        ]
+      }
     },
     {
       "number": 1168,
       "title": "",
       "aired": "2026-06-28",
       "classification": "unverified",
-      "classificationReview": null
+      "classificationReview": null,
+      "summary": "Mentre i due cavalieri divini si allontanano, Loki sottolinea la somiglianza di uno dei due a Shanks, anche se non lo è. Continua dicendo che grandi pirati e nobili mondiali sono agli antipodi, eppure hanno lo stesso volto, sottolineandone la stranezza. Shamrock allora spiega che colui di cui sta parlando è il suo gemello minore, ma la vita li ha separati, rivelando che tornò a Marijoa, ma preferì non vivere come un nobile mondiale. Loki ammette che scoprirne le origini lo fa infuriare ancora di più, spiegando che l'avrebbe fatta loro pagare appena sarà libero per vendicare i suoi amici animali.…",
+      "summaryLanguage": "it",
+      "summarySource": {
+        "provider": "One Piece Wiki Italia / Fandom",
+        "url": "https://onepiece.fandom.com/it/wiki/Episodio_1168",
+        "revisionId": 372003,
+        "checkedAt": "2026-08-09T14:38:24Z",
+        "license": "CC BY-SA 3.0",
+        "fields": [
+          "summary"
+        ]
+      },
+      "summaryStatus": "verified",
+      "chapter": "1138",
+      "chapterDetails": [
+        {
+          "chapter": 1138,
+          "pages": "2-17",
+          "url": "https://onepiece.fandom.com/wiki/Chapter_1138"
+        }
+      ],
+      "chapterStatus": "mapped",
+      "chapterSource": {
+        "provider": "One Piece Wiki / Template:WC",
+        "url": "https://onepiece.fandom.com/wiki/Template:WC",
+        "revisionId": 2133640,
+        "checkedAt": "2026-09-27T16:36:52Z",
+        "license": "CC BY-SA 3.0",
+        "fields": [
+          "chapter",
+          "pages"
+        ]
+      },
+      "editorialSource": {
+        "url": "https://onepiece.fandom.com/it/wiki/Episodio_1168",
+        "checkedAt": "2026-08-09T14:38:24Z",
+        "fields": [
+          "summary",
+          "chapter"
+        ]
+      }
     },
     {
       "number": 1169,
       "title": "",
       "aired": "2026-07-12",
       "classification": "unverified",
-      "classificationReview": null
+      "classificationReview": null,
+      "summary": "Zoro commenta che non c'è traccia della chiave, così Lord afferma che purtroppo le guardie non sanno dove si trova, supponendo che non siano in molti a conoscerne l'ubicazione e che probabilmente solo Jarl e gli altri anziani ne sono al corrente. Rufy propone di andare a chiedere al primo, ma il gigante spiega che non gli direbbe nulla in quanto Loki è un criminale. Poi Lord nota un elegante tappeto rosso, ipotizzando che conduca alla sala del trono, ma nota che essa è a pezzi a causa dei segni della battaglia.…",
+      "summaryLanguage": "it",
+      "summarySource": {
+        "provider": "One Piece Wiki Italia / Fandom",
+        "url": "https://onepiece.fandom.com/it/wiki/Episodio_1169",
+        "revisionId": 372004,
+        "checkedAt": "2026-08-09T14:39:33Z",
+        "license": "CC BY-SA 3.0",
+        "fields": [
+          "summary"
+        ]
+      },
+      "summaryStatus": "verified",
+      "chapter": "1139",
+      "chapterDetails": [
+        {
+          "chapter": 1139,
+          "pages": "2-13",
+          "url": "https://onepiece.fandom.com/wiki/Chapter_1139"
+        }
+      ],
+      "chapterStatus": "mapped",
+      "chapterSource": {
+        "provider": "One Piece Wiki / Template:WC",
+        "url": "https://onepiece.fandom.com/wiki/Template:WC",
+        "revisionId": 2133640,
+        "checkedAt": "2026-09-27T16:36:52Z",
+        "license": "CC BY-SA 3.0",
+        "fields": [
+          "chapter",
+          "pages"
+        ]
+      },
+      "editorialSource": {
+        "url": "https://onepiece.fandom.com/it/wiki/Episodio_1169",
+        "checkedAt": "2026-08-09T14:39:33Z",
+        "fields": [
+          "summary",
+          "chapter"
+        ]
+      }
     },
     {
       "number": 1170,
       "title": "",
       "aired": "2026-07-19",
       "classification": "unverified",
-      "classificationReview": null
+      "classificationReview": null,
+      "summary": "Gabin sprona Rufy a rubargli la chiave, che gli va incontro. L'anziano evita le braccia del ragazzo, che le allunga nel tentativo di sottrargliela. Cappello di paglia gli domanda perché faccia così dato che vuole sbrigarsi ad andare da Loki e tornare alla festa. Lui lo invita nuovamente a prendergliela, così il ragazzo allunga di nuovo il braccio, ma Gabin lo evita e ricorre all'Ambizione dell'armatura unita a quella del re conquistatore sulla chiave, che usa come arma, colpendolo. Appena l'imperatore si rialza, Gabin gli dice che ha davvero un bel cappello di paglia, che gli sta meglio rispetto all'elmetto che ora indossa.…",
+      "summaryLanguage": "it",
+      "summarySource": {
+        "provider": "One Piece Wiki Italia / Fandom",
+        "url": "https://onepiece.fandom.com/it/wiki/Episodio_1170",
+        "revisionId": 372428,
+        "checkedAt": "2026-09-01T19:11:26Z",
+        "license": "CC BY-SA 3.0",
+        "fields": [
+          "summary"
+        ]
+      },
+      "summaryStatus": "verified",
+      "chapter": "1140",
+      "chapterDetails": [
+        {
+          "chapter": 1140,
+          "pages": "2-17",
+          "url": "https://onepiece.fandom.com/wiki/Chapter_1140"
+        }
+      ],
+      "chapterStatus": "mapped",
+      "chapterSource": {
+        "provider": "One Piece Wiki / Template:WC",
+        "url": "https://onepiece.fandom.com/wiki/Template:WC",
+        "revisionId": 2133640,
+        "checkedAt": "2026-09-27T16:36:52Z",
+        "license": "CC BY-SA 3.0",
+        "fields": [
+          "chapter",
+          "pages"
+        ]
+      },
+      "editorialSource": {
+        "url": "https://onepiece.fandom.com/it/wiki/Episodio_1170",
+        "checkedAt": "2026-09-01T19:11:26Z",
+        "fields": [
+          "summary",
+          "chapter"
+        ]
+      }
     },
     {
       "number": 1171,
       "title": "",
       "aired": "2026-07-26",
       "classification": "unverified",
-      "classificationReview": null
+      "classificationReview": null,
+      "summary": "Lord carica le due guardie ferite a bordo della svalr e viene poi raggiunto da Nami, la quale dice di avere cercato in tutto il castello, ma non ha trovato nessun diamante o pezzo d'oro gigante, ammettendo che era il suo unico obiettivo e di non essere interessata a Loki. Nel frattempo, Ripley spiega a Franky che loro vivono su un ramo di Adam, ognuno avente una lunga storia.…",
+      "summaryLanguage": "it",
+      "summarySource": {
+        "provider": "One Piece Wiki Italia / Fandom",
+        "url": "https://onepiece.fandom.com/it/wiki/Episodio_1171",
+        "revisionId": 372429,
+        "checkedAt": "2026-09-01T19:11:29Z",
+        "license": "CC BY-SA 3.0",
+        "fields": [
+          "summary"
+        ]
+      },
+      "summaryStatus": "verified",
+      "chapter": "1141",
+      "chapterDetails": [
+        {
+          "chapter": 1141,
+          "pages": "2-17",
+          "url": "https://onepiece.fandom.com/wiki/Chapter_1141"
+        }
+      ],
+      "chapterStatus": "mapped",
+      "chapterSource": {
+        "provider": "One Piece Wiki / Template:WC",
+        "url": "https://onepiece.fandom.com/wiki/Template:WC",
+        "revisionId": 2133640,
+        "checkedAt": "2026-09-27T16:36:52Z",
+        "license": "CC BY-SA 3.0",
+        "fields": [
+          "chapter",
+          "pages"
+        ]
+      },
+      "editorialSource": {
+        "url": "https://onepiece.fandom.com/it/wiki/Episodio_1171",
+        "checkedAt": "2026-09-01T19:11:29Z",
+        "fields": [
+          "summary",
+          "chapter"
+        ]
+      }
     },
     {
       "number": 1172,
       "title": "",
       "aired": "2026-08-02",
       "classification": "unverified",
-      "classificationReview": null
+      "classificationReview": null,
+      "summary": "Un enorme serpente compare nella scuola del tricheco e l'insegnante Wolf cerca di tenerlo impegnato per permettere ai bambini di fuggire. Nella sala degli insegnanti, Blade informa Kiba e Ange dell'emergenza. Quest'ultima si chiede cosa ci faccia una creatura degli Inferi lì mentre il collega spera riescano a scappare tutti in tempo. Il preside afferma che devono chiamare i capitani. Quando il serpente sta per divorare Aegir, Kiba lo colpisce con il suo martello e poi sopraggiunge Sauro, che si scusa per essere in ritardo e gli sferra un pugno alla testa rivestito con l'Ambizione dell'armatura.…",
+      "summaryLanguage": "it",
+      "summarySource": {
+        "provider": "One Piece Wiki Italia / Fandom",
+        "url": "https://onepiece.fandom.com/it/wiki/Episodio_1172",
+        "revisionId": 372982,
+        "checkedAt": "2026-10-18T14:41:05Z",
+        "license": "CC BY-SA 3.0",
+        "fields": [
+          "summary"
+        ]
+      },
+      "summaryStatus": "verified",
+      "chapter": "1142",
+      "chapterDetails": [
+        {
+          "chapter": 1142,
+          "pages": "2-17",
+          "url": "https://onepiece.fandom.com/wiki/Chapter_1142"
+        }
+      ],
+      "chapterStatus": "mapped",
+      "chapterSource": {
+        "provider": "One Piece Wiki / Template:WC",
+        "url": "https://onepiece.fandom.com/wiki/Template:WC",
+        "revisionId": 2133640,
+        "checkedAt": "2026-09-27T16:36:52Z",
+        "license": "CC BY-SA 3.0",
+        "fields": [
+          "chapter",
+          "pages"
+        ]
+      },
+      "editorialSource": {
+        "url": "https://onepiece.fandom.com/it/wiki/Episodio_1172",
+        "checkedAt": "2026-10-18T14:41:05Z",
+        "fields": [
+          "summary",
+          "chapter"
+        ]
+      }
     },
     {
       "number": 1173,
       "title": "",
       "aired": "2026-08-09",
       "classification": "unverified",
-      "classificationReview": null
+      "classificationReview": null,
+      "summary": "Portando Chopper e Robin con sé, Sauro raggiunge i bambini e prova a svegliarli, sottolineando che camminano veramente nel sonno e chiedendosi cosa sia quella specie di tessuto bianco a forma di freccia. L'archeologa lo avverte di non toccare i bambini come detto da Wolf, con Chopper che sottolinea fosse ricoperto di sangue. Sauro dà loro ragione, ma afferma di non vedere nulla di sospetto ed è pericoloso lasciarli vagare in quel modo: appena prova a fermare Ilva, qualcosa gli perfora la mano, facendolo cadere a terra dal dolore. I pirati, preoccupati, gli chiedono se qualcosa lo abbia trafitto.…",
+      "summaryLanguage": "it",
+      "summarySource": {
+        "provider": "One Piece Wiki Italia / Fandom",
+        "url": "https://onepiece.fandom.com/it/wiki/Episodio_1173",
+        "revisionId": 372985,
+        "checkedAt": "2026-10-18T14:59:42Z",
+        "license": "CC BY-SA 3.0",
+        "fields": [
+          "summary"
+        ]
+      },
+      "summaryStatus": "verified",
+      "chapter": "1143",
+      "chapterDetails": [
+        {
+          "chapter": 1143,
+          "pages": "3-19",
+          "url": "https://onepiece.fandom.com/wiki/Chapter_1143"
+        }
+      ],
+      "chapterStatus": "mapped",
+      "chapterSource": {
+        "provider": "One Piece Wiki / Template:WC",
+        "url": "https://onepiece.fandom.com/wiki/Template:WC",
+        "revisionId": 2133640,
+        "checkedAt": "2026-09-27T16:36:52Z",
+        "license": "CC BY-SA 3.0",
+        "fields": [
+          "chapter",
+          "pages"
+        ]
+      },
+      "editorialSource": {
+        "url": "https://onepiece.fandom.com/it/wiki/Episodio_1173",
+        "checkedAt": "2026-10-18T14:59:42Z",
+        "fields": [
+          "summary",
+          "chapter"
+        ]
+      }
     },
     {
       "number": 1174,
       "title": "",
       "aired": "2026-08-16",
       "classification": "unverified",
-      "classificationReview": null
+      "classificationReview": null,
+      "summary": "Ripley conduce Franky in un altro punto dell'albero Adam, dove il cyborg si domanda cosa sia l'edificio che ha davanti, il quale trasuda scienza. La gigante spiega che è praticamente da sempre lì e ride poiché era sicura che quella sarebbe stata la cosa più eccitante per lui dato che è un cyborg. Quest'ultimo si chiede come mai nella terra dei giganti ci sia un ex laboratorio del genere. A quel punto, Lilith richiama l'attenzione di Franky da dentro l'edificio, contenta che l'abbia trovato anche lui, e che stava pensando di mostrarglielo più tardi. Bonney, che è con lei, dice al cyborg che lì è tutto bellissimo.…",
+      "summaryLanguage": "it",
+      "summarySource": {
+        "provider": "One Piece Wiki Italia / Fandom",
+        "url": "https://onepiece.fandom.com/it/wiki/Episodio_1174",
+        "revisionId": 372993,
+        "checkedAt": "2026-10-18T15:12:46Z",
+        "license": "CC BY-SA 3.0",
+        "fields": [
+          "summary"
+        ]
+      },
+      "summaryStatus": "verified",
+      "chapter": "1144",
+      "chapterDetails": [
+        {
+          "chapter": 1144,
+          "pages": "2-15",
+          "url": "https://onepiece.fandom.com/wiki/Chapter_1144"
+        }
+      ],
+      "chapterStatus": "mapped",
+      "chapterSource": {
+        "provider": "One Piece Wiki / Template:WC",
+        "url": "https://onepiece.fandom.com/wiki/Template:WC",
+        "revisionId": 2133640,
+        "checkedAt": "2026-09-27T16:36:52Z",
+        "license": "CC BY-SA 3.0",
+        "fields": [
+          "chapter",
+          "pages"
+        ]
+      },
+      "editorialSource": {
+        "url": "https://onepiece.fandom.com/it/wiki/Episodio_1174",
+        "checkedAt": "2026-10-18T15:12:46Z",
+        "fields": [
+          "summary",
+          "chapter"
+        ]
+      }
     },
     {
       "number": 1175,
       "title": "",
       "aired": "2026-08-23",
       "classification": "unverified",
-      "classificationReview": null
+      "classificationReview": null,
+      "summary": "Goldberg, Zoro e Sanji si occupano di cacciare un animale. Il gigante li avvisa quando un grokkysauro sta arrivando da loro, così Nash aumenta le sue dimensioni, impedendo all'animale di avanzare. Sanji lancia in aria Zoro sfruttando la forza della sua gamba, il quale decapita la bestia. Lo spadaccino chiede a Goldberg se il suo scudo abbia mangiato un frutto del diavolo, il quale racconta che è un retaggio di quando suo padre cercò di fermare Big Mom, spiegando che esso ha un'anima. Loki rivela che i cavalieri divini sono apparsi ad Erbaf, quindi Hajrudin capisce che sono stati loro a ridurlo in quello stato, ottenendo conferma.…",
+      "summaryLanguage": "it",
+      "summarySource": {
+        "provider": "One Piece Wiki Italia / Fandom",
+        "url": "https://onepiece.fandom.com/it/wiki/Episodio_1175",
+        "revisionId": 373028,
+        "checkedAt": "2026-10-23T15:05:27Z",
+        "license": "CC BY-SA 3.0",
+        "fields": [
+          "summary"
+        ]
+      },
+      "summaryStatus": "verified",
+      "chapter": "1145",
+      "chapterDetails": [
+        {
+          "chapter": 1145,
+          "pages": "3-19",
+          "url": "https://onepiece.fandom.com/wiki/Chapter_1145"
+        }
+      ],
+      "chapterStatus": "mapped",
+      "chapterSource": {
+        "provider": "One Piece Wiki / Template:WC",
+        "url": "https://onepiece.fandom.com/wiki/Template:WC",
+        "revisionId": 2133640,
+        "checkedAt": "2026-09-27T16:36:52Z",
+        "license": "CC BY-SA 3.0",
+        "fields": [
+          "chapter",
+          "pages"
+        ]
+      },
+      "editorialSource": {
+        "url": "https://onepiece.fandom.com/it/wiki/Episodio_1175",
+        "checkedAt": "2026-10-23T15:05:27Z",
+        "fields": [
+          "summary",
+          "chapter"
+        ]
+      }
     },
     {
       "number": 1176,
       "title": "",
       "aired": "2026-08-30",
       "classification": "unverified",
-      "classificationReview": null
+      "classificationReview": null,
+      "summary": "Jinbe e Nami capiscono che colei che è salita sulla svalr è una degli intrusi umani che hanno rapito i bambini e malmenato le guardie del castello. La nemica si sofferma sul fatto che l'hanno identificata come un'umana, affermando che loro sono dei. Nami impugna il Clima Takt, le chiede cosa gli dei vogliano dai bambini di Erbaf, mentre Collon afferma che sono suoi amici, domandandole dove intende portarli e dicendole di farli tornare indietro, ma la nemica gli ribatte di tacere.…",
+      "summaryLanguage": "it",
+      "summarySource": {
+        "provider": "One Piece Wiki Italia / Fandom",
+        "url": "https://onepiece.fandom.com/it/wiki/Episodio_1176",
+        "revisionId": 373030,
+        "checkedAt": "2026-10-23T15:07:14Z",
+        "license": "CC BY-SA 3.0",
+        "fields": [
+          "summary"
+        ]
+      },
+      "summaryStatus": "verified",
+      "chapter": "1146",
+      "chapterDetails": [
+        {
+          "chapter": 1146,
+          "pages": "2-17",
+          "url": "https://onepiece.fandom.com/wiki/Chapter_1146"
+        }
+      ],
+      "chapterStatus": "mapped",
+      "chapterSource": {
+        "provider": "One Piece Wiki / Template:WC",
+        "url": "https://onepiece.fandom.com/wiki/Template:WC",
+        "revisionId": 2133640,
+        "checkedAt": "2026-09-27T16:36:52Z",
+        "license": "CC BY-SA 3.0",
+        "fields": [
+          "chapter",
+          "pages"
+        ]
+      },
+      "editorialSource": {
+        "url": "https://onepiece.fandom.com/it/wiki/Episodio_1176",
+        "checkedAt": "2026-10-23T15:07:14Z",
+        "fields": [
+          "summary",
+          "chapter"
+        ]
+      }
     },
     {
       "number": 1177,
       "title": "",
       "aired": "2026-09-06",
       "classification": "unverified",
-      "classificationReview": null
+      "classificationReview": null,
+      "summary": "Robin e Chopper, ancora nascosti dentro la barba di Sauro, ripensano a quando il gigante ordinò loro di aspettare un'occasione per salvare i bambini dato che i cavalieri divini sono immortali e quindi imbattibili. Sommers intanto si ricongiunge con Gunko, che ha catturato molti membri dei Pirati di Cappello di paglia, ignorando gli avvertimenti prima di Killingham e poi di Sommers di non ingaggiare battaglia con uno degli imperatori. La ragazza ordina a Brook di comporre musica esclusivamente per lei in quanto suo nuovo schiavo, ma lo scheletro rifiuta poiché ha giurato fedeltà a Rufy, venendo malmenato.…",
+      "summaryLanguage": "it",
+      "summarySource": {
+        "provider": "One Piece Wiki Italia / Fandom",
+        "url": "https://onepiece.fandom.com/it/wiki/Episodio_1177",
+        "revisionId": 373031,
+        "checkedAt": "2026-10-23T15:08:37Z",
+        "license": "CC BY-SA 3.0",
+        "fields": [
+          "summary"
+        ]
+      },
+      "summaryStatus": "verified",
+      "chapter": "1147",
+      "chapterDetails": [
+        {
+          "chapter": 1147,
+          "pages": "2-17",
+          "url": "https://onepiece.fandom.com/wiki/Chapter_1147"
+        }
+      ],
+      "chapterStatus": "mapped",
+      "chapterSource": {
+        "provider": "One Piece Wiki / Template:WC",
+        "url": "https://onepiece.fandom.com/wiki/Template:WC",
+        "revisionId": 2133640,
+        "checkedAt": "2026-09-27T16:36:52Z",
+        "license": "CC BY-SA 3.0",
+        "fields": [
+          "chapter",
+          "pages"
+        ]
+      },
+      "editorialSource": {
+        "url": "https://onepiece.fandom.com/it/wiki/Episodio_1177",
+        "checkedAt": "2026-10-23T15:08:37Z",
+        "fields": [
+          "summary",
+          "chapter"
+        ]
+      }
     },
     {
       "number": 1178,
       "title": "",
       "aired": "2026-09-13",
       "classification": "unverified",
-      "classificationReview": null
+      "classificationReview": null,
+      "summary": "Gunko raggiunge i bambini e crea una freccia che porta Ronja verso il baratro. Informa quindi tramite lumacofono Sommers che il primo bambino è pronto a cadere, così il collega le dice di fare sentire la sua voce a tutta Erbaf. Quest'ultimo comunica all'isola che se entro trenta secondi Jarl non avrà deciso, il primo bambino cadrà dall'albero, dicendogli di ordinare agli insegnanti di bruciare la scuola e la biblioteca, aggiungendo che nessun libro dovrà uscire da essa poiché vogliono distruggere la loro cultura e la loro storia.…",
+      "summaryLanguage": "it",
+      "summarySource": {
+        "provider": "One Piece Wiki Italia / Fandom",
+        "url": "https://onepiece.fandom.com/it/wiki/Episodio_1178",
+        "revisionId": 373032,
+        "checkedAt": "2026-10-23T15:09:55Z",
+        "license": "CC BY-SA 3.0",
+        "fields": [
+          "summary"
+        ]
+      },
+      "summaryStatus": "verified",
+      "chapter": "1148",
+      "chapterDetails": [
+        {
+          "chapter": 1148,
+          "pages": "2-15",
+          "url": "https://onepiece.fandom.com/wiki/Chapter_1148"
+        }
+      ],
+      "chapterStatus": "mapped",
+      "chapterSource": {
+        "provider": "One Piece Wiki / Template:WC",
+        "url": "https://onepiece.fandom.com/wiki/Template:WC",
+        "revisionId": 2133640,
+        "checkedAt": "2026-09-27T16:36:52Z",
+        "license": "CC BY-SA 3.0",
+        "fields": [
+          "chapter",
+          "pages"
+        ]
+      },
+      "editorialSource": {
+        "url": "https://onepiece.fandom.com/it/wiki/Episodio_1178",
+        "checkedAt": "2026-10-23T15:09:55Z",
+        "fields": [
+          "summary",
+          "chapter"
+        ]
+      }
     },
     {
       "number": 1179,
       "title": "",
       "aired": "2026-09-20",
       "classification": "unverified",
-      "classificationReview": null
+      "classificationReview": null,
+      "summary": "Sommers fa fuoriuscire da terra delle grosse spine per difendersi e chiede a Gabin cosa ci faccia ad Erbaf, ma non ottiene risposta. Il cavaliere divino allora ricopre il suolo di spine, mentre gliene punta altre contro, ma l'ex pirata lo trancia in due. Gabin poi evita le spine e corre verso Collon, mentre Chopper esce dal suo nascondiglio tra i capelli di Sauro e insegue l'anziano per sapere come ha fatto a ferire qualcuno di immortale. Nel frattempo, Killingham costringe Ange a bruciare la scuola. Scocca poi una freccia infuocata contro la biblioteca, che prende fuoco.…",
+      "summaryLanguage": "it",
+      "summarySource": {
+        "provider": "One Piece Wiki Italia / Fandom",
+        "url": "https://onepiece.fandom.com/it/wiki/Episodio_1179",
+        "revisionId": 373033,
+        "checkedAt": "2026-10-23T15:10:35Z",
+        "license": "CC BY-SA 3.0",
+        "fields": [
+          "summary"
+        ]
+      },
+      "summaryStatus": "verified",
+      "chapter": "1149",
+      "chapterDetails": [
+        {
+          "chapter": 1149,
+          "pages": "3-19",
+          "url": "https://onepiece.fandom.com/wiki/Chapter_1149"
+        }
+      ],
+      "chapterStatus": "mapped",
+      "chapterSource": {
+        "provider": "One Piece Wiki / Template:WC",
+        "url": "https://onepiece.fandom.com/wiki/Template:WC",
+        "revisionId": 2133640,
+        "checkedAt": "2026-09-27T16:36:52Z",
+        "license": "CC BY-SA 3.0",
+        "fields": [
+          "chapter",
+          "pages"
+        ]
+      },
+      "editorialSource": {
+        "url": "https://onepiece.fandom.com/it/wiki/Episodio_1179",
+        "checkedAt": "2026-10-23T15:10:35Z",
+        "fields": [
+          "summary",
+          "chapter"
+        ]
+      }
     },
     {
       "number": 1180,
       "title": "",
       "aired": "2026-09-27",
       "classification": "unverified",
-      "classificationReview": null
+      "classificationReview": null,
+      "summary": "Alcuni giganti raggiungono i bambini, affermando di essere felici che stanno bene, ma Collon, in lacrime, dice loro che hanno gettato suo padre negli Inferi. Uno dei bambini spiega che è stata la donna che in quel momento sta levitando e li mette in guardia, ma subito dopo tutti svengono. Alcuni dei Pirati giganti guerrieri, appena sopraggiunti, subiscono la stessa sorte e Im, nel corpo di Gunko, ne colpisce qualcuno con dei cannoni che ha fatto fuoriuscire da un cerchio magico, affermando che non tollererà alcuna resistenza.…",
+      "summaryLanguage": "it",
+      "summarySource": {
+        "provider": "One Piece Wiki Italia / Fandom",
+        "url": "https://onepiece.fandom.com/it/wiki/Episodio_1180",
+        "revisionId": 373034,
+        "checkedAt": "2026-10-23T15:11:35Z",
+        "license": "CC BY-SA 3.0",
+        "fields": [
+          "summary"
+        ]
+      },
+      "summaryStatus": "verified",
+      "chapter": "1150–1151",
+      "chapterDetails": [
+        {
+          "chapter": 1150,
+          "pages": "2-15",
+          "url": "https://onepiece.fandom.com/wiki/Chapter_1150"
+        },
+        {
+          "chapter": 1151,
+          "pages": "2-3, 7-8",
+          "url": "https://onepiece.fandom.com/wiki/Chapter_1151"
+        }
+      ],
+      "chapterStatus": "mapped",
+      "chapterSource": {
+        "provider": "One Piece Wiki / Template:WC",
+        "url": "https://onepiece.fandom.com/wiki/Template:WC",
+        "revisionId": 2133640,
+        "checkedAt": "2026-09-27T16:36:52Z",
+        "license": "CC BY-SA 3.0",
+        "fields": [
+          "chapter",
+          "pages"
+        ]
+      },
+      "editorialSource": {
+        "url": "https://onepiece.fandom.com/it/wiki/Episodio_1180",
+        "checkedAt": "2026-10-23T15:11:35Z",
+        "fields": [
+          "summary",
+          "chapter"
+        ]
+      }
     }
   ],
   "metadataSource": {
-    "name": "One Piece Wiki English + Template:WC",
+    "name": "One Piece Wiki Italia / Fandom + One Piece Wiki English + Template:WC",
     "url": "https://onepiece.fandom.com/wiki/Episode_Guide",
-    "license": "CC BY-SA 3.0 salvo diversa indicazione"
+    "license": "CC BY-SA 3.0 salvo diversa indicazione; le traduzioni redazionali mantengono la stessa attribuzione",
+    "lastChecked": "2026-11-25T09:02:26.581Z"
   },
   "metadataCoverage": {
     "titles": 0,
-    "summaries": 0,
-    "chapterMappings": 0,
-    "episodes": 0
+    "summaries": 25,
+    "chapterMappings": 25,
+    "episodes": 25
   }
 }
