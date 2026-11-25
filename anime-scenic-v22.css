@@ -346,3 +346,105 @@ html[data-visual-style="night"] .character-utility .character-spoiler span,
 html[data-visual-style="night"] .character-utility .character-spoiler b,
 html[data-visual-style="night"] .character-utility .character-spoiler svg{color:#fff0c9!important}
 html[data-visual-style="night"] .character-utility button{color:#4f311d!important}
+
+/* v22.3 — cinematic scenic portrait correction. Retains full-body illustrated figures
+   while using their original scene as a soft, immersive background on wider screens.
+   Every change is scoped to the Anime theme and respects spoiler protection. */
+html[data-visual-style="anime"][data-active-section="characters"] .char-card[data-id="luffy"]{--v22-char-scene:url('/assets/anime-v22-portraits/luffy.webp')}
+html[data-visual-style="anime"][data-active-section="characters"] .char-card[data-id="zoro"]{--v22-char-scene:url('/assets/anime-v22-portraits/zoro.webp')}
+html[data-visual-style="anime"][data-active-section="characters"] .char-card[data-id="nami"]{--v22-char-scene:url('/assets/anime-v22-portraits/nami.webp')}
+html[data-visual-style="anime"][data-active-section="characters"] .char-card[data-id="usopp"]{--v22-char-scene:url('/assets/anime-v22-portraits/usopp.webp')}
+html[data-visual-style="anime"][data-active-section="characters"] .char-card[data-id="sanji"]{--v22-char-scene:url('/assets/anime-v22-portraits/sanji.webp')}
+html[data-visual-style="anime"][data-active-section="characters"] .char-card[data-id="chopper"]{--v22-char-scene:url('/assets/anime-v22-portraits/chopper.webp')}
+html[data-visual-style="anime"][data-active-section="characters"] .char-card[data-id="robin"]{--v22-char-scene:url('/assets/anime-v22-portraits/robin.webp')}
+html[data-visual-style="anime"][data-active-section="characters"] .char-card[data-id="franky"]{--v22-char-scene:url('/assets/anime-v22-portraits/franky.webp')}
+html[data-visual-style="anime"][data-active-section="characters"] .char-card[data-id="brook"]{--v22-char-scene:url('/assets/anime-v22-portraits/brook.webp')}
+html[data-visual-style="anime"][data-active-section="characters"] .char-card[data-id="jinbe"]{--v22-char-scene:url('/assets/anime-v22-portraits/jinbe.webp')}
+html[data-visual-style="anime"][data-active-section="characters"] .char-card[data-id] .char-photo-frame{
+ background:linear-gradient(155deg,#75d2e7,#dceabb)!important;isolation:isolate!important
+}
+html[data-visual-style="anime"][data-active-section="characters"] .char-card[data-id] .char-photo-frame::before{
+ content:''!important;position:absolute!important;inset:-12px!important;display:block!important;z-index:0!important;
+ background-image:var(--v22-char-scene,url('/assets/anime-v22-archipelago.webp'))!important;
+ background-position:center center!important;background-size:cover!important;
+ opacity:.78!important;filter:blur(10px) saturate(1.1)!important;pointer-events:none!important
+}
+html[data-visual-style="anime"][data-active-section="characters"] .char-card[data-id] .char-art .char-photo-frame img.character-portrait{
+ position:relative!important;z-index:1!important;display:block!important;
+ width:100%!important;height:100%!important;max-width:none!important;
+ object-fit:contain!important;object-position:center center!important;
+ border-radius:0!important;filter:saturate(1.13) contrast(1.07)!important;
+ transform:none!important;scale:1!important
+}
+html[data-visual-style="anime"][data-active-section="characters"] .char-card[data-id].is-locked .char-art .char-photo-frame img.character-portrait{
+ filter:grayscale(1) blur(11px) brightness(.7)!important
+}
+html[data-visual-style="anime"][data-active-section="characters"] .char-card[data-id].is-locked .char-photo-frame::before{
+ filter:grayscale(1) blur(12px) brightness(.75)!important
+}
+html[data-visual-style="anime"][data-active-section="characters"] .char-card:not(.is-locked):focus-within .char-photo-frame img.character-portrait{
+ filter:saturate(1.17) contrast(1.08)!important
+}
+@media(min-width:481px) and (max-width:860px){
+ html[data-visual-style="anime"][data-active-section="characters"] .char-card{min-height:340px!important}
+ html[data-visual-style="anime"][data-active-section="characters"] .char-open{min-height:336px!important;grid-template-columns:minmax(0,44%) minmax(0,56%)!important}
+ html[data-visual-style="anime"][data-active-section="characters"] .char-art{min-height:336px!important}
+}
+@media(min-width:861px){
+ html[data-visual-style="anime"][data-active-section="characters"] .char-card{min-height:385px!important}
+ html[data-visual-style="anime"][data-active-section="characters"] .char-open{min-height:381px!important;grid-template-columns:minmax(0,43%) minmax(0,57%)!important}
+ html[data-visual-style="anime"][data-active-section="characters"] .char-art{min-height:381px!important}
+}
+@media(max-width:480px){
+ html[data-visual-style="anime"][data-active-section="characters"] .char-card[data-id] .char-art .char-photo-frame img.character-portrait{
+  object-fit:cover!important;object-position:50% 49%!important
+ }
+ html[data-visual-style="anime"][data-active-section="characters"] .char-card[data-id="chopper"] .char-art .char-photo-frame img.character-portrait{object-position:center 46%!important}
+}
+@media(prefers-reduced-motion:reduce){
+ html[data-visual-style="anime"][data-active-section="characters"] .char-photo-frame::before{animation:none!important;transition:none!important}
+}
+/* v22.3b — more expressive illustrated top and bottom navigation. */
+@media(max-width:920px){
+ html[data-visual-style="anime"] .mobile-brand{
+  position:relative!important;min-height:70px!important;padding:7px 9px!important;
+  border:2px solid #bd8b4f!important;border-radius:12px!important;
+  background:linear-gradient(96deg,#e8f7f6f7 0%,#d4f1f8f4 60%,#8ed3ecca),url('/assets/anime-v22-archipelago.webp') right 33%/cover!important;
+  box-shadow:0 3px 0 #724621a4,0 5px 12px #1e779a36,inset 0 0 0 1px #fff6d6!important
+ }
+ html[data-visual-style="anime"] .mobile-brand-title{
+  font-size:clamp(24px,6.4vw,31px)!important;line-height:1.06!important;
+  color:#4c2d1d!important;letter-spacing:.55px!important;
+  text-shadow:1px 2px 0 #ffeab4,0 3px 0 #93603a5c!important
+ }
+ html[data-visual-style="anime"] .mobile-brand-sub{
+  color:#80512e!important;letter-spacing:.7px!important;font-weight:900!important
+ }
+ html[data-visual-style="anime"] .mobile-brand-mark{
+  width:47px!important;height:47px!important;min-width:47px!important;
+  filter:drop-shadow(0 3px 2px #38251577)!important
+ }
+ html[data-visual-style="anime"] .mobile-brand-stamp{
+  background:linear-gradient(145deg,#fff6dc,#f2d297)!important;
+  box-shadow:0 2px 0 #673f23a8!important;border-color:#8d542a!important
+ }
+ html[data-visual-style="anime"] .mobile-nav{
+  border-top:4px solid #dcb46b!important;
+  background:linear-gradient(180deg,#865237 0%,#593621 43%,#3f2b24 100%)!important;
+  box-shadow:inset 0 3px 0 #b3815270,0 -5px 17px #2c1e196e!important;
+  min-height:73px!important
+ }
+ html[data-visual-style="anime"] .mobile-nav button img.mobile-art{
+  width:31px!important;height:31px!important;max-width:36px!important;
+  filter:drop-shadow(0 2px 2px #000b)!important
+ }
+ html[data-visual-style="anime"] .mobile-nav button{
+  min-height:55px!important;min-width:0!important;gap:3px!important;color:#fff3d4!important;
+  border-radius:12px!important
+ }
+ html[data-visual-style="anime"] .mobile-nav button.active{
+  border:1px solid #f8d27c!important;
+  background:linear-gradient(150deg,#fff5af35,#a8743775)!important;
+  box-shadow:inset 0 1px 0 #fff3be94,0 0 10px #ffd5772c!important
+ }
+}

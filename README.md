@@ -54,3 +54,6 @@ Nuova composizione fedele al concept: Nami, Usopp, Sanji e Chopper in primo pian
 - Accessibilità: animazione ambientale del mare in modalità Completa, disattivata correttamente sia con modalità Off sia con prefers-reduced-motion.
 - Salvaguardia: tema Pergamena classica e personalizzazione di palette, icone e intensità animazioni ancora disponibili; autenticazione email e catalogo immutati.
 - L'esecuzione da GitHub Actions ha verificato il catalogo, l'integrità delle immagini e la PWA prima del rilascio.
+
+### Rifinitura grafica v22.3
+Verificate in Chromium 44 combinazioni di 11 sezioni a 320, 390, 768 e 1280 px. Nella sezione Personaggi sono state eliminate le fasce azzurre vuote ai lati delle illustrazioni; gli stessi paesaggi illustrati ora riempiono gli sfondi, mantenendo i personaggi a figura intera. Riproporzionati i pannelli su tablet/desktop e migliorati intestazione e menu inferiore solo nel tema Anime. Preservati gli altri temi, le opzioni di animazione e l'antispoiler. PWA aggiornata alla cache v22-2.
