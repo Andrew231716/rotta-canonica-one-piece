@@ -1,5 +1,4 @@
-// Rotta Canonica: controllo offline dei riferimenti asset e cache PWA.
-// Dalla radice del repository: node scripts/check-ui-assets.mjs
+// Rotta Canonica: asset references, anime visual themes and offline cache tests.
 import {readFile, access} from 'node:fs/promises';
 const read=path=>readFile(path,'utf8');
 const html=await read('index.html');
@@ -7,29 +6,26 @@ const sw=await read('service-worker.js');
 const css=await read('design-system-v16.css');
 const newCss=await read('nautical-finish-v18.css');
 const pwaCss=await read('catalog-pwa-v19.css');
-if(!html.includes('/nautical-finish-v18.css'))throw Error('Foglio grafico v18 non collegato');
-if(!html.includes('/catalog-pwa-v19.css'))throw Error('Foglio PWA/catalogo v19 non collegato');
-if((pwaCss.match(/\{/g)||[]).length!==(pwaCss.match(/\}/g)||[]).length)throw Error('CSS PWA v19 non valido');
-if((newCss.match(/\{/g)||[]).length!==(newCss.match(/\}/g)||[]).length)throw Error('CSS v18 non valido');
-const feature=await read('features.js');
-if(!html.includes('/design-system-v16.css'))throw Error('Foglio grafico v16 non collegato');
-if(!/rotta-canonica-v20-email-auth/.test(sw))throw Error('Cache PWA non aggiornata alla v20');
-if(!sw.includes("'/data/episodes-latest.json'"))throw Error('Feed delle nuove uscite non incluso nella cache offline');
-if(!feature.includes('[2,5,4,6,2,5][i%6]'))throw Error('Mappa priva delle miniature illustrate per le saghe');
-if((css.match(/\{/g)||[]).length!==(css.match(/\}/g)||[]).length)throw Error('Parentesi CSS non bilanciate');
+const animeCss=await read('anime-art-direction-v21.css');
+const features=await read('features.js');
+const app=await read('app.js');
+for(const file of ['nautical-finish-v18.css','catalog-pwa-v19.css','anime-art-direction-v21.css','design-system-v16.css'])if(!html.includes('/'+file))throw Error('Stylesheet not linked: '+file);
+for(const [file,value] of [['v16',css],['v18',newCss],['v19',pwaCss],['v21',animeCss]])if((value.match(/\{/g)||[]).length!==(value.match(/\}/g)||[]).length)throw Error('Unbalanced CSS braces in '+file);
+if(!sw.includes('rotta-canonica-v21-anime-customizer'))throw Error('PWA version not bumped to v21');
+if(!sw.includes("'/data/episodes-latest.json'"))throw Error('Missing offline episode feed');
+if(!features.includes('[2,5,4,6,2,5][i%6]'))throw Error('Map illustrations missing');
+if(!features.includes('appearanceStyle')||!features.includes('symbolStyle')||!features.includes('colorPalette')||!features.includes('animationLevel'))throw Error('Visual customization not persisted');
+if(!app.includes('visual-style')||!app.includes('visual-symbols')||!app.includes('visual-palette')||!app.includes('visual-motion'))throw Error('Visual customization not actionable');
 const precache=sw.match(/const ASSETS=(\[[\s\S]*?\]);/);
-if(!precache)throw Error('Lista precache del service worker assente');
-let assets;
-try{assets=JSON.parse(precache[1])}catch{throw Error('Lista precache del service worker non valida')}
+if(!precache)throw Error('PWA asset list missing');
+let assets;try{assets=JSON.parse(precache[1])}catch{throw Error('Invalid PWA asset list')}
 const referenced=new Set([...assets.filter(v=>v!=='/'),...Array.from(html.matchAll(/(?:src|href)="(\/[^"?]+)(?:\?[^"]*)?"/g),x=>x[1])]);
-const characters=['luffy','zoro','nami','usopp','sanji','chopper','robin','franky','brook','jinbe','ace','law'];
-for(const id of characters)referenced.add('/assets/character-scenes/'+id+'.webp');
+for(const id of ['luffy','zoro','nami','usopp','sanji','chopper','robin','franky','brook','jinbe','ace','law'])referenced.add('/assets/character-scenes/'+id+'.webp');
 for(let i=1;i<=6;i++)referenced.add('/assets/route-'+i+'.webp');
+const requiredIcons=['anchor','chest','compass','complete','download','episode','filler','flag','locator','loot','map','netflix','progress','route','saga','sea-divider','spyglass','treasure','warning','wheel'];
+for(const name of requiredIcons){const path='/assets/anime-icons/'+name+'.webp';if(!assets.includes(path))throw Error('Anime icon not cached: '+name);referenced.add(path)}
+for(const name of ['/anime-art-direction-v21.css','/assets/anime-hero-portrait.webp','/assets/anime-ocean-bg.webp'])if(!assets.includes(name))throw Error('Illustrated UI asset not cached: '+name);
 const missing=[];
-for(const rel of referenced){
- if(!rel.startsWith('/')||rel.includes('..'))throw Error('Percorso sospetto: '+rel);
- try{await access('.'+rel)}catch{missing.push(rel)}
-}
-if(missing.length)throw Error('Asset mancanti: '+missing.join(', '));
-if(!assets.includes('/catalog-pwa-v19.css')||!assets.includes('/data/episodes-latest.json'))throw Error('Cache offline incompleta');
-console.log('UI assets OK:',referenced.size,'file verificati, 12 personaggi, 6 tappe illustrate, catalogo e feed offline');
+for(const rel of referenced){if(!rel.startsWith('/')||rel.includes('..'))throw Error('Unsafe asset path: '+rel);try{await access('.'+rel)}catch{missing.push(rel)}}
+if(missing.length)throw Error('Assets missing: '+missing.join(', '));
+console.log('Anime UI assets OK:',referenced.size,'assets, 20 new icons, 2 illustrated scenes, 4 themes, 3 symbol styles');

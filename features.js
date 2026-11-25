@@ -7,7 +7,13 @@ return {favorites:Array.isArray(x.favorites)?x.favorites.filter(n=>Number.isInte
  characterFavoriteEdits:x.characterFavoriteEdits&&typeof x.characterFavoriteEdits==='object'?x.characterFavoriteEdits:{},
  notes:x.notes&&typeof x.notes==='object'?x.notes:{},ratings:x.ratings&&typeof x.ratings==='object'?x.ratings:{},watchedAt:x.watchedAt&&typeof x.watchedAt==='object'?x.watchedAt:{},
  spoiler:x.spoiler!==false,reminderDays:Number.isInteger(x.reminderDays)&&x.reminderDays>=0&&x.reminderDays<=30?x.reminderDays:0,
- theme:['light','ocean'].includes(x.theme)?x.theme:'light',hideCompleted:!!x.hideCompleted,watchEdits:x.watchEdits&&typeof x.watchEdits==='object'?x.watchEdits:{},favoriteEdits:x.favoriteEdits&&typeof x.favoriteEdits==='object'?x.favoriteEdits:{},noteEdits:x.noteEdits&&typeof x.noteEdits==='object'?x.noteEdits:{},ratingEdits:x.ratingEdits&&typeof x.ratingEdits==='object'?x.ratingEdits:{},settingsUpdatedAt:Number(x.settingsUpdatedAt)||0,catalogOverride:x.catalogOverride&&typeof x.catalogOverride==='object'?x.catalogOverride:{}}}
+ theme:['light','ocean'].includes(x.theme)?x.theme:'light',
+ appearanceStyle:['anime','ocean','night','classic'].includes(x.appearanceStyle)?x.appearanceStyle:(x.theme==='ocean'?'ocean':'anime'),
+ symbolStyle:['anime','vintage','vector'].includes(x.symbolStyle)?x.symbolStyle:'anime',
+ colorPalette:['coral','sea','gold','violet','custom'].includes(x.colorPalette)?x.colorPalette:'coral',
+ customAccent:typeof x.customAccent==='string'&&/^#[0-9a-fA-F]{6}$/.test(x.customAccent)?x.customAccent:'#dc4c34',
+ animationLevel:['full','soft','off'].includes(x.animationLevel)?x.animationLevel:'full',
+ hideCompleted:!!x.hideCompleted,watchEdits:x.watchEdits&&typeof x.watchEdits==='object'?x.watchEdits:{},favoriteEdits:x.favoriteEdits&&typeof x.favoriteEdits==='object'?x.favoriteEdits:{},noteEdits:x.noteEdits&&typeof x.noteEdits==='object'?x.noteEdits:{},ratingEdits:x.ratingEdits&&typeof x.ratingEdits==='object'?x.ratingEdits:{},settingsUpdatedAt:Number(x.settingsUpdatedAt)||0,catalogOverride:x.catalogOverride&&typeof x.catalogOverride==='object'?x.catalogOverride:{}}}
 let extra=loadExtra();
 function saveExtra(){try{localStorage.setItem(EXTRA_KEY,JSON.stringify(extra))}catch(e){console.warn('Spazio locale esaurito',e);toast('Memoria locale piena: esporta un backup')}}
 function saveAll(){save();saveExtra()}
@@ -188,8 +194,54 @@ function achievementView(){const wins=ACHIEVEMENTS.filter(x=>x.test()).length;re
  <div class="achievement-head">${art('chest')}<div><b>${wins} / ${ACHIEVEMENTS.length}</b><span>Obiettivi conquistati</span></div></div>
  <div class="achievement-grid">${ACHIEVEMENTS.map(a=>{const unlocked=a.test();return `<article class="achievement-card ${unlocked?'earned':''}"><div class="achievement-badge">${art(a.icon)}</div><span>${unlocked?'SBLOCCATO':'DA CONQUISTARE'}</span><h3>${cleanText(a.title)}</h3><p>${cleanText(a.detail)}</p></article>`}).join('')}</div></div>`}
 function settingsView(){return `<div class="section-shell">${sectionHeader('Impostazioni di bordo','Personalizza il viaggio e proteggi i tuoi dati.')}
- <div class="settings-columns"><section class="paper-panel"><h3>${art('compass')} Navigazione</h3><div class="setting-item"><div><b>Protezione spoiler</b><small>Stato: <strong>${extra.spoiler?'attiva':'disattivata'}</strong>. Nasconde saghe e personaggi non ancora raggiunti.</small></div><button class="button small secondary" data-action="spoiler-toggle" aria-pressed="${extra.spoiler}">${extra.spoiler?'Disattiva protezione':'Attiva protezione'}</button></div>
- <div class="setting-item"><div><b>Tema interfaccia</b><small>Attuale: <strong>${extra.theme==='light'?'Pergamena':'Oceano'}</strong>.</small></div><button class="button small secondary" data-action="theme-toggle">${extra.theme==='light'?'Passa a Oceano':'Passa a Pergamena'}</button></div>
+ <div class="settings-columns">
+ <section class="paper-panel appearance-lab" aria-label="Personalizza grafica dell'app">
+   <div class="appearance-head"><div class="appearance-head-art">${art('compass')}</div><div><span class="appearance-kicker">LA BOTTEGA DEL NAVIGATORE</span><h3>Personalizza l'avventura</h3><p>Cambia direttamente grafica, colori, simboli e animazioni. Ogni scelta viene salvata su questo dispositivo.</p></div></div>
+   <div class="appearance-preview" aria-label="Anteprima del tema corrente">
+     <span class="preview-rays" aria-hidden="true"></span>
+     <span class="preview-icon">${art('chest')}</span><span class="preview-icon">${art('compass')}</span><span class="preview-icon">${art('map')}</span>
+     <b>La tua rotta, il tuo stile</b>
+   </div>
+   <div class="appearance-controls">
+     <label class="setting-select">Stile grafico
+       <select id="visual-style" aria-label="Stile grafico">
+         <option value="anime" ${extra.appearanceStyle==='anime'?'selected':''}>Anime avventura · illustrato</option>
+         <option value="ocean" ${extra.appearanceStyle==='ocean'?'selected':''}>Oceano celeste · colori vivaci</option>
+         <option value="night" ${extra.appearanceStyle==='night'?'selected':''}>Notte dei pirati · blu profondo</option>
+         <option value="classic" ${extra.appearanceStyle==='classic'?'selected':''}>Pergamena classica · tradizionale</option>
+       </select>
+     </label>
+     <label class="setting-select">Simboli e icone
+       <select id="visual-symbols" aria-label="Stile delle icone">
+         <option value="anime" ${extra.symbolStyle==='anime'?'selected':''}>Anime illustrati · dettagliati</option>
+         <option value="vintage" ${extra.symbolStyle==='vintage'?'selected':''}>Emblemi nautici · vintage</option>
+         <option value="vector" ${extra.symbolStyle==='vector'?'selected':''}>Simboli essenziali · SVG</option>
+       </select>
+     </label>
+     <label class="setting-select">Palette colori
+       <select id="visual-palette" aria-label="Palette colori">
+         <option value="coral" ${extra.colorPalette==='coral'?'selected':''}>Rosso avventura</option>
+         <option value="sea" ${extra.colorPalette==='sea'?'selected':''}>Blu mare</option>
+         <option value="gold" ${extra.colorPalette==='gold'?'selected':''}>Oro del tesoro</option>
+         <option value="violet" ${extra.colorPalette==='violet'?'selected':''}>Viola misterioso</option>
+         <option value="custom" ${extra.colorPalette==='custom'?'selected':''}>Colore personale</option>
+       </select>
+     </label>
+     <label class="setting-select appearance-color">Scegli un colore preciso
+       <input id="visual-accent" type="color" value="${extra.customAccent}" aria-label="Scegli colore personalizzato">
+     </label>
+     <label class="setting-select">Animazioni
+       <select id="visual-motion" aria-label="Intensità animazioni">
+         <option value="full" ${extra.animationLevel==='full'?'selected':''}>Anime dinamico · completo</option>
+         <option value="soft" ${extra.animationLevel==='soft'?'selected':''}>Movimenti delicati</option>
+         <option value="off" ${extra.animationLevel==='off'?'selected':''}>Disattivate</option>
+       </select>
+     </label>
+   </div>
+   <div class="appearance-footer"><span>Puoi combinare liberamente stili, simboli e colori.</span><button class="button secondary small" data-action="visual-reset">Ripristina la grafica anime</button></div>
+ </section>
+ <section class="paper-panel"><h3>${art('compass')} Navigazione</h3><div class="setting-item"><div><b>Protezione spoiler</b><small>Stato: <strong>${extra.spoiler?'attiva':'disattivata'}</strong>. Nasconde saghe e personaggi non ancora raggiunti.</small></div><button class="button small secondary" data-action="spoiler-toggle" aria-pressed="${extra.spoiler}">${extra.spoiler?'Disattiva protezione':'Attiva protezione'}</button></div>
+
  <div class="setting-item"><div><b>Nascondi saghe completate</b><small>Nella Home puoi tenere solo le tappe ancora da finire.</small></div><button class="button small secondary" data-action="hide-completed" aria-pressed="${!!extra.hideCompleted}">${extra.hideCompleted?'Mostra tutte':'Nascondi completate'}</button></div>
  <div class="setting-item"><div><b>Riprendi dal numero</b><small>Non modifica gli episodi già segnati come visti.</small></div><button class="button small secondary" data-action="change-start">Ep. ${start}</button></div></section>
  <section class="paper-panel"><h3>${art('spyglass')} Promemoria</h3><p>Il promemoria compare <b>quando apri l’app</b>, se non guardi episodi da alcuni giorni.</p><label class="setting-select">Ricordamelo dopo<select id="reminder-days">${[0,1,2,3,5,7,14,30].map(d=>`<option value="${d}" ${extra.reminderDays===d?'selected':''}>${d===0?'Disattivato':`${d} giorni`}</option>`).join('')}</select></label><button class="button small secondary" data-action="notification-test">Prova notifica</button><p class="smallprint">Questo promemoria è locale e non richiede l’accesso con email.</p></section>
@@ -224,7 +276,8 @@ async function handleExtraAction(action,t){const n=Number(t.dataset.ep);
  case 'jump-current':{const n=getNext();if(!n){toast('Hai completato la rotta');return true}openEpisode(n);return true}
  case 'hide-completed':extra.hideCompleted=!extra.hideCompleted;extra.settingsUpdatedAt=Date.now();saveExtra();render();toast(extra.hideCompleted?'Saghe completate nascoste':'Tutte le saghe visibili');return true;
  case 'spoiler-toggle':extra.spoiler=!extra.spoiler;extra.settingsUpdatedAt=Date.now();saveExtra();render();return true;
- case 'theme-toggle':extra.theme=extra.theme==='light'?'ocean':'light';extra.settingsUpdatedAt=Date.now();saveExtra();applyTheme();render();return true;
+ case 'theme-toggle':extra.appearanceStyle=extra.appearanceStyle==='anime'?'ocean':'anime';extra.theme=extra.appearanceStyle==='ocean'?'ocean':'light';extra.settingsUpdatedAt=Date.now();saveExtra();applyTheme();render();return true;
+ case 'visual-reset':extra.appearanceStyle='anime';extra.symbolStyle='anime';extra.colorPalette='coral';extra.customAccent='#dc4c34';extra.animationLevel='full';extra.theme='light';extra.settingsUpdatedAt=Date.now();saveExtra();applyTheme();render();toast('Grafica anime ripristinata');return true;
  case 'share-backup':{const backup={app:'Rotta Canonica',version:5,exported:new Date().toISOString(),start,watched:[...watched],extras:extra};const blob=new Blob([JSON.stringify(backup,null,2)],{type:'application/json'});const file=new File([blob],'rotta-canonica-backup.json',{type:'application/json'});try{if(navigator.canShare?.({files:[file]})){await navigator.share({files:[file],title:'Backup Rotta Canonica'});toast('Backup condiviso')}else exportProgress()}catch(e){if(e.name!=='AbortError'){exportProgress();toast('Backup scaricato per condividerlo manualmente')}}return true}
  case 'notification-test':{if(!('Notification' in window)){toast('Notifiche non disponibili nel browser');return true}try{const p=await Notification.requestPermission();if(p==='granted')new Notification('Rotta Canonica',{body:'Le tue avventure ti aspettano!'});else toast('Permesso notifiche non concesso')}catch{toast('Notifiche non disponibili qui')}return true}
  case 'catalog-import':modal('<h3>Importa metadati degli episodi</h3><p>JSON con <code>{"episodes":[{"n":92,"chapter":"130","summary":"Testo originale","source":{"url":"https://fonte.example/...","checkedAt":"2026-11-24"}}]}</code>. Occorre una fonte HTTPS; non modifica la classificazione filler/canonico.</p><input id="catalog-file" type="file" accept=".json,application/json"><div class="modal-buttons"><button class="button secondary" data-action="modal-cancel">Annulla</button><button class="button primary" data-action="catalog-confirm">Importa</button></div>');return true;
@@ -234,7 +287,22 @@ async function handleExtraAction(action,t){const n=Number(t.dataset.ep);
  if(Object.keys(clean).length){extra.catalogOverride[ep.n]={...clean,source:{url:ep.source.url,checkedAt:ep.source.checkedAt}};count++}}saveExtra();closeModal();render();toast(`${count} schede importate`)}catch{toast('JSON non valido o troppo grande')}return true}
  default:return false;
  }}
-function applyTheme(){document.documentElement.dataset.theme=extra.theme}
+function applyTheme(){
+ const root=document.documentElement;
+ const style=['anime','ocean','night','classic'].includes(extra.appearanceStyle)?extra.appearanceStyle:'anime';
+ const symbols=['anime','vintage','vector'].includes(extra.symbolStyle)?extra.symbolStyle:'anime';
+ const palette=['coral','sea','gold','violet','custom'].includes(extra.colorPalette)?extra.colorPalette:'coral';
+ const motion=['full','soft','off'].includes(extra.animationLevel)?extra.animationLevel:'full';
+ const colors={coral:'#d94d34',sea:'#117fa9',gold:'#b98524',violet:'#8355bb',custom:extra.customAccent};
+ root.dataset.theme=style==='ocean'||style==='night'?'ocean':'light';
+ root.dataset.visualStyle=style;root.dataset.symbolStyle=symbols;root.dataset.colorPalette=palette;root.dataset.animationLevel=motion;
+ const hex=/^#[0-9a-fA-F]{6}$/.test(colors[palette])?colors[palette]:'#d94d34';
+ root.style.setProperty('--anime-accent',hex);
+ const rgb=[1,3,5].map(i=>parseInt(hex.slice(i,i+2),16)/255).map(c=>c<=0.04045?c/12.92:Math.pow((c+0.055)/1.055,2.4));
+ const lum=.2126*rgb[0]+.7152*rgb[1]+.0722*rgb[2];
+ root.style.setProperty('--anime-accent-ink',lum>0.37?'#2d2018':'#fff8e3');
+ root.style.colorScheme=style==='night'?'dark':'light';
+}
 function checkReminder(){if(!extra.reminderDays||!Object.keys(extra.watchedAt).length)return;const d=Math.max(...Object.values(extra.watchedAt).map(x=>Date.parse(x)).filter(Number.isFinite));if(Date.now()-d>extra.reminderDays*86400000)setTimeout(()=>toast('La tua rotta ti aspetta: scegli il prossimo episodio canonico.'),1800)}
 
 function rewardModal(){modal(`<div class="reward-celebration"><span class="eyebrow">TESORO SCOPERTO!</span><div class="reward-open-art">${art('chest','reward-closed')}${art('loot','reward-open')}</div><h3>Ricompensa sbloccata!</h3><p>Hai raggiunto un nuovo traguardo. Continua il viaggio e scopri tutti i tesori nella sezione Ricompense.</p><div class="modal-buttons"><button class="button primary" data-action="modal-cancel">Continua l’avventura</button><button class="button secondary" data-tab="achievements">Ricompense</button></div></div>`)}

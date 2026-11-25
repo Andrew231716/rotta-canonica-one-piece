@@ -1,0 +1,128 @@
+/* ROTTA CANONICA — Anime Adventure Art Direction v21
+   Assets: original owner-provided anime illustrations; no generic flat icon replacements.
+   User-selectable themes, symbols, accents and reduced-motion modes. */
+:root{--anime-accent:#d94d34;--anime-ocean:#08649a;--anime-ink:#322719;--anime-gold:#f8c64d;--anime-sheet:#fff4d4;--anime-border:#6a4021;--anime-soft-shadow:0 5px 0 #43271055,0 14px 28px #082c4c2a}
+html[data-visual-style="anime"],html[data-visual-style="ocean"],html[data-visual-style="night"]{color-scheme:light}
+body{background:linear-gradient(180deg,#91daf1a8 0,#d1f5f4ce 300px,#ecf2dfec 750px,#f4e6c9f5 100%),url('/assets/anime-ocean-bg.webp') center top / min(100%,980px) auto no-repeat!important;background-attachment:scroll!important}
+/* Decorative backgrounds intentionally stay UNDER interactive content. */
+.shell{isolation:isolate}
+.main{position:relative}
+:where(.paper-panel,.more-menu,.map-board,.stat-panel,.achievement-card,.recover-card,.filler-card,.ep-list-item,.arc-card){border-color:var(--anime-border)!important;box-shadow:var(--anime-soft-shadow)!important}
+:where(.paper-panel,.more-menu,.stat-panel,.episode-filters,.notice-catalog,.achievement-card,.recover-card,.filler-card,.ep-list-item){background-image:linear-gradient(137deg,#fff9eb 0%,#ffecc6 52%,#edd5a0 100%)!important}
+.section-header h2{color:#283b49!important;text-shadow:2px 2px #f9c765!important}
+.section-header:after{background:linear-gradient(90deg,var(--anime-accent),var(--anime-gold))!important;height:7px!important}
+:where(.section-header,.paper-panel,.more-menu,.map-board,.achievement-card,.arc-card){position:relative}
+/* Rich Anime navigation, illustrated chapter stamps */
+:where(.tool-tile-icon,.achievement-badge,.map-compass,.stamp-art,.mobile-art,.nav-art,.secondary-art,.character-portrait,.hero-top-stamp img) img{image-rendering:auto}
+:where(.tool-tile-icon img,.mobile-art,.nav-art,.brand-icon,.achievement-badge img,.achievement-head img,.map-compass img,.paper-panel h3 img,.filler-art,.recover-image,.button-art,.secondary-art,.arc-seal,.stamp-art,.illustrated-icon){filter:drop-shadow(0 3px 1px #50301c4f)!important;object-fit:contain!important;mix-blend-mode:normal!important}
+.tool-tile-icon img{width:100%!important;height:100%!important}
+.tool-tile{border-color:#754223!important;background:linear-gradient(125deg,#fffaed,#ffebbf)!important;box-shadow:0 4px 0 #6b361f80!important;overflow:hidden}
+.tool-tile:before{content:'';position:absolute;inset:0;background:linear-gradient(115deg,transparent 22%,#fffbd16b 41%,transparent 59%);transform:translateX(-120%);pointer-events:none}
+.tool-tile-copy b,.more-menu .tool-tile-copy b{color:#4c2a19!important}
+.tool-tile-chevron{color:var(--anime-accent)!important}
+.mobile-nav{background:linear-gradient(180deg,#7a4529,#341f1c)!important;border-top:4px solid #f3bf55!important;box-shadow:0 -5px 18px #2f1b1a65,inset 0 2px 0 #d9aa65!important;min-height:73px}
+.mobile-nav button.active{background:linear-gradient(180deg,#ae6940,#58321e)!important;box-shadow:inset 0 0 0 2px #edbf6b,0 0 10px #ffc45867!important;border-radius:13px!important}
+.mobile-nav .mobile-art{width:39px!important;height:39px!important;filter:drop-shadow(0 3px 1px #1c0d12ab)!important}
+.mobile-nav button{color:#fff2cd!important;text-shadow:0 1px 2px #1a1009!important}
+.mobile-nav button.active>span:last-child{color:#fff6b7!important}
+.nav-button.active{border-color:var(--anime-accent)!important}
+/* Hero uses a supplied anime captain against an illustrated sky/ocean, never circles covering characters. */
+html[data-active-section="path"] .hero{border:4px solid #6f432a!important;box-shadow:0 6px 0 #442517,0 16px 30px #0f435755!important;background:#fff2cb!important}
+html[data-active-section="path"] .hero-visual{background:linear-gradient(180deg,#1c81bb15,#012b5b1a),url('/assets/anime-ocean-bg.webp') center 49% / cover no-repeat!important;isolation:isolate;min-height:300px}
+html[data-active-section="path"] .hero-visual-img{object-fit:contain!important;object-position:center bottom!important;height:100%!important;width:100%!important;filter:drop-shadow(3px 8px 6px #0229439c)!important;transform-origin:center 88%}
+.hero-visual::after{background:linear-gradient(0deg,#0d4b6880,transparent 27%,#fcefb515)!important}
+.hero-lightflare{position:absolute;pointer-events:none;z-index:1;right:14%;top:12%;height:24px;width:24px;border-radius:50%;background:#fff5bf;box-shadow:0 0 32px 8px #ffe9a7b0;opacity:.5}
+.hero-top-stamp{border:2px solid #67402a!important;background:linear-gradient(#fff6c9,#e6b863)!important;box-shadow:2px 4px 0 #34201890!important}
+.hero-banner{border:3px solid #71371d!important;background:linear-gradient(#fdf0ba,#e8bc69)!important}
+.hero-banner b{color:#3b2016!important}
+.hero-banner small{color:var(--anime-accent)!important}
+html[data-active-section="path"] .hero-copy{background:linear-gradient(110deg,#fff7db 10%,#fae0a9 100%)!important}
+html[data-active-section="path"] .hero-copy h1{color:#303a3e!important;letter-spacing:1.1px}
+html[data-active-section="path"] .hero-copy h1 em{color:var(--anime-accent)!important;text-shadow:2px 2px 0 #ffc56b!important}
+:where(.button.primary,.hero-buttons .button.primary,.open-arc,.mini-detail){border-color:#792f1e!important;background:linear-gradient(180deg,var(--anime-accent),#a83222)!important;color:#fff8de!important;box-shadow:0 3px 0 #662916!important;text-shadow:0 1px 1px #27141655}
+:where(.button.primary,.open-arc,.mini-detail):hover{filter:brightness(1.08)!important}
+/* Manga-style section frames and accomplishments */
+:where(.more-menu,.map-board){background:linear-gradient(125deg,#fff5d5ea,#ebd0a0f2),url('/assets/scroll-texture.webp') center/cover!important;border:4px solid #6e4329!important}
+.more-menu .tool-tile{border:2px solid #8b542e!important;box-shadow:0 4px 0 #74432380!important}
+.arc-card .arc-image{border-bottom:4px solid #6b4228!important}
+.arc-number{background:linear-gradient(160deg,#fff8d9,#eec46f)!important;color:#52321e!important;border-color:#7d5032!important}
+.map-stop{border:2px solid #78502b!important;background:linear-gradient(135deg,#fffae8,#f4dba4)!important}
+.achievement-card{overflow:hidden;background:linear-gradient(130deg,#fff8e8,#f4db9f)!important;border:3px solid #7b5334!important}
+.achievement-badge{position:relative;filter:drop-shadow(0 3px 2px #70432280)}
+.achievement-card.earned .achievement-badge:before{content:'';position:absolute;inset:0;border-radius:50%;background:radial-gradient(#ffed8273,transparent 72%);pointer-events:none}
+.achievement-card.earned{border-color:var(--anime-accent)!important;box-shadow:0 0 0 2px #f9ca57,0 6px 0 #a76643,0 10px 25px #e5a84b66!important}
+.characters-hero{border:3px solid #6e4329!important}
+html[data-active-section="characters"] .characters-hero{background:linear-gradient(110deg,#fff7dcce,#fff5cc94),url('/assets/anime-ocean-bg.webp') center 44% /cover!important}
+html[data-active-section="characters"] .char-card{box-shadow:0 4px 0 #5d381a96,0 9px 25px #10384b1e!important;border-color:#7e4c2b!important}
+html[data-active-section="characters"] .char-card .char-art{overflow:hidden}
+html[data-active-section="characters"] .char-cta{background:var(--anime-accent)!important;color:#fff7d5!important}
+/* Configurable distinct visual worlds */
+html[data-visual-style="ocean"] body{background:linear-gradient(180deg,#7ad9f0a6,#c0edf1cc 48%,#edf0d9ef 100%),url('/assets/anime-ocean-bg.webp') center top /min(100%,980px) auto no-repeat!important}
+html[data-visual-style="ocean"] :where(.paper-panel,.more-menu,.stat-panel,.achievement-card,.ep-list-item,.recover-card){background:linear-gradient(135deg,#f6ffff,#d5f3f0 96%)!important}
+html[data-visual-style="ocean"] .mobile-nav{background:linear-gradient(180deg,#115a83,#122d53)!important}
+html[data-visual-style="night"] body{background:linear-gradient(#07182ad9,#13304be8),url('/assets/anime-ocean-bg.webp') center top/cover no-repeat!important}
+html[data-visual-style="night"] .main{background:#0d27425b!important}
+html[data-visual-style="night"] .section-header h2{color:#fff1ba!important;text-shadow:2px 3px #39252a!important}
+html[data-visual-style="night"] .section-header p{color:#ffecbf!important}
+html[data-visual-style="night"] :where(.paper-panel,.more-menu,.stat-panel,.achievement-card,.ep-list-item,.recover-card){background:linear-gradient(135deg,#f9e9c7,#e2c48c)!important}
+html[data-visual-style="night"] .mobile-nav{background:linear-gradient(#2b2e56,#14152e)!important}
+html[data-visual-style="classic"] body{background:linear-gradient(180deg,#a2dcef,#eef4e8,#f8edce)!important}
+html[data-visual-style="classic"] .hero-visual{background-image:url('/assets/crew-hero.webp')!important}
+html[data-visual-style="classic"] .hero-visual-img{opacity:0!important}
+html[data-visual-style="classic"] :where(.paper-panel,.more-menu,.stat-panel,.achievement-card,.ep-list-item,.recover-card){background:linear-gradient(145deg,#fff8e7,#f5e2bf)!important}
+/* Controls are part of the universe, not a generic settings form. */
+.appearance-lab{grid-column:1/-1!important;padding:clamp(16px,3vw,26px)!important;border:3px solid #704025!important;background:linear-gradient(140deg,#fff8e2,#f0d6a7)!important}
+.appearance-head{display:flex;gap:14px;align-items:center}
+.appearance-head-art{height:74px;width:74px;flex:none;display:grid;place-items:center;border:2px solid #6c482c;background:linear-gradient(#fbebb8,#e8bd69);border-radius:16px;box-shadow:0 4px 0 #7a4c26}
+.appearance-head-art img{height:64px;width:64px;object-fit:contain}
+.appearance-head h3{font-family:Georgia,serif;font-size:clamp(23px,3vw,30px)!important;color:#442c1b!important;margin:0 0 6px!important}
+.appearance-head p{max-width:750px;margin:0!important}
+.appearance-kicker{font-size:10px;letter-spacing:1.7px;color:var(--anime-accent);font-weight:1000}
+.appearance-preview{position:relative;isolation:isolate;display:flex;align-items:center;flex-wrap:wrap;gap:8px;min-height:116px;padding:11px 18px;margin:18px 0;border:3px solid #60402b;border-radius:17px;overflow:hidden;background:linear-gradient(95deg,#fff5d9cc,#f6d79d90),url('/assets/anime-ocean-bg.webp') center 68%/cover;box-shadow:inset 0 0 0 2px #fff5d6,0 4px 0 #593c26}
+.appearance-preview .preview-icon{width:68px;height:68px;display:grid;place-items:center;z-index:1;filter:drop-shadow(0 4px 2px #3b25157f)}
+.appearance-preview .preview-icon img{width:68px;height:68px;object-fit:contain}
+.appearance-preview>b{font-family:Georgia,serif;font-size:clamp(15px,2.3vw,23px);color:#3d2818;text-shadow:1px 1px 0 #fff7dc;z-index:1}
+.appearance-controls{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px 18px}
+.appearance-controls .setting-select{display:flex;flex-direction:column;gap:6px;font-size:12px;font-weight:900;color:#583921}
+.appearance-controls select{display:block;width:100%;min-height:48px;padding:9px 12px;color:#472d1c;background:#fff9e9;border:2px solid #9c7145;border-radius:11px;font-weight:800;line-height:1.35;box-shadow:0 3px 0 #956e453d}
+.appearance-controls input[type="color"]{height:48px;padding:4px;background:#fff9e9;border:2px solid #9c7145;border-radius:10px;cursor:pointer;width:100%}
+.appearance-footer{margin-top:16px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.appearance-footer span{font-size:12px;color:#6d5238}
+.appearance-lab .button.secondary{background:#f3d89b!important;border:2px solid #785435!important;color:#4a3122!important}
+/* Animations form a single coordinated vocabulary and never cover the content. */
+@keyframes animeFloat{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-5px) rotate(2deg)}}
+@keyframes animeShip{0%,100%{transform:translateY(0) rotate(-1.4deg)}50%{transform:translateY(-8px) rotate(1.3deg)}}
+@keyframes animeGlow{0%,100%{opacity:.35;transform:scale(.92)}50%{opacity:.76;transform:scale(1.12)}}
+@keyframes animeAppear{0%{opacity:0;transform:translateY(14px) scale(.98)}100%{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes animeShimmer{from{transform:translateX(-160%)}to{transform:translateX(160%)}}
+@keyframes animePulse{0%,100%{transform:scale(1)}40%{transform:scale(1.09)}65%{transform:scale(.98)}}
+html[data-animation-level="full"] .hero-visual-img{animation:animeShip 7.5s ease-in-out infinite alternate!important}
+html[data-animation-level="full"] .hero-lightflare{animation:animeGlow 3.8s ease-in-out infinite!important}
+html[data-animation-level="full"] .hero-top-stamp img{animation:animeFloat 5s ease-in-out infinite!important}
+html[data-animation-level="full"] .achievement-card.earned .achievement-badge img{animation:animePulse 4.8s ease-in-out infinite!important}
+html[data-animation-level="full"] .map-compass img{animation:animeFloat 7s ease-in-out infinite!important}
+html[data-animation-level="full"] .appearance-preview .preview-icon:nth-of-type(odd){animation:animeFloat 5.1s ease-in-out infinite!important}
+html[data-animation-level="full"] :where(.char-card,.arc-card,.paper-panel,.map-stop,.achievement-card,.tool-tile){animation:animeAppear .52s both!important}
+html[data-animation-level="full"] :where(.char-card,.arc-card,.map-stop,.achievement-card):nth-child(2n){animation-delay:.07s!important}
+html[data-animation-level="full"] :where(.char-card,.arc-card,.map-stop,.achievement-card):nth-child(3n){animation-delay:.12s!important}
+html[data-animation-level="full"] .tool-tile:hover:before{animation:animeShimmer .9s ease-out 1 both!important}
+html[data-animation-level="full"] .mobile-nav button.active .mobile-art{animation:animePulse 3.5s ease-in-out infinite!important}
+html[data-animation-level="full"] .hero-buttons button:hover,html[data-animation-level="full"] .tool-tile:hover{transform:translateY(-3px) scale(1.02)!important}
+html[data-animation-level="soft"] .hero-visual-img{animation:animeShip 13s ease-in-out infinite alternate!important}
+html[data-animation-level="soft"] .hero-lightflare{animation:animeGlow 8s ease-in-out infinite!important}
+html[data-animation-level="soft"] .achievement-card.earned .achievement-badge img{animation:animePulse 9s ease-in-out infinite!important}
+html[data-animation-level="off"] *,html[data-animation-level="off"] *:before,html[data-animation-level="off"] *:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+@media(max-width:740px){.appearance-controls{grid-template-columns:repeat(2,minmax(0,1fr))}.appearance-head-art{width:62px;height:62px}.appearance-head-art img{width:53px;height:53px}.appearance-preview .preview-icon{width:52px;height:52px}.appearance-preview .preview-icon img{width:52px;height:52px}html[data-active-section="path"] .hero-visual{min-height:300px}}
+@media(max-width:460px){.appearance-controls{grid-template-columns:1fr}.appearance-lab{padding:14px!important}.appearance-preview{padding:9px;gap:4px;min-height:90px}.appearance-preview .preview-icon{width:49px;height:49px}.appearance-preview .preview-icon img{width:49px;height:49px}.appearance-preview>b{font-size:13px;flex-basis:100%;text-align:center}.appearance-head{gap:10px}.appearance-head h3{font-size:22px!important}.appearance-head-art{width:55px;height:55px}.appearance-head-art img{width:47px;height:47px}.appearance-kicker{letter-spacing:.8px;font-size:9px}.mobile-nav .mobile-art{height:36px!important;width:36px!important}.hero-banner{bottom:1px!important}}
+
+/* User-defined palette must change the real interactive hierarchy, not only one underline. */
+:root{--anime-accent-ink:#fff8e3}
+:where(.button.primary,.button[data-action="detail-watch"],.char-cta){background:var(--anime-accent)!important;color:var(--anime-accent-ink)!important;border-color:#46301d!important}
+:where(.mobile-nav button.active,.nav-button.active){outline-color:var(--anime-accent)!important}
+:where(.rate-star.selected,.progress-fill,.ring){accent-color:var(--anime-accent)!important}
+:where(.button.primary,.char-cta):focus-visible{outline:3px solid var(--anime-accent)!important;outline-offset:3px}
+.appearance-preview .preview-icon img,.appearance-head-art img{filter:drop-shadow(0 3px 2px #56331b73)!important}
+html[data-color-palette="sea"] .hero-banner small{color:#117fa9!important}
+html[data-color-palette="violet"] .hero-banner small{color:#8355bb!important}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}}
