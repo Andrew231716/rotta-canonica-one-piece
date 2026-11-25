@@ -68,6 +68,7 @@ for(let n=1;n<=max;n++){
  const italianPage=pageMap.get(n),englishPage=n>BASE?englishMap.get(n):null,page=italianPage||englishPage;
  const language=italianPage?'it':englishPage?'en':'it',wikitext=pageText(page),revision=page?.revisions?.[0];
  const pageUrl=italianPage?EPISODE_URL(n):'https://onepiece.fandom.com/wiki/Episode_'+n;
+ if(n===1)console.log('WIKI_EPISODE_1_SOURCE_PREVIEW',JSON.stringify(wikitext.slice(0,2600)));
  const pageDate=revision?.timestamp||checkedAt,provider=italianPage?'One Piece Wiki Italia / Fandom':'One Piece Wiki / Fandom (English)';
  const pageSource={provider,url:pageUrl,revisionId:revision?.revid||null,checkedAt:pageDate,license:'CC BY-SA 3.0'};
  const manualTitle=manualSource(row.source),manualSummary=manualSource(row.summarySource),manualChapter=manualSource(row.chapterSource);

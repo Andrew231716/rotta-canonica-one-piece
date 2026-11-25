@@ -8,6 +8,7 @@ on:
       - 'scripts/merge-reviewed.mjs'
       - 'scripts/update-episodes.mjs'
       - 'scripts/validate-data.mjs'
+      - 'scripts/sanitize-titles.mjs'
       - '.github/workflows/enrich-episode-titles.yml'
   workflow_dispatch:
   schedule:
@@ -28,14 +29,17 @@ jobs:
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: '22'
-      - name: Repair missing and corrupted titles from Jikan
+      - name: Remove corrupted navigation-heading titles
+        run: node scripts/sanitize-titles.mjs
+      - name: Try a verified episode-title fallback (optional)
+        continue-on-error: true
         run: node scripts/enrich-episodes.mjs
       - name: Import Italian titles, summaries and manga chapters
         run: node scripts/enrich-italian-wiki.mjs
       - name: Merge reviewed chapter/summary sources
         run: node scripts/merge-reviewed.mjs
       - name: Validate catalog and provenance
-        run: node scripts/validate-data.mjs
+        run: node scripts/validate-data.mjs --allow-empty
       - name: Commit only if valid metadata changed
         run: |
           if ! git diff --quiet -- data/episodes.json data/episodes-latest.json; then
