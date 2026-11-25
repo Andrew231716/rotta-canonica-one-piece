@@ -1,0 +1,205 @@
+/* Rotta Canonica v18 — unified high-definition pirate-anime interface.
+   All content, spoiler rules and offline data remain unchanged. */
+:root{
+ --v18-ink:#243e48;--v18-dark:#36251c;--v18-wood:#754a2c;
+ --v18-gold:#e9bc66;--v18-coral:#bf5036;--v18-ocean:#117b9b;
+ --v18-paper:#fff4da;--v18-paper2:#f6e2b9;
+ --v18-border:#a57843;--v18-shadow:0 4px 0 #6c482a42,0 13px 29px #123f5527;
+}
+html{scroll-padding-top:18px}
+body{background-attachment:scroll!important}
+:where(.main,.section-shell,.paper-panel,.map-board,.char-card,.more-menu){min-width:0}
+.section-shell{max-width:1140px;margin-inline:auto}
+.section-header{position:relative;display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:21px!important;padding:10px 0 14px!important;border-bottom:2px solid #a87a4688}
+.section-header:after{content:'';position:absolute;bottom:-5px;left:0;width:72px;height:7px;background:linear-gradient(90deg,#cd6041,#f3c572);border-radius:8px}
+.section-header h2{font-family:'Bangers',Impact,'Arial Black',sans-serif!important;font-size:clamp(30px,4vw,45px)!important;line-height:1.08!important;letter-spacing:.9px!important;color:var(--v18-ink)!important;text-shadow:1px 2px 0 #ffdd93!important}
+.section-header p{font-size:clamp(13px,1.16vw,15px)!important;line-height:1.58!important;color:#405b5f!important;font-weight:700!important;max-width:64ch}
+.section-header .tiny-tag{border:1px solid #a68150!important;background:#fff0c9!important;color:#674b30!important}
+:where(.paper-panel,.stat-panel,.callout,.tipbox,.episode-filters,.notice-catalog,.map-board,.achievement-card,.more-menu){border-color:var(--v18-border)!important;box-shadow:var(--v18-shadow)!important}
+:where(.paper-panel,.stat-panel,.callout,.tipbox,.episode-filters,.notice-catalog){background:linear-gradient(154deg,#fff8e7 0%,#f6e4c3 100%)!important}
+:where(.paper-panel,.stat-panel,.callout,.tipbox,.episode-filters,.notice-catalog,.map-board){border-radius:18px!important}
+:where(.paper-panel,.stat-panel,.callout,.tipbox) p{font-size:clamp(13px,1.16vw,15px)!important;line-height:1.65!important;color:#584839!important}
+:where(.paper-panel,.stat-panel,.callout,.tipbox) h3{line-height:1.18!important}
+:where(.button,.char-cta,.tool-tile,.map-stop,.open-arc,.mini-detail){transition:transform .16s ease,box-shadow .16s ease,background-color .16s ease}
+:where(.button,.char-cta,.tool-tile,.map-stop,.open-arc,.mini-detail):active{transform:translateY(1px)}
+:where(button,[role=button],a,select,input,textarea):focus-visible{outline:3px solid #147ea1!important;outline-offset:3px!important}
+:where(.nav-art,.mobile-art,.brand-icon,.tiny-art,.tool-tile-icon img,.paper-panel h3 img,.achievement-badge img,.achievement-head img,.map-bottom img,.map-compass img,.filler-art,.recover-image,.button-art,.callout-image,.stamp-art,.sidebar-treasure-art,.metric-art,.stat-loot){
+  image-rendering:auto!important;filter:none!important;mix-blend-mode:normal!important;
+}
+/* The same crisp nautical SVG language in all menus and headings. */
+.brand-icon{object-fit:contain}
+.nav-button .nav-art{width:40px!important;height:40px!important;flex:none!important}
+.nav-button span{font-size:clamp(12px,1.15vw,14px)!important}
+.mobile-nav .mobile-art{width:36px!important;height:36px!important;flex:none!important}
+.mobile-nav .mobile-netflix,.mobile-nav .mobile-more{width:32px!important;height:32px!important}
+.mobile-nav button{font-weight:900!important;letter-spacing:.06px;min-width:0!important}
+.mobile-nav button.active{background:linear-gradient(#8b6139,#6c472e)!important;color:#ffedb4!important;box-shadow:inset 0 0 0 2px #deb97f!important}
+.tool-tile-icon{width:70px!important;height:70px!important;flex:none!important;display:grid!important;place-items:center!important;overflow:visible!important}
+.tool-tile-icon img{width:100%!important;height:100%!important;max-height:none!important;object-fit:contain!important}
+.tool-tile-copy{min-width:0}
+.tool-tile-copy b{font:900 clamp(17px,1.6vw,22px)/1.18 Georgia,serif!important;color:#442f21!important}
+.tool-tile-copy small{font-size:clamp(12px,1.12vw,14px)!important;color:#705941!important;line-height:1.42!important;display:block!important}
+.tool-tile-chevron{font-size:26px!important;color:var(--v18-coral)!important}
+.more-menu{display:grid!important;gap:15px!important;padding:clamp(13px,2.6vw,25px)!important;background:linear-gradient(145deg,#fff8e8,#ead6ad)!important}
+.more-menu .tool-tile{display:grid!important;grid-template-columns:78px minmax(0,1fr) 22px!important;align-items:center!important;gap:15px!important;min-height:98px!important;padding:14px 17px!important;border:2px solid #ac7c45!important;border-radius:16px!important;background:linear-gradient(115deg,#fffaf0,#f9e9c9)!important;box-shadow:0 4px 0 #8c653a48!important;text-align:left!important}
+.more-menu .tool-tile:hover{background:#fff7e0!important}
+.more-menu .tool-tile-icon{width:70px!important;height:70px!important}
+.more-menu .tool-tile-chevron{justify-self:end}
+:where(.tool-tile,.mobile-nav button,.nav-button) img[src$=".svg"]{background:transparent!important}
+/* Home / journey: atmospheric art, restrained typography and distinct shortcuts. */
+html[data-active-section="path"] .hero{border:2px solid #b28b54!important;border-radius:20px!important;box-shadow:var(--v18-shadow)!important}
+html[data-active-section="path"] .hero-visual{overflow:hidden;background:linear-gradient(140deg,#267da1,#102f55)!important}
+html[data-active-section="path"] .hero-visual-img{filter:none!important;image-rendering:auto!important;object-position:50% 46%!important}
+html[data-active-section="path"] .hero-copy{background:linear-gradient(140deg,#fff5df,#f5dcaf)!important}
+html[data-active-section="path"] .hero-copy h1{line-height:1.04!important;max-width:19ch;text-wrap:balance}
+html[data-active-section="path"] .hero-copy p{font-size:clamp(14px,1.3vw,17px)!important;line-height:1.65!important}
+html[data-active-section="path"] .hero-buttons .button{min-height:46px!important;white-space:normal;line-height:1.35!important}
+html[data-active-section="path"] .tool-grid{gap:12px!important}
+html[data-active-section="path"] .tool-grid .tool-tile{border-radius:13px!important;min-width:0!important}
+.arc-list{gap:clamp(13px,1.8vw,22px)!important}
+.arc-card{border:2px solid #a47743!important;border-radius:17px!important;background:#fff1d3!important;box-shadow:var(--v18-shadow)!important}
+.arc-card .arc-image{height:clamp(116px,14vw,168px)!important;border-bottom:3px solid #ba894f!important}
+.arc-card .arc-image>img:first-child{object-fit:cover!important;filter:none!important}
+.arc-top,.arc-footer{background:linear-gradient(145deg,#fff7e2,#f5e1be)!important}
+.arc-title{font-size:clamp(24px,2.1vw,31px)!important;line-height:1.09!important}
+.arc-card .open-arc{min-height:43px!important;border-radius:10px!important}
+.arc-card.is-spoiler .arc-image>img:first-child{filter:blur(4px) grayscale(.8)!important}
+/* Episode reading: clean numbers, metadata and 44px actions. */
+.notice-catalog{padding:15px 18px!important}
+.catalog-coverage{display:flex!important;flex-wrap:wrap;gap:8px!important}
+.catalog-coverage span{font-size:12px!important;background:#fff5de!important;border-color:#b89362!important;border-radius:9px!important}
+.episode-filters{padding:15px!important;gap:12px!important}
+.episode-filters :is(input,select){min-height:45px!important;font-size:14px!important;background:#fffaf0!important}
+.episode-list{gap:12px!important}
+.ep-list-item{min-height:100px!important;gap:10px!important;padding:13px 14px!important;background:linear-gradient(130deg,#fff9e9,#f7e6c7)!important;border:2px solid #ae8553!important}
+.ep-list-item .ep-list-num{background:linear-gradient(#ca6546,#8f3529)!important;border-radius:10px!important}
+.ep-list-copy b{font-size:14px!important;line-height:1.34!important;white-space:normal!important;overflow:visible!important}
+.ep-list-copy>span{font-size:12px!important;line-height:1.5!important}
+.ep-tag{font-size:10px!important;padding:4px 7px!important}
+.ep-list-actions :is(.icon-action,.mini-detail){min-height:44px!important}
+.ep-list-actions .icon-action{min-width:44px!important}
+.ep-list-actions .mini-detail{font-size:13px!important;padding:9px 13px!important}
+.result-hint{font-size:12px!important}
+/* Illustrated route / saga map: clearer scenic previews. */
+.map-board{padding:18px!important;background:linear-gradient(145deg,#fff3d2db,#ead1a0ee),url('/assets/scroll-texture.webp') center/cover!important}
+.map-trail{gap:20px 25px!important}
+.map-stop{min-height:125px!important;gap:14px!important;padding:14px!important;border:2px solid #997346!important;background:linear-gradient(115deg,#fff9e9,#f4dfb8)!important}
+.map-stop>img{width:110px!important;height:87px!important;border-radius:12px!important;border:2px solid #c7a374!important;object-fit:cover!important}
+.map-stop-body b{font-size:clamp(20px,2vw,25px)!important;line-height:1.16!important}
+.map-stop-body small{font-size:12px!important;line-height:1.45!important}
+.map-stop.fogged>img{filter:grayscale(1) blur(3px) opacity(.55)!important}
+.map-stop:disabled{cursor:not-allowed}
+/* Recuperi Netflix: distinct parchment dossiers, no ambiguous CTAs. */
+.recover-list{gap:14px!important}
+.recover-card{padding:17px!important;gap:13px!important;border:2px solid #ac8051!important;background:linear-gradient(130deg,#fff7e1,#f2dfc1)!important}
+.recover-image{width:65px!important;height:65px!important;object-fit:contain!important}
+.recover-range{font-size:clamp(25px,2.7vw,35px)!important}
+.recover-body h3{line-height:1.17!important}
+.recover-body p,.recover-card p{font-size:13px!important;line-height:1.58!important}
+.recover-card .button{min-height:44px!important}
+.callout-start{border-left:6px solid #c45738!important}
+/* Filler log: recognizable warning mark, reduced clutter. */
+.filler-list{gap:11px!important}
+.filler-card{min-height:88px!important;display:flex;align-items:center;gap:13px!important;padding:12px 15px!important;border:2px solid #ad7e4a!important;background:linear-gradient(125deg,#fff5df,#f5dec1)!important}
+.filler-symbol{width:59px!important;height:59px!important;flex:none!important;background:transparent!important;padding:0!important}
+.filler-art{width:100%!important;height:100%!important;object-fit:contain!important}
+.filler-title{font-size:clamp(15px,1.3vw,19px)!important;line-height:1.3!important;color:#4c3429!important}
+.filler-detail{font-size:13px!important;line-height:1.45!important}
+.filler-n{font-size:12px!important;border-radius:10px!important;padding:6px 9px!important;flex:none}
+/* Character encyclopedia — preserve full-body scenic artwork without zoom. */
+html[data-active-section="characters"] .characters-hero{background:linear-gradient(115deg,#dcf2f4e8,#eef6eae0),url('/assets/sea-hero.webp') center/cover!important}
+html[data-active-section="characters"] .character-grid{gap:17px!important}
+html[data-active-section="characters"] .char-card{box-shadow:var(--v18-shadow)!important;border-color:#a47743!important}
+html[data-active-section="characters"] .char-art{background:linear-gradient(150deg,#52abc9,#e6dfb3)!important}
+html[data-active-section="characters"] .char-art img.character-portrait{object-fit:contain!important;object-position:center bottom!important;transform:none!important;filter:none!important}
+html[data-active-section="characters"] .char-card[data-id] .char-art img{transform:none!important}
+html[data-active-section="characters"] .char-copy{background:linear-gradient(130deg,#fff9ea,#f7e4c0)!important}
+html[data-active-section="characters"] .char-title{color:#493324!important;line-height:1.1!important}
+html[data-active-section="characters"] .char-description{font-size:clamp(12px,1.12vw,14px)!important;line-height:1.5!important}
+html[data-active-section="characters"] .char-cta{min-height:44px!important}
+html[data-active-section="characters"] .char-card.is-locked .char-art img.character-portrait{filter:blur(10px) saturate(.15)!important}
+html[data-active-section="characters"] .char-card.is-locked .char-title{color:#776452!important}
+/* Journal, achievements, progress and preferences. */
+.journal-columns,.settings-columns,.achievement-grid{gap:16px!important}
+.journal-metrics{gap:10px!important}
+.journal-metrics>div{border:2px solid #b58a55!important;border-radius:14px!important;background:linear-gradient(140deg,#fff9e8,#f5dfb8)!important}
+.journal-metrics b{font-variant-numeric:tabular-nums}
+.journal-entry{min-height:52px!important;border-radius:11px!important}
+.achievement-head{border:2px solid #b28b54!important;background:linear-gradient(130deg,#fff8e0,#e8c98d)!important;border-radius:15px!important}
+.achievement-head img{width:80px!important;height:80px!important;object-fit:contain!important}
+.achievement-card{min-height:180px!important;border:2px solid #b58b53!important;background:linear-gradient(135deg,#fff8e8,#f5e3c5)!important}
+.achievement-badge img{width:62px!important;height:62px!important;object-fit:contain!important}
+.achievement-card.earned{border-color:#238675!important;background:linear-gradient(135deg,#eff9df,#f5e7c8)!important}
+.achievement-card h3{font-size:clamp(19px,1.8vw,25px)!important;line-height:1.18!important}
+.achievement-card p{font-size:13px!important;line-height:1.5!important}
+.stat-panel{border:2px solid #a87b47!important}
+.stat-panel h3{line-height:1.2!important}
+.setting-item{border-radius:11px!important;padding:14px!important;gap:12px!important;background:#fff9eb99!important}
+.setting-item b{color:#493827!important;font-size:14px!important}
+.setting-item small{color:#705b48!important;font-size:12.5px!important;line-height:1.52!important}
+.setting-item .button{min-height:44px!important;line-height:1.35!important;white-space:normal!important}
+.cloud-panel .cloud-status{font-size:13px!important}
+.cloud-oauth-options{display:flex;gap:9px;flex-wrap:wrap;margin:12px 0}
+.cloud-oauth-options .button{min-height:44px!important}
+/* Dock: easy thumb targets and clearly differentiated icons. */
+@media(max-width:920px){
+ .main{padding-bottom:calc(118px + env(safe-area-inset-bottom))!important}
+ .mobile-nav{background:linear-gradient(180deg,#68442f,#3b251c)!important;border-top:3px solid #d8ae69!important;box-shadow:0 -8px 24px #283c4b44!important}
+ .mobile-nav button{min-height:57px!important;border-radius:12px!important;gap:3px!important}
+ .mobile-nav button span{font-size:11px!important;line-height:1.15!important}
+ .mobile-nav .mobile-art{width:36px!important;height:36px!important}
+ .mobile-nav button.active{background:linear-gradient(150deg,#91643f,#6d492c)!important}
+}
+@media(max-width:650px){
+ .main{padding-inline:12px!important}
+ .section-header{padding-block:7px 13px!important;margin-bottom:16px!important;align-items:flex-start}
+ .section-header h2{font-size:clamp(27px,7.7vw,34px)!important}
+ .section-header p{font-size:13px!important}
+ .section-header .section-extra{max-width:40%;text-align:right}
+ .more-menu{padding:13px!important;gap:11px!important;border-radius:19px!important}
+ .more-menu .tool-tile{grid-template-columns:58px minmax(0,1fr) 18px!important;gap:10px!important;min-height:83px!important;padding:11px 12px!important;border-radius:12px!important}
+ .more-menu .tool-tile-icon{width:56px!important;height:56px!important}
+ .more-menu .tool-tile-copy b{font-size:clamp(15px,4.1vw,19px)!important}
+ .more-menu .tool-tile-copy small{font-size:12px!important}
+ .more-menu .tool-tile-chevron{font-size:23px!important}
+ html[data-active-section="path"] .hero-copy{padding:20px 18px 23px!important}
+ html[data-active-section="path"] .hero-copy h1{font-size:clamp(31px,8vw,44px)!important}
+ html[data-active-section="path"] .hero-copy p{font-size:14px!important}
+ html[data-active-section="path"] .hero-buttons .button{width:100%;justify-content:center}
+ .arc-list{grid-template-columns:1fr!important}
+ .arc-card .arc-image{height:145px!important}
+ .ep-list-item{grid-template-columns:48px minmax(0,1fr)!important;gap:9px!important;padding:12px!important}
+ .ep-list-copy b{font-size:14px!important}
+ .ep-list-copy>span{font-size:12px!important}
+ .ep-list-actions{display:flex!important;justify-content:flex-end!important;gap:8px!important;width:100%!important}
+ .ep-list-actions :is(.icon-action,.mini-detail){min-height:44px!important}
+ .map-board{padding:10px 8px!important}
+ .map-trail{padding:16px 8px 16px 12px!important;gap:17px!important}
+ .map-stop{min-height:104px!important;padding:10px!important;gap:9px!important;margin-left:20px!important}
+ .map-stop>img{width:86px!important;height:78px!important;flex:none}
+ .map-stop-body b{font-size:18px!important}
+ .map-stop-body small{font-size:11px!important}
+ .recover-card{gap:10px!important;padding:12px!important}
+ .recover-image{width:49px!important;height:56px!important}
+ .filler-card{gap:9px!important;padding:11px!important}
+ .filler-symbol{width:48px!important;height:48px!important}
+ .filler-detail{font-size:12px!important}
+ .filler-n{font-size:11px!important}
+ html[data-active-section="characters"] .character-grid{grid-template-columns:1fr!important}
+ html[data-active-section="characters"] .char-copy{padding:13px 11px!important}
+ html[data-active-section="characters"] .char-description{font-size:12px!important}
+ .journal-metrics{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ .achievement-head img{width:64px!important;height:64px!important}
+ .achievement-badge img{width:54px!important;height:54px!important}
+ .setting-item{flex-wrap:wrap}
+}
+@media(max-width:365px){
+ .mobile-nav .mobile-art{width:30px!important;height:30px!important}
+ .mobile-nav button span{font-size:10px!important}
+ .more-menu .tool-tile{grid-template-columns:52px minmax(0,1fr) 16px!important;gap:7px!important}
+ .more-menu .tool-tile-icon{width:50px!important;height:50px!important}
+ .map-stop>img{width:70px!important;height:70px!important}
+}
+@media(prefers-reduced-motion:reduce){
+ :where(.button,.char-cta,.tool-tile,.map-stop,.open-arc,.mini-detail){transition:none!important;transform:none!important}
+}
