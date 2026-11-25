@@ -25,7 +25,7 @@ function decodeEntities(value){return String(value).replace(/&nbsp;/gi,' ').repl
 function plainWiki(value){let text=String(value||'').replace(/<!--[\s\S]*?-->/g,' ').replace(/<ref\b[^>]*>[\s\S]*?<\/ref>/gi,' ').replace(/<ref\b[^>]*\/>/gi,' ').replace(/<gallery[\s\S]*?<\/gallery>/gi,' ').replace(/<br\s*\/?\s*>/gi,' ');for(let i=0;i<12;i++){const next=text.replace(/\{\{[^{}]*\}\}/g,' ');if(next===text)break;text=next}text=text.replace(/\{\{[\s\S]*?\}\}/g,' ').replace(/\[\[(?:File|Image|Categoria|Category):[^\]]+\]\]/gi,' ').replace(/\[\[([^\]|]+)\|([^\]]+)\]\]/g,'$2').replace(/\[\[([^\]]+)\]\]/g,'$1').replace(/\[(?:https?:\/\/\S+)\s+([^\]]+)\]/g,'$1').replace(/https?:\/\/\S+/g,' ').replace(/<[^>]*>/g,' ').replace(/'''|''/g,'').replace(/^\s*[*#;:]+\s*/gm,' ').replace(/^\s*[|!].*$/gm,' ').replace(/^={2,6}.*={2,6}$/gm,' ').replace(/\[\d+\]/g,' ');return decodeEntities(text).replace(/[\t\r\n]+/g,' ').replace(/\s{2,}/g,' ').trim()}
 function concise(value,max=650){const text=plainWiki(value);if(text.length<=max)return text;const head=text.slice(0,max-1),cut=Math.max(head.lastIndexOf('. '),head.lastIndexOf('! '),head.lastIndexOf('? '));return (cut>Math.floor(max*.55)?head.slice(0,cut+1):head.replace(/\s+\S*$/,'')).trimEnd()+'…'}
 function titleFromPage(page,wikitext,n,language='it'){
- const raw=page?.displaytitle||((wikitext.match(/\{\{DISPLAYTITLE\s*:\s*([^}]+)\}\}/i)||[])[1])||'';
+ const raw=page?.title||page?.displaytitle||((wikitext.match(/\{\{DISPLAYTITLE\s*:\s*([^}]+)\}\}/i)||[])[1])||'';
  const generic=/^(navigazione|navigation|informazioni episodio|english information|japanese information|crediti|episode credits|statistiche|statistics|riassunto|short summary|long summary|personaggi|characters|differenze tra manga e anime|anime notes|collegamenti esterni|site navigation|curiosità|notes)$/i;
  const clean=value=>plainWiki(value).replace(new RegExp('^(?:Episodio|Episode)\\s+'+n+'\\s*[:–—-]?\\s*','i'),'').trim();
  const title=clean(raw);if(title&&!generic.test(title)&&title.toLowerCase()!=='episodio '+n&&title.toLowerCase()!=='episode '+n)return title.slice(0,150);
@@ -69,6 +69,7 @@ for(let n=1;n<=max;n++){
  if(page){
   if(italianPage)italianPages++;
   const title=titleFromPage(page,wikitext,n,language);
+  if([1,1155,1156,1180].includes(n))console.log('TITLE_DEBUG',n,JSON.stringify({pageTitle:page?.title,displayTitle:page?.displaytitle,headings:wikitext.split(/\\r?\\n/).filter(line=>headingInfo(line)).slice(0,14),candidate:title}));
   if(title&&!manualTitle){row.title=title;row.titleLanguage=language;row.source={...pageSource,fields:['title']};row.titleSource={...pageSource,fields:['title']};row.verifiedAt=pageDate;titles++}
   const summary=concise(section(wikitext,language==='it'?['Riassunto','Trama','Sinossi']:['Short Summary','Summary']),650);
   if(summary&&!manualSummary){row.summary=summary;row.summaryLanguage=language;row.summarySource={...pageSource,fields:['summary']};row.summaryStatus=language==='it'?'verified':'source-english';summaries++}
