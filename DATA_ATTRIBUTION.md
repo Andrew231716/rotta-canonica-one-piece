@@ -27,3 +27,10 @@ La presenza di un capitolo manga non determina automaticamente la classificazion
 ## Ambito
 
 Rotta Canonica è un progetto fan non ufficiale, non affiliato a Eiichirō Oda, Shueisha, Toei Animation, MyAnimeList o Fandom. I dati della community sono attribuiti e mantenuti con la licenza applicabile alle singole fonti; codice, grafica originale e dati non derivati restano soggetti alle rispettive licenze.
+
+## Nuove uscite (1156+)
+
+Per le puntate recenti non ancora documentate da una scheda italiana, i titoli e le sinossi possono essere tradotti in italiano a partire dalle schede episodio in inglese della One Piece Wiki. Ogni voce conserva il link alla pagina e la revisione utilizzata. Il testo comunitario originale e la sua traduzione restano attribuiti a One Piece Wiki / Fandom e soggetti a CC BY-SA 3.0 salvo diversa indicazione.
+
+- Indice episodi inglese: https://onepiece.fandom.com/wiki/Episode_Guide
+- Le mappature capitolo/pagina restano tratte da Template:WC.

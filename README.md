@@ -15,6 +15,6 @@ Scene illustrate a tutta card in Personaggi (`/assets/character-scenes/`). Vedi 
 ## Catalogo e PWA v19
 
 - Archivio principale 1–1155: titoli e sinossi italiani con attribuzione per singola scheda; capitoli e pagine adattate da Template:WC. Le nuove uscite sono mantenute nel feed separato (1156+), senza promuovere automaticamente gli episodi non classificati.
-- I contenuti della community One Piece Wiki Italia / Fandom sono attribuiti alle rispettive revisioni e restano soggetti a CC BY-SA 3.0 salvo diversa indicazione. Consulta `DATA_ATTRIBUTION.md`.
+- I contenuti della community One Piece Wiki Italia / Fandom e le traduzioni delle schede inglesi per le nuove uscite sono attribuiti alle rispettive revisioni e restano soggetti a CC BY-SA 3.0 salvo diversa indicazione. Consulta `DATA_ATTRIBUTION.md`.
 - Il service worker usa cache network-first per HTML/CSS/JS/JSON e mantiene offline sia `episodes.json` sia `episodes-latest.json`.
 - Su iPhone: aprire il sito in Safari → Condividi → Aggiungi alla schermata Home. Per l'offline, caricare l'app una prima volta con rete.

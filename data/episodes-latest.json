@@ -1,14 +1,189 @@
 {
   "schemaVersion": 1,
   "source": "Jikan API (MyAnimeList, fonte terza non ufficiale)",
-  "checkedAt": null,
-  "latest": 1155,
-  "episodes": [],
+  "checkedAt": "2026-11-25T09:01:18.488Z",
+  "latest": 1180,
+  "episodes": [
+    {
+      "number": 1156,
+      "title": "",
+      "aired": "2026-04-05",
+      "classification": "unverified",
+      "classificationReview": null
+    },
+    {
+      "number": 1157,
+      "title": "",
+      "aired": "2026-04-12",
+      "classification": "unverified",
+      "classificationReview": null
+    },
+    {
+      "number": 1158,
+      "title": "",
+      "aired": "2026-04-19",
+      "classification": "unverified",
+      "classificationReview": null
+    },
+    {
+      "number": 1159,
+      "title": "",
+      "aired": "2026-04-26",
+      "classification": "unverified",
+      "classificationReview": null
+    },
+    {
+      "number": 1160,
+      "title": "",
+      "aired": "2026-05-03",
+      "classification": "unverified",
+      "classificationReview": null
+    },
+    {
+      "number": 1161,
+      "title": "",
+      "aired": "2026-05-10",
+      "classification": "unverified",
+      "classificationReview": null
+    },
+    {
+      "number": 1162,
+      "title": "",
+      "aired": "2026-05-17",
+      "classification": "unverified",
+      "classificationReview": null
+    },
+    {
+      "number": 1163,
+      "title": "",
+      "aired": "2026-05-24",
+      "classification": "unverified",
+      "classificationReview": null
+    },
+    {
+      "number": 1164,
+      "title": "",
+      "aired": "2026-05-31",
+      "classification": "unverified",
+      "classificationReview": null
+    },
+    {
+      "number": 1165,
+      "title": "",
+      "aired": "2026-06-07",
+      "classification": "unverified",
+      "classificationReview": null
+    },
+    {
+      "number": 1166,
+      "title": "",
+      "aired": "2026-06-14",
+      "classification": "unverified",
+      "classificationReview": null
+    },
+    {
+      "number": 1167,
+      "title": "",
+      "aired": "2026-06-21",
+      "classification": "unverified",
+      "classificationReview": null
+    },
+    {
+      "number": 1168,
+      "title": "",
+      "aired": "2026-06-28",
+      "classification": "unverified",
+      "classificationReview": null
+    },
+    {
+      "number": 1169,
+      "title": "",
+      "aired": "2026-07-12",
+      "classification": "unverified",
+      "classificationReview": null
+    },
+    {
+      "number": 1170,
+      "title": "",
+      "aired": "2026-07-19",
+      "classification": "unverified",
+      "classificationReview": null
+    },
+    {
+      "number": 1171,
+      "title": "",
+      "aired": "2026-07-26",
+      "classification": "unverified",
+      "classificationReview": null
+    },
+    {
+      "number": 1172,
+      "title": "",
+      "aired": "2026-08-02",
+      "classification": "unverified",
+      "classificationReview": null
+    },
+    {
+      "number": 1173,
+      "title": "",
+      "aired": "2026-08-09",
+      "classification": "unverified",
+      "classificationReview": null
+    },
+    {
+      "number": 1174,
+      "title": "",
+      "aired": "2026-08-16",
+      "classification": "unverified",
+      "classificationReview": null
+    },
+    {
+      "number": 1175,
+      "title": "",
+      "aired": "2026-08-23",
+      "classification": "unverified",
+      "classificationReview": null
+    },
+    {
+      "number": 1176,
+      "title": "",
+      "aired": "2026-08-30",
+      "classification": "unverified",
+      "classificationReview": null
+    },
+    {
+      "number": 1177,
+      "title": "",
+      "aired": "2026-09-06",
+      "classification": "unverified",
+      "classificationReview": null
+    },
+    {
+      "number": 1178,
+      "title": "",
+      "aired": "2026-09-13",
+      "classification": "unverified",
+      "classificationReview": null
+    },
+    {
+      "number": 1179,
+      "title": "",
+      "aired": "2026-09-20",
+      "classification": "unverified",
+      "classificationReview": null
+    },
+    {
+      "number": 1180,
+      "title": "",
+      "aired": "2026-09-27",
+      "classification": "unverified",
+      "classificationReview": null
+    }
+  ],
   "metadataSource": {
-    "name": "One Piece Wiki Italia / Fandom + Template:WC",
-    "url": "https://onepiece.fandom.com/it/wiki/Episodi_e_film",
-    "license": "CC BY-SA 3.0 salvo diversa indicazione",
-    "lastChecked": "2026-11-25T08:55:12.442Z"
+    "name": "One Piece Wiki English + Template:WC",
+    "url": "https://onepiece.fandom.com/wiki/Episode_Guide",
+    "license": "CC BY-SA 3.0 salvo diversa indicazione"
   },
   "metadataCoverage": {
     "titles": 0,
