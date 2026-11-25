@@ -8,7 +8,7 @@ return {favorites:Array.isArray(x.favorites)?x.favorites.filter(n=>Number.isInte
  notes:x.notes&&typeof x.notes==='object'?x.notes:{},ratings:x.ratings&&typeof x.ratings==='object'?x.ratings:{},watchedAt:x.watchedAt&&typeof x.watchedAt==='object'?x.watchedAt:{},
  spoiler:x.spoiler!==false,reminderDays:Number.isInteger(x.reminderDays)&&x.reminderDays>=0&&x.reminderDays<=30?x.reminderDays:0,
  theme:['light','ocean'].includes(x.theme)?x.theme:'light',
- appearanceStyle:['anime','ocean','night','classic'].includes(x.appearanceStyle)?x.appearanceStyle:(x.theme==='ocean'?'ocean':'anime'),
+ appearanceStyle:['anime','atlas-grid','scenic','ocean','night','classic'].includes(x.appearanceStyle)?x.appearanceStyle:(x.theme==='ocean'?'ocean':'anime'),
  symbolStyle:['anime','vintage','vector'].includes(x.symbolStyle)?x.symbolStyle:'anime',
  colorPalette:['coral','sea','gold','violet','custom'].includes(x.colorPalette)?x.colorPalette:'coral',
  customAccent:typeof x.customAccent==='string'&&/^#[0-9a-fA-F]{6}$/.test(x.customAccent)?x.customAccent:'#dc4c34',
@@ -168,6 +168,7 @@ function characterView(){
  const discovered=CHARACTERS.filter(c=>!blocked(c.unlock)).length;
  const favoriteCount=(extra.characterFavorites||[]).length;
  return `<div class="section-shell character-section">
+ ${isAtlas()?'<img class="atlas-crew-banner" src="/assets/atlas/crew-banner.webp" alt="Personaggi della Rotta Canonica">':''}
  <section class="characters-hero" aria-label="Enciclopedia dei personaggi">
    <div class="characters-hero-top"><span>ENCICLOPEDIA DELLA GRAND LINE</span><span class="characters-hero-count">${discovered} / ${CHARACTERS.length} scoperti</span></div>
    <div class="characters-hero-title"><img src="/assets/ui-compass.webp" width="45" height="45" alt="" loading="lazy"><h1>PERSONAGGI</h1><span class="characters-hero-anchor" aria-hidden="true">⚓</span></div>
@@ -184,7 +185,7 @@ function characterView(){
   const searchable=locked?`personaggio da scoprire episodio ${c.unlock}`:`${c.name} ${c.role} ${c.profile} ${c.tags}`.toLocaleLowerCase('it');
   return `<article class="char-card ${locked?'is-locked':''}" data-id="${c.id}" data-group="${c.group?'encounters':'crew'}" data-locked="${locked}" data-search="${cleanText(searchable)}">
    <button type="button" class="char-open" data-action="character-detail" data-character="${i}" aria-label="${locked?`Personaggio non ancora sbloccato, episodio ${c.unlock}`:`Apri la scheda di ${cleanText(c.name)}`}" ${locked?'aria-disabled="true"':''}>
-    <span class="char-art"><span class="char-photo-frame">${characterPortrait(c,locked)}${locked?'<span class="char-hidden-mark" aria-hidden="true">?</span>':''}</span></span>
+    <span class="char-art"><span class="char-photo-frame">${isAtlas()&&!locked&&v22FeaturedCharacters.includes(c.id)?`<img class="atlas-portrait" src="/assets/atlas/${c.id}.webp" alt="" loading="lazy">`:characterPortrait(c,locked)}${locked?'<span class="char-hidden-mark" aria-hidden="true">?</span>':''}</span></span>
     <span class="char-copy"><span class="char-kicker">${art(v22RoleIcons[c.id]||'compass','char-role-icon')} ${locked?'IDENTITÀ NASCOSTA':cleanText(c.role)}</span><strong class="char-title">${locked?'Da scoprire':cleanText(c.name)}</strong><span class="char-description">${locked?`Scheda disponibile dall’episodio ${c.unlock}.`:cleanText(c.profile)}</span><span class="char-cta"><span>${locked?`Da ep. ${c.unlock}`:'Scopri la scheda'}${!locked?` <small>· Ep. ${c.unlock}</small>`:''}</span><span aria-hidden="true">›</span></span></span>
    </button>
    ${locked?'<span class="char-favorite locked" title="Non ancora sbloccato" aria-label="Personaggio ancora bloccato">⌑</span>':`<button type="button" class="char-favorite ${favorite?'is-favorite':''}" data-action="character-star" data-character-id="${c.id}" aria-pressed="${favorite}" aria-label="${favorite?'Rimuovi':'Aggiungi'} ${cleanText(c.name)} ${favorite?'dai':'ai'} preferiti">★</button>`}
@@ -220,7 +221,9 @@ function settingsView(){return `<div class="section-shell">${sectionHeader('Impo
    <div class="appearance-controls">
      <label class="setting-select">Stile grafico
        <select id="visual-style" aria-label="Stile grafico">
-         <option value="anime" ${extra.appearanceStyle==='anime'?'selected':''}>Anime avventura · illustrato</option>
+         <option value="anime" ${extra.appearanceStyle==='anime'?'selected':''}>Grande Rotta · pergamene illustrate</option>
+         <option value="atlas-grid" ${extra.appearanceStyle==='atlas-grid'?'selected':''}>Atlante · tessere illustrate</option>
+         <option value="scenic" ${extra.appearanceStyle==='scenic'?'selected':''}>Anime scenografico · v22</option>
          <option value="ocean" ${extra.appearanceStyle==='ocean'?'selected':''}>Oceano celeste · colori vivaci</option>
          <option value="night" ${extra.appearanceStyle==='night'?'selected':''}>Notte dei pirati · blu profondo</option>
          <option value="classic" ${extra.appearanceStyle==='classic'?'selected':''}>Pergamena classica · tradizionale</option>
@@ -265,7 +268,7 @@ function settingsView(){return `<div class="section-shell">${sectionHeader('Impo
  <section class="paper-panel"><h3>${art('episode')} Archivio episodi</h3><p>Archivio verificato 1–1155; nuove uscite consultabili fino all’episodio ${MAX}. I titoli, le sinossi e le pagine manga riportano la fonte direttamente nella scheda.</p><button class="button small secondary" data-action="catalog-import">Importa metadati (JSON)</button><p class="smallprint">Le puntate 1156 e successive restano fuori dal percorso canonico finché la classificazione non viene documentata.</p></section>
  <section class="paper-panel pwa-install-panel"><h3>${art('map')} Installa su iPhone</h3><ol class="ios-install-steps"><li>Apri Rotta Canonica in <b>Safari</b>, non nel browser interno di un social.</li><li>Tocca <b>Condividi</b> e scegli <b>Aggiungi alla schermata Home</b>.</li><li>Conferma con <b>Aggiungi</b> e apri l’app dalla nuova icona.</li></ol><p>Per l’uso offline, apri una volta l’app con la connessione attiva e attendi il caricamento del catalogo. Il feed delle nuove puntate viene aggiornato quando torni online.</p><p class="smallprint">L’accesso email non trasferisce progressi o preferiti tra dispositivi. Per farlo manualmente usa Esporta/Importa backup.</p></section>
  <section class="paper-panel"><h3>${art('compass')} Fonti e attribuzioni</h3><p>I titoli e le sinossi italiane sono tratti dalle schede della community di One Piece Wiki Italia; le corrispondenze capitolo/pagina sono tratte da Template:WC. Le attribuzioni e le revisioni sono conservate nei metadati delle singole schede.</p><p>I contenuti della community Fandom sono disponibili con licenza <b>CC BY-SA 3.0</b>, salvo diversa indicazione. I titoli Jikan/MyAnimeList sono usati solo come fallback quando manca una scheda italiana.</p><div class="attribution-links"><a href="https://onepiece.fandom.com/it/wiki/Episodi_e_film" target="_blank" rel="noopener noreferrer">One Piece Wiki Italia</a><a href="https://onepiece.fandom.com/wiki/Template:WC" target="_blank" rel="noopener noreferrer">Template:WC</a><a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noopener noreferrer">Licenza CC BY-SA 3.0</a></div><p class="smallprint">Rotta Canonica è un progetto fan non ufficiale e non è affiliato a Eiichirō Oda, Shueisha, Toei Animation o Fandom.</p></section></div></div>`}
-function moreView(){return `<div class="section-shell">${sectionHeader('Tutti i servizi','Ogni sezione della tua avventura, sempre a portata di mano.')}
+function moreView(){if(isAtlas())return atlasLanding(getNext());return `<div class="section-shell">${sectionHeader('Tutti i servizi','Ogni sezione della tua avventura, sempre a portata di mano.')}
  <div class="more-menu">${toolTile('journal','Diario di bordo','Note e preferiti','loot')}${toolTile('characters','Personaggi','Enciclopedia senza spoiler','spyglass')}${toolTile('achievements','Ricompense','Traguardi sbloccabili','chest')}${toolTile('filler','Filler','Episodi fuori rotta','flag')}${toolTile('stats','Progressi','Statistiche del viaggio','progress')}${toolTile('settings','Impostazioni','Backup e protezione dati','wheel')}</div></div>`}
 function moreStats(){return `<div class="paper-panel extras-quick"><div><h3>Il viaggio continua</h3><p>${extra.favorites.length} episodi preferiti · ${notesSummary().length} note · ${ACHIEVEMENTS.filter(a=>a.test()).length} ricompense.</p></div><div class="row-buttons"><button class="button small secondary" data-tab="journal">Diario</button><button class="button small secondary" data-tab="achievements">Ricompense</button><button class="button small secondary" data-tab="settings">Impostazioni</button></div></div>`}
 async function loadCatalog(){try{const r=await fetch('/data/episodes.json',{cache:'no-cache'});if(!r.ok)throw Error('catalog unavailable');const d=await r.json();if(!Array.isArray(d.episodes))throw Error('invalid data');const obj={};for(const e of d.episodes){if(Number.isInteger(e.n)&&e.n>=1&&e.n<=BASE_MAX)obj[e.n]={source:e.source||null,titleSource:e.titleSource||null,summarySource:e.summarySource||null,chapterSource:e.chapterSource||null,editorialSource:e.editorialSource||null,verifiedAt:e.verifiedAt||null,title:typeof e.title==='string'&&e.title.trim()?e.title:null,titleLanguage:e.titleLanguage||null,chapter:typeof e.chapter==='string'?e.chapter:null,chapterDetails:Array.isArray(e.chapterDetails)?e.chapterDetails:[],chapterStatus:e.chapterStatus||null,duration:typeof e.duration==='string'?e.duration:null,summary:typeof e.summary==='string'?e.summary:null,summaryStatus:e.summaryStatus||null,summaryLanguage:e.summaryLanguage||null}}catalog=obj;render()}catch(e){console.warn('Catalog offline: fallback numerico',e)}}
@@ -304,13 +307,14 @@ async function handleExtraAction(action,t){const n=Number(t.dataset.ep);
  }}
 function applyTheme(){
  const root=document.documentElement;
- const style=['anime','ocean','night','classic'].includes(extra.appearanceStyle)?extra.appearanceStyle:'anime';
+ const style=['anime','atlas-grid','scenic','ocean','night','classic'].includes(extra.appearanceStyle)?extra.appearanceStyle:'anime';
  const symbols=['anime','vintage','vector'].includes(extra.symbolStyle)?extra.symbolStyle:'anime';
  const palette=['coral','sea','gold','violet','custom'].includes(extra.colorPalette)?extra.colorPalette:'coral';
  const motion=['full','soft','off'].includes(extra.animationLevel)?extra.animationLevel:'full';
  const colors={coral:'#d94d34',sea:'#117fa9',gold:'#b98524',violet:'#8355bb',custom:extra.customAccent};
  root.dataset.theme=style==='ocean'||style==='night'?'ocean':'light';
- root.dataset.visualStyle=style;root.dataset.symbolStyle=symbols;root.dataset.colorPalette=palette;root.dataset.animationLevel=motion;
+ root.dataset.atlas=['anime','atlas-grid'].includes(style)?style:'off';
+ root.dataset.visualStyle=['atlas-grid','scenic'].includes(style)?'anime':style;root.dataset.symbolStyle=symbols;root.dataset.colorPalette=palette;root.dataset.animationLevel=motion;
  const hex=/^#[0-9a-fA-F]{6}$/.test(colors[palette])?colors[palette]:'#d94d34';
  root.style.setProperty('--anime-accent',hex);
  const rgb=[1,3,5].map(i=>parseInt(hex.slice(i,i+2),16)/255).map(c=>c<=0.04045?c/12.92:Math.pow((c+0.055)/1.055,2.4));

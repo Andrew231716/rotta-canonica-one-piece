@@ -18,7 +18,7 @@ assert.doesNotMatch(config,/oauthGoogleEnabled|oauthAppleEnabled|vapidPublicKey|
 assert.match(sw,/OFFLINE_CORE/);
 assert.match(sw,/Promise\.allSettled/);
 assert.match(sw,/ignoreSearch\s*:\s*true/);
-assert.match(sw,/rotta-canonica-v22-2-scenic-portraits/);
+assert.match(sw,/rotta-canonica-v23-atlas/);
 assert.match(sw,/data\/episodes-latest\.json/);
 assert.match(app,/service-worker\.js\?v=21anime/);
 const animeCSS=read('anime-art-direction-v21.css');
