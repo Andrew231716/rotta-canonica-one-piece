@@ -11,7 +11,7 @@ CSS_FILES = [
     'characters-v13.css', 'art-direction-v15.css', 'design-system-v16.css', 'nautical-finish-v18.css',
     'catalog-pwa-v19.css', 'anime-art-direction-v21.css', 'anime-scenic-v22.css', 'atlas.css',
     'mobile-quality-fixes.css', 'mobile-visual-repair-v26.css', 'premium-grand-line.css',
-    'interactive-atlas-v28.css', 'wanted-dossiers-v28.css',
+    'interactive-atlas-v28.css', 'wanted-dossiers-v28.css', 'mobile-ux-polish-v29.css',
 ]
 JS_FILES = ['features.js', 'cloud.js', 'app.js', 'polish-v11.js']
 
