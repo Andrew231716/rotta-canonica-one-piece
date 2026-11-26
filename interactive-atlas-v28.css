@@ -12,14 +12,17 @@
 }
 .gl-atlas-top{
   display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
-  padding:4px 6px 14px;border-bottom:1px dashed rgba(201,162,39,.45);margin-bottom:14px;
+  padding:8px 10px 10px;margin-bottom:14px;border-radius:14px;
+  border:1px solid rgba(240,210,122,.28);
+  background:linear-gradient(100deg,rgba(7,30,43,.82),rgba(11,58,79,.62) 55%,rgba(7,30,43,.55));
+  box-shadow:inset 0 1px 0 rgba(255,246,224,.12);
 }
 .gl-atlas-kicker{
-  display:block;font-size:10px;letter-spacing:.18em;font-weight:800;color:var(--gl-coral,var(--anime-accent,#C44536));
+  display:block;font-size:10px;letter-spacing:.18em;font-weight:800;color:#F0D27A;
 }
 .gl-atlas-top strong{
   font-family:Georgia,"Palatino Linotype",Palatino,serif;font-size:clamp(18px,2.4vw,26px);
-  color:#FFF6E0;text-shadow:0 2px 0 #0006;
+  color:#FFF6E0;text-shadow:0 1px 2px rgba(0,0,0,.45);
 }
 .gl-atlas-voyage{
   display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border-radius:999px;
@@ -69,6 +72,11 @@
   display:flex;flex-direction:column;align-items:center;gap:3px;text-align:center;
   touch-action:manipulation;z-index:2;
 }
+/* Neutralize legacy list .map-stop chrome inherited by atlas pins */
+.gl-atlas-stage .gl-island.map-stop{
+  min-height:0!important;margin:0!important;padding:0!important;gap:3px!important;
+  border:0!important;background:transparent!important;box-shadow:none!important;
+}
 .gl-island-pin{
   position:relative;z-index:3;min-width:28px;padding:2px 7px;border-radius:999px;
   background:linear-gradient(180deg,#C44536,#8a2e22);color:#fff8e8;font:800 11px/1.2 Georgia,serif;
@@ -105,8 +113,14 @@
 .gl-island[aria-disabled="true"]{cursor:not-allowed}
 .gl-island[aria-disabled="true"]:hover .gl-island-media{transform:none}
 
-.gl-atlas-compass{position:absolute;right:10px;top:10px;opacity:.55;z-index:1;pointer-events:none}
-.gl-atlas-compass img{width:56px;height:56px;object-fit:contain}
+/* Decorative only; bottom-center of stage, clear of east cluster and west starts. */
+.gl-atlas-compass{
+  position:absolute;left:50%;right:auto;top:auto;bottom:6px;
+  transform:translateX(-50%);
+  opacity:.28;z-index:0;pointer-events:none;
+}
+.gl-atlas-compass.map-compass{opacity:.28}
+.gl-atlas-compass img{width:48px;height:48px;object-fit:contain}
 
 .gl-atlas-panel{
   display:flex;flex-direction:column;gap:0;min-width:0;border-radius:18px;overflow:hidden;
@@ -198,20 +212,34 @@ html[data-animation-level="off"] .gl-atlas-dial{animation:none!important}
   .gl-atlas-compass{display:none}
   .gl-atlas-panel-actions .button{flex:1 1 140px}
 }
+/* Keep compass off stacked tablet layouts where the stage is crowded; show on desktop grid. */
+@media (max-width:920px){
+  .gl-atlas-compass{display:none}
+}
 
-/* Compact atlas: keep the route visible with pin markers; rail remains the primary selector. */
+/* Compact atlas: pin+thumb markers with real ≥44×44 hit targets; rail stays secondary selector.
+   Beat legacy .map-stop min-height !important (list stops) so atlas pins stay compact. */
 @media (max-width:430px){
-  .gl-atlas-stage{min-height:210px}
-  .gl-atlas-routes,.gl-atlas-islands{inset:10% 12% 14% 12%}
+  .gl-atlas-stage{min-height:230px}
+  .gl-atlas-routes,.gl-atlas-islands{inset:8% 6% 12% 6%}
   .gl-atlas-routes{opacity:.9}
-  .gl-island{width:auto;gap:2px;--gl-iy-shift:-42%}
+  .gl-atlas-stage .gl-island.map-stop,
+  .gl-atlas-stage .gl-island{
+    width:44px!important;min-width:44px!important;max-width:44px!important;
+    height:44px!important;min-height:44px!important;max-height:44px!important;
+    margin:0!important;padding:2px!important;gap:2px!important;
+    border:0!important;background:transparent!important;box-shadow:none!important;
+    box-sizing:border-box;justify-content:center;
+    --gl-ix-shift:-50%;--gl-iy-shift:-50%;
+  }
   .gl-island-media{
-    width:36px;height:28px;border-radius:10px;border-width:1.5px;
+    width:30px!important;height:24px!important;border-radius:9px;border-width:1.5px;
     box-shadow:0 2px 0 #3a241866,0 4px 10px #04182055;
   }
   .gl-island-badge{display:none}
-  .gl-island-label{display:none}
-  .gl-island-pin{min-width:22px;padding:2px 5px;font-size:10px}
+  .gl-island-label{display:none!important}
+  .gl-island-pin{min-width:22px;min-height:16px;padding:2px 5px;font-size:10px}
+  .gl-island.is-selected{z-index:6}
   .gl-island.is-selected .gl-island-media{outline-width:2px;outline-offset:1px}
   .gl-atlas-panel-art-wrap{min-height:96px}
   .gl-atlas-panel-scene{height:96px}
@@ -220,15 +248,17 @@ html[data-animation-level="off"] .gl-atlas-dial{animation:none!important}
   .gl-atlas-panel-copy p{font-size:12px}
 }
 @media (max-width:360px){
-  .gl-atlas-stage{min-height:190px}
-  .gl-atlas-routes,.gl-atlas-islands{inset:11% 14% 15% 14%}
-  .gl-island-media{width:30px;height:24px}
-  .gl-island-pin{min-width:20px;font-size:9px;padding:1px 4px}
+  .gl-atlas-stage{min-height:210px}
+  .gl-atlas-routes,.gl-atlas-islands{inset:8% 5% 12% 5%}
+  .gl-atlas-stage .gl-island.map-stop,
+  .gl-atlas-stage .gl-island{
+    width:44px!important;min-width:44px!important;height:44px!important;min-height:44px!important;
+  }
+  .gl-island-media{width:28px!important;height:22px!important}
+  .gl-island-pin{min-width:22px;font-size:10px;padding:2px 5px}
 }
 @media (max-width:320px){
-  .gl-atlas-stage{min-height:176px}
-  .gl-atlas-routes,.gl-atlas-islands{inset:12% 16% 16% 16%}
-  .gl-island-media{width:26px;height:20px}
+  .gl-atlas-stage{min-height:196px}
   .gl-atlas-voyage span:last-child{font-size:11px}
 }
 

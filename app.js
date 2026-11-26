@@ -149,7 +149,7 @@ function shell(content){const c=counts(),next=getNext();return `<div class="shel
   <main class="main">
     <div class="mobile-chrome">
       <header class="mobile-brand"><img class="mobile-brand-mark illustrated-icon" src="/icon.svg" alt="" width="40" height="40" decoding="async"><div><span class="mobile-brand-title">ROTTA CANONICA</span><span class="mobile-brand-sub">GUIDA ONE PIECE • FAN PROJECT</span></div><span class="mobile-brand-stamp">PWA</span></header>
-      <div class="topline"><div class="breadcrumb">${art('anchor','tiny-art')} GRANDE ROTTA <b>/</b> ${({path:'IL TUO PERCORSO',episodes:'GUIDA EPISODI',map:'MAPPA DELLE SAGHE',recover:'RECUPERI LIVE ACTION',filler:'EPISODI FILLER',characters:'PERSONAGGI',journal:'DIARIO DI BORDO',achievements:'RICOMPENSE',settings:'IMPOSTAZIONI',more:'TUTTE LE SEZIONI',stats:'STATISTICHE'})[tab]||'IL TUO PERCORSO'}</div><div class="top-actions"><span class="tiny-tag"><span class="dot"></span> ARCHIVIO 1–${MAX}</span></div></div>
+      <div class="topline"><div class="breadcrumb">${art('anchor','tiny-art')} ${tab==='map'?`MAPPA SAGHE`:`GRANDE ROTTA <b>/</b> ${({path:'IL TUO PERCORSO',episodes:'GUIDA EPISODI',map:'MAPPA SAGHE',recover:'RECUPERI LIVE ACTION',filler:'EPISODI FILLER',characters:'PERSONAGGI',journal:'DIARIO DI BORDO',achievements:'RICOMPENSE',settings:'IMPOSTAZIONI',more:'TUTTE LE SEZIONI',stats:'STATISTICHE'})[tab]||'IL TUO PERCORSO'}`}</div><div class="top-actions"><span class="tiny-tag"><span class="dot"></span> ARCHIVIO 1–${MAX}</span></div></div>
     </div>
     ${tab==='path'?(isAtlas()?atlasLanding(next):heroPanel(next)):sectionBanner(tab)}
     ${['path','stats'].includes(tab)?`${voyageLine()}<div class="metrics">
@@ -272,7 +272,7 @@ document.addEventListener('keydown',e=>{
 applyTheme();render();loadCatalog();loadWeeklyEpisodes();checkReminder();
 if('serviceWorker' in navigator){
  navigator.serviceWorker.addEventListener('message',event=>{if(event.data?.type==='ROTTA_SW_UPDATED')toast('Rotta aggiornata: catalogo e nuove uscite pronti per l’uso offline.')});
- window.addEventListener('load',()=>navigator.serviceWorker.register('/service-worker.js?v=30.1a1',{updateViaCache:'none'}).then(reg=>reg.update().catch(()=>{})).catch(()=>{}));
+ window.addEventListener('load',()=>navigator.serviceWorker.register('/service-worker.js?v=30.2a1',{updateViaCache:'none'}).then(reg=>reg.update().catch(()=>{})).catch(()=>{}));
 }
 window.addEventListener('offline',()=>toast('Sei offline: puoi continuare con il catalogo già caricato.'));
 window.addEventListener('online',()=>{toast('Connessione ripristinata.');loadWeeklyEpisodes()});
