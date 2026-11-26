@@ -56,7 +56,8 @@ html[data-visual-style="classic"] body{
     radial-gradient(100% 70% at 80% 110%,rgba(11,58,79,.18),transparent 50%);
   opacity:.9;
 }
-.main,.sidebar,.mobile-nav{position:relative;z-index:1}
+/* .mobile-nav must stay position:fixed on mobile — do not force relative here (v29.1). */
+.main,.sidebar{position:relative;z-index:1}
 
 /* Sea foam strip under content */
 .footer-sea{
