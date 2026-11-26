@@ -10,7 +10,7 @@
   box-shadow:0 3px 0 #3a241855;
 }
 .wanted-stats b{display:block;font:800 clamp(20px,3vw,28px)/1.1 Georgia,serif}
-.wanted-stats span{display:block;margin-top:4px;font-size:11px;font-weight:700;color:#4A5F6B}
+.wanted-stats span{display:block;margin-top:4px;font-size:12px;font-weight:700;color:#3d4f5c}
 .wanted-bounty-note{
   margin:0 0 14px;padding:10px 12px;border-radius:12px;font-size:12px;line-height:1.45;color:#4A5F6B;
   background:rgba(251,246,236,.85);border:1px dashed rgba(92,58,36,.35);
@@ -63,11 +63,11 @@
   display:block;width:100%;font:800 clamp(13px,2.8vw,16px)/1.15 Georgia,serif;
   text-transform:uppercase;letter-spacing:.03em;
 }
-.wanted-alias{display:block;font-size:11px;font-weight:700;color:#5a4632}
+.wanted-alias{display:block;font-size:12px;font-weight:700;color:#4a3828}
 .wanted-bounty{display:flex;flex-direction:column;gap:2px;width:100%}
-.wanted-bounty em{font:700 9px/1.2 Georgia,serif;letter-spacing:.14em;color:#7a2e22}
+.wanted-bounty em{font:700 11px/1.2 Georgia,serif;letter-spacing:.1em;color:#6b3428}
 .wanted-bounty strong{font:900 clamp(12px,2.4vw,14px)/1.1 Impact,"Arial Black",sans-serif;color:#1a1410}
-.wanted-meta{display:block;font-size:10px;font-weight:700;color:#5a4632;line-height:1.3}
+.wanted-meta{display:block;font-size:12px;font-weight:700;color:#3d2e20;line-height:1.35}
 .wanted-stamp{
   position:absolute;right:8px;top:42px;padding:3px 7px;border-radius:3px;rotate:12deg;
   font:800 9px/1.1 Georgia,serif;letter-spacing:.06em;border:2px solid currentColor;background:rgba(251,246,236,.92);

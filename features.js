@@ -406,7 +406,7 @@ function characterDetail(i){
     <span>Taglia</span><b>Non catalogata</b>
    </div>
    <div class="wanted-dossier-actions">
-    <button class="button primary small" data-action="character-star" data-character-id="${c.id}">${collected?'★ In archivio':'☆ Archivia manifesto'}</button>
+    <button class="button primary small" data-action="character-star" data-character-id="${c.id}">${collected?'★ In archivio':'☆ Salva in archivio'}</button>
     <button class="button secondary small" data-action="wanted-open-episodes" data-first="${saga.first}">${art('episode','button-art')} Episodi · ${cleanText(saga.name)}</button>
     <button class="button secondary small" data-action="wanted-open-saga" data-first="${saga.first}">${art('map','button-art')} Isola sulla mappa</button>
     <button class="button secondary small" data-action="detail" data-ep="${firstCanon}">Scheda ep. ${firstCanon}</button>
