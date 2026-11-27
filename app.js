@@ -272,7 +272,7 @@ document.addEventListener('keydown',e=>{
 applyTheme();render();loadCatalog();loadWeeklyEpisodes();checkReminder();
 if('serviceWorker' in navigator){
  navigator.serviceWorker.addEventListener('message',event=>{if(event.data?.type==='ROTTA_SW_UPDATED')toast('Rotta aggiornata: catalogo e nuove uscite pronti per l’uso offline.')});
- window.addEventListener('load',()=>navigator.serviceWorker.register('/service-worker.js?v=30.2a2',{updateViaCache:'none'}).then(reg=>reg.update().catch(()=>{})).catch(()=>{}));
+ window.addEventListener('load',()=>navigator.serviceWorker.register('/service-worker.js?v=30.3a1',{updateViaCache:'none'}).then(reg=>reg.update().catch(()=>{})).catch(()=>{}));
 }
 window.addEventListener('offline',()=>toast('Sei offline: puoi continuare con il catalogo già caricato.'));
 window.addEventListener('online',()=>{toast('Connessione ripristinata.');loadWeeklyEpisodes()});
