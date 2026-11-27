@@ -1,0 +1,124 @@
+/* Rotta Canonica v31 — Watch Session (Segna visto e continua)
+   Compact, mobile-first continuity panel. Additive; no atlas/nav rewrites. */
+
+.watch-session{
+  display:grid;
+  gap:12px;
+  margin:10px 0 14px;
+  padding:14px 14px 15px;
+  border:2px solid color-mix(in srgb,var(--gl-brass,#D4B05A) 70%,#694a2c);
+  border-radius:16px;
+  background:
+    linear-gradient(135deg,rgba(251,246,236,.96),rgba(232,217,181,.9) 55%,rgba(184,228,239,.28)),
+    url('/assets/scroll-texture.webp') center/cover;
+  box-shadow:3px 4px 0 #2d697855,0 10px 22px #05253622;
+  color:var(--gl-ink,#1F3340);
+}
+.watch-session.is-complete{
+  background:
+    linear-gradient(135deg,rgba(243,234,219,.98),rgba(184,228,239,.35)),
+    url('/assets/scroll-texture.webp') center/cover;
+}
+.watch-session-kicker{
+  display:block;
+  font-size:10px;
+  letter-spacing:.14em;
+  font-weight:800;
+  color:var(--gl-coral,#C44536);
+  margin-bottom:4px;
+}
+.watch-session-copy b{
+  display:block;
+  font-family:Georgia,"Palatino Linotype",Palatino,serif;
+  font-size:clamp(16px,4.2vw,21px);
+  line-height:1.2;
+  margin:0 0 4px;
+  color:var(--gl-ink,#1F3340);
+}
+.watch-session-copy small{
+  display:block;
+  color:var(--gl-ink-soft,#4A5F6B);
+  font-weight:700;
+  font-size:12px;
+  line-height:1.35;
+}
+.watch-session-pause{
+  margin:8px 0 0;
+  font-size:12px;
+  line-height:1.4;
+  color:var(--gl-ocean,#0B3A4F);
+}
+.watch-session-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  align-items:stretch;
+}
+.watch-session-actions .button{
+  min-height:44px;
+  flex:1 1 calc(50% - 4px);
+  justify-content:center;
+}
+.watch-session-actions .button.primary{
+  flex:1 1 100%;
+}
+.reward-list{
+  margin:10px 0 0;
+  padding:0 0 0 18px;
+  text-align:left;
+  color:var(--gl-ink-soft,#4A5F6B);
+  font-size:13px;
+  line-height:1.4;
+}
+.reward-list li{margin:0 0 4px}
+
+@media (min-width:768px){
+  .watch-session{
+    grid-template-columns:minmax(0,1fr) auto;
+    align-items:center;
+    padding:16px 18px;
+  }
+  .watch-session-actions{
+    max-width:280px;
+    flex-direction:column;
+  }
+  .watch-session-actions .button{
+    flex:0 0 auto;
+    width:100%;
+  }
+}
+
+@media (max-width:430px){
+  .watch-session{margin-bottom:14px;padding:12px}
+  .watch-session-copy b{font-size:clamp(15px,4.6vw,18px)}
+  .watch-session-actions .button{flex:1 1 100%}
+}
+
+/* Keep session clear of fixed mobile nav (padding already on .main; ensure panel buttons stay reachable) */
+@media (max-width:920px){
+  .watch-session{scroll-margin-bottom:calc(env(safe-area-inset-bottom,0px) + 110px)}
+}
+
+html[data-animation-level="full"] .watch-session{
+  animation:watchSessionIn .45s var(--gl-ease,cubic-bezier(.22,.7,.28,1)) both;
+}
+html[data-animation-level="soft"] .watch-session{
+  animation:watchSessionIn .35s ease-out both;
+}
+html[data-animation-level="off"] .watch-session{animation:none!important}
+@media (prefers-reduced-motion:reduce){
+  .watch-session{animation:none!important}
+}
+@keyframes watchSessionIn{
+  from{opacity:0;transform:translateY(8px)}
+  to{opacity:1;transform:none}
+}
+
+html[data-visual-style="night"] .watch-session{
+  background:linear-gradient(135deg,rgba(7,30,43,.92),rgba(11,58,79,.88));
+  border-color:var(--gl-brass,#D4B05A);
+  color:#E8D9B5;
+}
+html[data-visual-style="night"] .watch-session-copy b,
+html[data-visual-style="night"] .watch-session-copy small{color:#E8D9B5}
+html[data-visual-style="night"] .watch-session-pause{color:#B8E4EF}

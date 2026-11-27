@@ -21,7 +21,9 @@ return {noteDrafts:validDrafts(x.noteDrafts),favorites:Array.isArray(x.favorites
  colorPalette:['coral','sea','gold','violet','custom'].includes(x.colorPalette)?x.colorPalette:'coral',
  customAccent:typeof x.customAccent==='string'&&/^#[0-9a-fA-F]{6}$/.test(x.customAccent)?x.customAccent:'#dc4c34',
  animationLevel:['full','soft','off'].includes(x.animationLevel)?x.animationLevel:'full',
- hideCompleted:!!x.hideCompleted,watchEdits:x.watchEdits&&typeof x.watchEdits==='object'?x.watchEdits:{},favoriteEdits:x.favoriteEdits&&typeof x.favoriteEdits==='object'?x.favoriteEdits:{},noteEdits:x.noteEdits&&typeof x.noteEdits==='object'?x.noteEdits:{},ratingEdits:x.ratingEdits&&typeof x.ratingEdits==='object'?x.ratingEdits:{},settingsUpdatedAt:Number(x.settingsUpdatedAt)||0,catalogOverride:x.catalogOverride&&typeof x.catalogOverride==='object'?x.catalogOverride:{}}}
+ hideCompleted:!!x.hideCompleted,watchEdits:x.watchEdits&&typeof x.watchEdits==='object'?x.watchEdits:{},favoriteEdits:x.favoriteEdits&&typeof x.favoriteEdits==='object'?x.favoriteEdits:{},noteEdits:x.noteEdits&&typeof x.noteEdits==='object'?x.noteEdits:{},ratingEdits:x.ratingEdits&&typeof x.ratingEdits==='object'?x.ratingEdits:{},settingsUpdatedAt:Number(x.settingsUpdatedAt)||0,catalogOverride:x.catalogOverride&&typeof x.catalogOverride==='object'?x.catalogOverride:{},
+ seenAchievements:Array.isArray(x.seenAchievements)?x.seenAchievements.filter(id=>typeof id==='string'&&/^[a-z][a-z0-9-]{0,40}$/.test(id)).slice(0,80):null}
+}
 let extra=loadExtra();
 function writeLocal(key,value){
  try{localStorage.setItem(key,JSON.stringify(value));failedWrites.delete(key)}
@@ -136,7 +138,7 @@ function episodeView(){let items=availableEpisodeNumbers(),query=episodeQuery.to
  if(episodeSaga!=='all'){const g=SAGA_GROUPS.find(g=>g.name===episodeSaga);if(g)items=items.filter(n=>n>=g.first&&(n<=g.last||(g.name==='Saga finale'&&n>BASE_MAX)))}
  if(query)items=items.filter(n=>{const ep=epInfo(n);return /^\d+$/.test(query)?n===Number(query):String(n).includes(query)||ep.arc.toLowerCase().includes(query)||ep.saga.toLowerCase().includes(query)||ep.title.toLowerCase().includes(query)||String(ep.chapter||'').toLowerCase().includes(query)});
  const count=items.length,shown=items.slice(0,episodePage*PAGE_SIZE),cov=catalogCoverage(),next=getNext();
- return `<div class="section-shell">${sectionHeader('Guida agli episodi','Cerca per numero o arco. I titoli e i capitoli compaiono solo quando sono stati verificati nel catalogo.')}
+ return `${watchSessionPanel()}<div class="section-shell">${sectionHeader('Guida agli episodi','Cerca per numero o arco. I titoli e i capitoli compaiono solo quando sono stati verificati nel catalogo.')}
  <div class="notice-catalog">${art('compass','notice-icon')}<div><b>${cov.titles?`Titoli con fonte: ${cov.titles}/${cov.total}`:'Titoli non ancora nel catalogo'}</b><div class="catalog-coverage" aria-label="Copertura metadati degli episodi"><span>Titoli ${cov.titles}/${cov.total}</span><span>Capitoli ${cov.chapters}/${cov.total}</span><span>Sinossi ${cov.summaries}/${cov.total}</span></div><span>${cov.titles?'Puoi importare altri metadati verificati dalle Impostazioni.':'Per ora vedi numero e arco: puoi comunque segnare i visti e aggiungere note.'}</span></div></div>
  <div class="episode-jump"><label for="jump-episode">Vai all’episodio</label><input id="jump-episode" type="number" min="1" max="${MAX}" placeholder="es. 92" inputmode="numeric"><button class="button small primary" data-action="jump-episode">Apri</button><button class="button small secondary" data-action="filter-unwatched">Solo da vedere</button></div>
  <div class="episode-filters"><label class="search-box">${icon('search')}<input id="episode-search" type="search" autocomplete="off" placeholder="Numero, titolo o arco…" value="${cleanText(episodeQuery)}"></label>
@@ -159,7 +161,7 @@ function episodeDetail(n){const x=epInfo(n),lock=blocked(n),fav=extra.favorites.
  modal(`<div class="episode-detail"><span class="eyebrow">SCHEDA DELL’EPISODIO</span><h3>${lock?'Episodio '+n:cleanText(x.title)}</h3><div class="detail-sub">Episodio ${n} · ${lock?'Saga nascosta':cleanText(x.arc)}</div><span class="ep-tag ${x.status}">${epStatusLabel(x.status)}</span><p>${cleanText(defaultP)}</p>
  <div class="detail-source">Capitoli manga: <b>${chapterLabel}</b> · Durata: <b>${x.duration?cleanText(x.duration):'Da verificare'}</b> · ${x.source?'Fonte titolo: '+cleanText(x.source.provider||'Catalogo terzo'):'Metadati del titolo da verificare.'}</div>
  ${chapterItems?`<div class="chapter-details"><b>Pagine adattate nel manga</b><div>${chapterItems}</div></div>`:''}${sourceMarkup}
- <div class="detail-actions"><button class="button small ${done?'secondary':'primary'}" data-action="detail-watch" data-ep="${n}" ${x.status==='filler'||x.status==='unverified'?'disabled':''}>${done?'✓ Già visto · annulla':'✓ Segna come visto'}</button><button class="button secondary small" data-action="favorite" data-ep="${n}">${fav?'★ Nei preferiti':'☆ Preferito'}</button></div>
+ <div class="detail-actions"><button class="button small ${done?'secondary':'primary'}" data-action="detail-watch" data-ep="${n}" ${x.status==='filler'||x.status==='unverified'?'disabled':''}>${done?'✓ Già visto · annulla':'✓ Segna come visto'}</button>${x.status==='filler'||x.status==='unverified'?'':`<button class="button primary small" data-action="detail-watch-continue" data-ep="${n}">${done?'Continua al successivo':'Segna visto e continua'}</button>`}<button class="button secondary small" data-action="favorite" data-ep="${n}">${fav?'★ Nei preferiti':'☆ Preferito'}</button></div>
  <div class="rating-group" role="group" aria-label="La tua valutazione">Valutazione personale ${[1,2,3,4,5].map(k=>`<button class="rate-star ${rate>=k?'selected':''}" data-action="rate" data-ep="${n}" data-score="${k}" aria-label="${k} stelle">★</button>`).join('')}</div>
  <label class="note-label">Note private <textarea id="detail-notes" data-ep="${n}" maxlength="2500" rows="4" placeholder="Scrivi una nota personale. Viene salvata su questo dispositivo.">${cleanText(text)}</textarea></label><small id="draft-status" role="status">${Object.hasOwn(extra.noteDrafts,n)?"Bozza ripristinata":"Le modifiche vengono salvate in bozza."}</small><div class="modal-buttons"><button class="button secondary" data-action="modal-cancel">Chiudi</button><button class="button primary" data-action="note-save" data-ep="${n}">Salva note</button></div></div>`)}
 /* Interactive Grand Line Atlas — in-memory selection only (no LocalStorage). */
@@ -493,6 +495,80 @@ function moreStats(){return `<div class="paper-panel extras-quick"><div><h3>Il v
 async function loadCatalog(){try{const r=await fetch('/data/episodes.json',{cache:'no-cache'});if(!r.ok)throw Error('catalog unavailable');const d=await r.json();if(!Array.isArray(d.episodes))throw Error('invalid data');const obj={};for(const e of d.episodes){if(Number.isInteger(e.n)&&e.n>=1&&e.n<=BASE_MAX)obj[e.n]={source:e.source||null,titleSource:e.titleSource||null,summarySource:e.summarySource||null,chapterSource:e.chapterSource||null,editorialSource:e.editorialSource||null,verifiedAt:e.verifiedAt||null,title:typeof e.title==='string'&&e.title.trim()?e.title:null,titleLanguage:e.titleLanguage||null,chapter:typeof e.chapter==='string'?e.chapter:null,chapterDetails:Array.isArray(e.chapterDetails)?e.chapterDetails:[],chapterStatus:e.chapterStatus||null,duration:typeof e.duration==='string'?e.duration:null,summary:typeof e.summary==='string'?e.summary:null,summaryStatus:e.summaryStatus||null,summaryLanguage:e.summaryLanguage||null}}catalog=obj;render()}catch(e){console.warn('Catalog offline: fallback numerico',e)}}
 function trackWatched(n,nowWatched){extra.watchEdits[n]={value:!!nowWatched,at:Date.now()};if(nowWatched)extra.watchedAt[n]=new Date().toISOString();else delete extra.watchedAt[n]}
 function playAchievement(){const k=ACHIEVEMENTS.filter(a=>a.test()).length;return k}
+function unlockedAchievementIds(){return ACHIEVEMENTS.filter(a=>a.test()).map(a=>a.id)}
+function seedSeenAchievements(){
+ if(Array.isArray(extra.seenAchievements))return;
+ extra.seenAchievements=unlockedAchievementIds();
+ saveExtra();
+}
+function celebrateNewAchievements(beforeIds){
+ seedSeenAchievements();
+ const before=Array.isArray(beforeIds)?beforeIds:[];
+ const newly=unlockedAchievementIds().filter(id=>!before.includes(id));
+ if(!newly.length)return;
+ const unseen=newly.filter(id=>!(extra.seenAchievements||[]).includes(id));
+ extra.seenAchievements=[...new Set([...(extra.seenAchievements||[]),...newly])];
+ saveExtra();
+ if(!unseen.length)return;
+ rewardModal(unseen.map(id=>ACHIEVEMENTS.find(a=>a.id===id)).filter(Boolean));
+}
+function daysSinceLastWatch(){
+ const times=Object.values(extra.watchedAt||{}).map(x=>Date.parse(x)).filter(Number.isFinite);
+ if(!times.length)return null;
+ return Math.floor((Date.now()-Math.max(...times))/86400000);
+}
+function sessionEpisodeTitle(n){
+ if(!Number.isInteger(n))return 'Episodio';
+ if(blocked(n))return 'Episodio '+n;
+ const info=epInfo(n);
+ const title=info?.title&&info.title!==`Episodio ${n}`?info.title:`Episodio ${n}`;
+ return title;
+}
+function watchSessionPanel(){
+ const next=getNext();
+ const days=daysSinceLastWatch();
+ const pauseNote=days!==null&&days>=3
+  ?`<p class="watch-session-pause">Torni dopo ${days} giorni. Riprendi senza spoiler dal punto sicuro della tua rotta.</p>`
+  :'';
+ if(!next){
+  return `<section class="watch-session is-complete" aria-label="Sessione di visione" data-session="complete">
+   <div class="watch-session-copy"><span class="watch-session-kicker">SESSIONE DI VISIONE</span>
+   <b>Rotta completata</b><small>Non ci sono altri episodi canonici da segnare sul percorso attuale.</small>${pauseNote}</div>
+   <div class="watch-session-actions"><button type="button" class="button secondary small" data-tab="achievements">${art('chest','button-art')} Ricompense</button><button type="button" class="button secondary small" data-tab="journal">${art('loot','button-art')} Diario</button></div>
+  </section>`;
+ }
+ const arc=episodeArc(next);
+ const sagaLabel=spoilerName(next,arc[3]||arc[0]||'Rotta');
+ const title=sessionEpisodeTitle(next);
+ const done=watched.has(next);
+ return `<section class="watch-session" aria-label="Sessione di visione" data-session-ep="${next}">
+  <div class="watch-session-copy">
+   <span class="watch-session-kicker">${done?'IN SESSIONE · GIÀ VISTO':'SESSIONE DI VISIONE · PROSSIMO'}</span>
+   <b>${cleanText(title)}</b>
+   <small>Episodio ${next} · ${cleanText(sagaLabel)}${done?' · già segnato':''}</small>
+   ${pauseNote}
+  </div>
+  <div class="watch-session-actions">
+   <button type="button" class="button secondary small" data-action="detail" data-ep="${next}">Scheda</button>
+   ${done
+     ?`<button type="button" class="button primary small" data-action="session-continue" data-ep="${next}">${art('route','button-art')} Continua al successivo</button>`
+     :`<button type="button" class="button secondary small" data-action="session-watch" data-ep="${next}">Segna visto</button>
+        <button type="button" class="button primary small" data-action="session-watch-continue" data-ep="${next}">${art('route','button-art')} Segna visto e continua</button>`}
+  </div>
+ </section>`;
+}
+function markEpisodeSeen(n){
+ if(!Number.isInteger(n)||n<1||n>CATALOG_LIMIT)return {ok:false,reason:'invalid'};
+ if(filler.has(n))return {ok:false,reason:'filler'};
+ if(!allCanon.includes(n))return {ok:false,reason:'not-canon'};
+ if(watched.has(n))return {ok:true,changed:false};
+ const before=unlockedAchievementIds();
+ watched.add(n);
+ trackWatched(n,true);
+ saveAll();
+ celebrateNewAchievements(before);
+ return {ok:true,changed:true};
+}
 function toggleFavorite(n){if(extra.favorites.includes(n))extra.favorites=extra.favorites.filter(v=>v!==n);else extra.favorites.push(n);extra.favoriteEdits[n]={value:extra.favorites.includes(n),at:Date.now()};saveExtra();return extra.favorites.includes(n)}
 function downloadJSON(obj,name){const b=new Blob([JSON.stringify(obj,null,2)],{type:'application/json'});const u=URL.createObjectURL(b);const a=document.createElement('a');a.href=u;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(u),2000)}
 function refreshEpisodeDetail(n){
@@ -512,7 +588,23 @@ async function handleExtraAction(action,t){const n=Number(t.dataset.ep);
  case 'search-map':{const first=Number(t.dataset.first);if(blocked(first))return true;selectedMapFirst=first;closeModal(false);setTab('map');const stop=document.querySelector('.gl-island[data-first="'+first+'"],.map-stop[data-first="'+first+'"]');stop?.focus({preventScroll:true});stop?.scrollIntoView({block:'center',behavior:motionScrollBehavior()});document.getElementById('atlas-panel')?.scrollIntoView({block:'nearest',behavior:motionScrollBehavior()});return true}
  case 'go-next':openEpisode(getNext()||start);return true;
  case 'detail':if(Number.isInteger(n)&&n>=1&&(n<=BASE_MAX||!!releaseByNumber(n)))episodeDetail(n);return true;
- case 'detail-watch':if(allCanon.includes(n)){watched.has(n)?watched.delete(n):watched.add(n);trackWatched(n,watched.has(n));saveAll();refreshEpisodeDetail(n);toast('Episodio aggiornato')}return true;
+ case 'detail-watch':if(allCanon.includes(n)){const before=unlockedAchievementIds();watched.has(n)?(watched.delete(n),trackWatched(n,false)):(watched.add(n),trackWatched(n,true));saveAll();refreshEpisodeDetail(n);celebrateNewAchievements(before);toast('Episodio aggiornato')}return true;
+ case 'session-watch':{const r=markEpisodeSeen(n);if(!r.ok){toast(r.reason==='filler'?'I filler non entrano nella sessione':'Episodio non disponibile');return true}render();toast(r.changed?'Segnato come visto':'Già segnato come visto');return true}
+ case 'session-continue':
+ case 'session-watch-continue':
+ case 'detail-watch-continue':{
+  const fromDetail=action==='detail-watch-continue';
+  if(action!=='session-continue'){
+   const r=markEpisodeSeen(n);
+   if(!r.ok){toast(r.reason==='filler'?'I filler non entrano nella sessione':'Episodio non disponibile');return true}
+  }
+  if(fromDetail)closeModal(false);
+  const following=getNext();
+  render();
+  if(following){openEpisode(following);toast('Prossimo: episodio '+following)}
+  else toast('Rotta completata sul percorso attuale');
+  return true;
+ }
  case 'favorite':{const f=toggleFavorite(n);if(document.querySelector('.modal-layer'))refreshEpisodeDetail(n);else render();toast(f?'Aggiunto ai preferiti':'Rimosso dai preferiti');return true}
  case 'rate':extra.ratings[n]=Number(t.dataset.score);extra.ratingEdits[n]=Date.now();saveExtra();refreshEpisodeDetail(n);return true;
  case 'note-save':{const val=String(document.getElementById('detail-notes')?.value||'').slice(0,2500);if(val.trim())extra.notes[n]=val;else delete extra.notes[n];extra.noteEdits[n]=Date.now();delete extra.noteDrafts[n];const saved=saveExtra();closeModal();render();toast(saved?'Nota salvata':'Nota in memoria: esporta i progressi');return true}
@@ -559,7 +651,14 @@ function applyTheme(){
 }
 function checkReminder(){if(!extra.reminderDays||!Object.keys(extra.watchedAt).length)return;const d=Math.max(...Object.values(extra.watchedAt).map(x=>Date.parse(x)).filter(Number.isFinite));if(Date.now()-d>extra.reminderDays*86400000)setTimeout(()=>toast('La tua rotta ti aspetta: scegli il prossimo episodio canonico.'),1800)}
 
-function rewardModal(){modal(`<div class="reward-celebration"><span class="eyebrow">TESORO SCOPERTO!</span><div class="reward-open-art">${art('chest','reward-closed')}${art('loot','reward-open')}</div><h3>Ricompensa sbloccata!</h3><p>Hai raggiunto un nuovo traguardo. Continua il viaggio e scopri tutti i tesori nella sezione Ricompense.</p><div class="modal-buttons"><button class="button primary" data-action="modal-cancel">Continua l’avventura</button><button class="button secondary" data-tab="achievements">Ricompense</button></div></div>`)}
+function rewardModal(items){
+ const list=Array.isArray(items)?items.filter(Boolean):[];
+ const primary=list[0];
+ const title=primary?cleanText(primary.title):'Ricompensa sbloccata!';
+ const detail=primary?cleanText(primary.detail):(list.length?`${list.length} nuovi traguardi.`:'Hai raggiunto un nuovo traguardo.');
+ const more=list.length>1?`<ul class="reward-list">${list.slice(1).map(a=>`<li><b>${cleanText(a.title)}</b> — ${cleanText(a.detail)}</li>`).join('')}</ul>`:'';
+ modal(`<div class="reward-celebration"><span class="eyebrow">TESORO SCOPERTO!</span><div class="reward-open-art">${art('chest','reward-closed')}${art(primary?.icon||'loot','reward-open')}</div><h3>${title}</h3><p>${detail}</p>${more}<div class="modal-buttons"><button class="button primary" data-action="modal-cancel">Continua l’avventura</button><button class="button secondary" data-tab="achievements">Ricompense</button></div></div>`);
+}
 
 /* v8 · Ricerca istantanea senza ricostruire le card e perdere il focus. */
 document.addEventListener('input',e=>{if(e.target?.id==='character-search'){characterQuery=e.target.value;applyCharacterFilters()}});
