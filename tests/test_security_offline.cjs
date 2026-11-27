@@ -18,7 +18,7 @@ assert.doesNotMatch(config,/oauthGoogleEnabled|oauthAppleEnabled|vapidPublicKey|
 assert.match(sw,/OFFLINE_CORE/);
 assert.match(sw,/Promise\.allSettled/);
 assert.match(sw,/ignoreSearch\s*:\s*true/);
-assert.match(sw,/rotta-canonica-v30-2-atlas/);
+assert.match(sw,/rotta-canonica-v30-2-atlas-harden/);
 assert.match(sw,/mobile-ux-polish-v29\.css/);
 assert.match(sw,/mobile-fixed-nav-v291\.css/);
 assert.match(sw,/mobile-iphone-top-v292\.css/);
@@ -26,7 +26,7 @@ assert.match(sw,/data\/episodes-latest\.json/);
 assert.match(sw,/premium-grand-line\.css/);
 assert.match(sw,/interactive-atlas-v28\.css/);
 assert.match(sw,/wanted-dossiers-v28\.css/);
-assert.match(app,/service-worker\.js\?v=30\.2a1/);
+assert.match(app,/service-worker\.js\?v=30\.2a2/);
 const animeCSS=read('anime-art-direction-v21.css');
 assert.match(animeCSS,/@keyframes animeShip\{0%,100%\{translate:0 0;rotate:-1\.4deg\}/);
 assert.match(animeCSS,/html\[data-animation-level="off"\] #app \*/);

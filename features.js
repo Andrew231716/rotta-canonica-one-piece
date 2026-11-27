@@ -165,12 +165,12 @@ function episodeDetail(n){const x=epInfo(n),lock=blocked(n),fav=extra.favorites.
 /* Interactive Grand Line Atlas — in-memory selection only (no LocalStorage). */
 let selectedMapFirst=null;
 /* Positions are % of the stage; keep inset so media+label never clip the frame. */
-/* v30.2: spread right-cluster (08–11) for mobile tap clarity; path stays coherent with pins. */
+/* v30.2 hardening: pack 11×44px targets inside stage (no overflow clip); pin centers ≥44px on 320. */
 const ATLAS_ISLAND_POS=[
- {x:7,y:70},{x:16,y:50},{x:26,y:22},{x:36,y:62},{x:47,y:28},
- {x:55,y:54},{x:63,y:70},{x:72,y:40},{x:80,y:16},{x:88,y:56},{x:95,y:26}
+ {x:10,y:80},{x:26,y:46},{x:38,y:11},{x:30,y:68},{x:54,y:21},
+ {x:44,y:50},{x:60,y:86},{x:70,y:39},{x:77,y:11},{x:82,y:54},{x:86,y:28}
 ];
-const ATLAS_ROUTE_PATH='M7 70 C12 60, 14 52, 16 50 S21 30, 26 22 S31 48, 36 62 S42 38, 47 28 S51 46, 55 54 S59 66, 63 70 S68 50, 72 40 S76 22, 80 16 S84 40, 88 56 S92 36, 95 26';
+const ATLAS_ROUTE_PATH='M10 80 C18 60, 22 50, 26 46 S32 22, 38 11 S34 48, 30 68 S42 36, 54 21 S48 40, 44 50 S52 72, 60 86 S65 54, 70 39 S74 18, 77 11 S80 40, 82 54 S84 38, 86 28';
 const ATLAS_ROUTE_ART=[2,5,4,6,2,5,3,1,4,6,2];
 function sagaProgress(g){
  const ns=allCanon.filter(n=>n>=g.first&&n<=g.last);
